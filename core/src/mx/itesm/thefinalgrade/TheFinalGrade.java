@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 
+import mx.itesm.thefinalgrade.levels.MorningLevel;
 import mx.itesm.thefinalgrade.menus.StartMenu;
 import mx.itesm.thefinalgrade.worlds.Morning;
 
@@ -32,7 +33,7 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/player/boy/animations/walk/5.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/6.png", Texture.class);
 		manager.finishLoading();
-		setScreen(new Morning(this));
+		setScreen(new StartMenu(this, "Fondo_StartMenu.png"));
 	}
 
 	@Override
