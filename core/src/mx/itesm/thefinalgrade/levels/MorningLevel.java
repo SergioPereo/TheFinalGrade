@@ -15,6 +15,7 @@ import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.objects.Bonus;
+import mx.itesm.thefinalgrade.util.objects.LittleGrass;
 import mx.itesm.thefinalgrade.util.objects.Obstacle;
 import mx.itesm.thefinalgrade.util.objects.Platform;
 import mx.itesm.thefinalgrade.util.objects.Player;
@@ -25,8 +26,16 @@ public class MorningLevel extends Level {
     private float playerPaddingLeft = 20, playerPaddingBottom = 20;
 
     Texture platformTexture;
+    Texture platform2Texture;
     Texture obstacleTexture;
-    Texture obstacle;
+    Texture arbolTexture;
+    Texture arbol2Texture;
+    Texture casa1Texture;
+    Texture casa2Texture;
+    Texture casa3Texture;
+    Texture pasto;
+    Texture pastito;
+    Texture cloudTexture;
 
     private float movementMultiplicator = 60f;
 
@@ -40,38 +49,62 @@ public class MorningLevel extends Level {
     }
     protected void loadTextures(){
 
-        platformTexture = new Texture("Plataforma 1.png");
+        platformTexture = new Texture("Mapa 1/Plataforma 1.png");
+        platform2Texture = new Texture("Mapa 1/Plataforma 2.png");
         obstacleTexture = new Texture("HojaRota.png");
         playerTexture = new Texture("Niño/Niño.png");
         hojaBuenaTexture = new Texture("Hoja.png");
         botonBrincar = new Texture("Brincar.png");
         brincarClicked = new Texture("BrincarClicked.png");
-
+        arbolTexture = new Texture("Mapa 1/Arbolito 1.png");
+        arbol2Texture = new Texture("Mapa 1/Arbolito 2.png");
+        casa1Texture = new Texture("Mapa 1/Casita.png");
+        casa2Texture = new Texture("Mapa 1/Casita 2.png");
+        casa3Texture = new Texture("Mapa 1/Casita 3.png");
+        pasto = new Texture("Mapa 1/Pasto_Base.png");
+        pastito = new Texture("Mapa 1/Pastito.png");
+        cloudTexture = new Texture("Mapa 1/Nube.png");
     }
 
 
 
     protected void createPlatforms() {
         // Must be the same lengths unless you want the game to crash or do strange platforms
-        float[] platformsXCoordinates = {0, ANCHO / 3 - 100, ANCHO / 2, ANCHO / 2 + 300, ANCHO - platformTexture.getWidth()};
-        float[] platformsYCoordinates = {0, ALTO / 3 - 100, ALTO / 2, ALTO - 400, ALTO - platformTexture.getHeight() * 2};
+        float[] platformsXCoordinates = {0, ANCHO / 3 - 100, ANCHO / 2 - 100, ANCHO / 2 + 200, ANCHO - platformTexture.getWidth()-100};
+        float[] platformsYCoordinates = {92, 200, ALTO / 2, ALTO - 450, ALTO - platformTexture.getHeight() * 2};
         platforms = new Array<>(5);
 
         for (int i = 0; i < platformsXCoordinates.length; i++) {
-            platforms.add(new Platform(platformTexture, platformsXCoordinates[i], platformsYCoordinates[i]));
+            if (i % 2 == 0){
+                platforms.add(new Platform(platform2Texture, platformsXCoordinates[i], platformsYCoordinates[i]));
+
+            } else {
+                platforms.add(new Platform(platformTexture, platformsXCoordinates[i], platformsYCoordinates[i]));
+            }
+
         }
     }
 
     private void createObstacles(){
         obstacles = new Array<>();
-        obstacles.add(new Obstacle(obstacleTexture, ANCHO/3, ALTO/3));
+        obstacles.add(new Obstacle(obstacleTexture, ANCHO/3, ALTO/3+25));
+
+    }
+
+    private void createLittleGrass(){
+        float y = 92;
+        float x = 0;
+        littleGrass = new Array<>();
+        for (int i = 0; i < 10; i++){
+            littleGrass.add(new LittleGrass(pastito, x, y));
+            x += 120;
+        }
 
     }
 
     private void createBonus(){
-        bonus = new Array<Bonus>();
-        bonus.add(new Bonus(hojaBuenaTexture, ANCHO/2+300, ALTO-500));
-        bonus.add(new Bonus(hojaBuenaTexture,200, 80));
+        bonus = new Array<>();
+        bonus.add(new Bonus(hojaBuenaTexture, ANCHO / 2 + 260, ALTO - 370));
     }
 
     @Override
@@ -94,6 +127,7 @@ public class MorningLevel extends Level {
         createBonus();
         createHUD();
         createButton();
+        createLittleGrass();
     }
 
     @Override
@@ -102,19 +136,37 @@ public class MorningLevel extends Level {
         updates(delta);
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
+
         batch.draw(background,0,0);
+        batch.draw(pasto, 0, 0);
+        batch.draw(casa1Texture, 50, 92);
+        batch.draw(casa2Texture, 420, 92);
+        batch.draw(casa3Texture, 800, 92);
+        batch.draw(cloudTexture, 0, 520);
+        batch.draw(cloudTexture, 400, 520);
+        batch.draw(cloudTexture, 800, 520);
+        batch.draw(arbolTexture, 350, 92);
+        batch.draw(arbol2Texture, 750, 92);
         score.draw(batch, "" + UserPreferences.getInstance().getScore(), 8*ANCHO/9, 20*ALTO/21);
+
+        for (LittleGrass pasto : littleGrass){
+            pasto.render(batch);
+        }
         player.render(batch);
+
 
         for(Platform platform: platforms){
             platform.render(batch);
         }
+
         for (Bonus bonus : bonus){
             bonus.render(batch);
         }
         for(Obstacle obstacle: obstacles){
             obstacle.render(batch);
         }
+
+
         batch.end();
         levelStage.draw();
         levelStage.act();

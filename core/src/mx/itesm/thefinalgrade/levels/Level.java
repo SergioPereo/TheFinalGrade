@@ -23,6 +23,7 @@ import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.util.Pantalla;
 import mx.itesm.thefinalgrade.util.objects.Bonus;
+import mx.itesm.thefinalgrade.util.objects.LittleGrass;
 import mx.itesm.thefinalgrade.util.objects.Obstacle;
 import mx.itesm.thefinalgrade.util.objects.Platform;
 import mx.itesm.thefinalgrade.util.objects.Player;
@@ -40,7 +41,8 @@ public abstract class Level extends Pantalla {
     protected Array<Obstacle> obstacles;
     protected Array<Platform> platforms;
     protected Array<Bonus> bonus;
-    private float playerPaddingLeft = 20, playerPaddingBottom = 60;
+    protected Array<LittleGrass> littleGrass;
+    private float playerPaddingLeft = 20, playerPaddingBottom = 20;
     //Texturas
     protected Texture background;
     Texture playerTexture;
@@ -159,7 +161,7 @@ public abstract class Level extends Pantalla {
             Rectangle obstacleRect = new Rectangle(obstacles.get(i).getTextureX(), obstacles.get(i).getTextureY(), obstacles.get(i).getTextureWidth(), obstacles.get(i).getTextureHeight());
 
             if (playerRect.overlaps(obstacleRect)){
-                UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore()+10);
+                UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore()-10);
                 obstacles.removeIndex(i);
                 break;
             }
@@ -169,7 +171,7 @@ public abstract class Level extends Pantalla {
             Rectangle bonusRect = new Rectangle(bonus.get(i).getTextureX(), bonus.get(i).getTextureY(), bonus.get(i).getTextureWidth(), bonus.get(i).getTextureHeight());
 
             if (playerRect.overlaps(bonusRect)){
-                UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore()-10);
+                UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore()+10);
                 bonus.removeIndex(i);
                 break;
             }
