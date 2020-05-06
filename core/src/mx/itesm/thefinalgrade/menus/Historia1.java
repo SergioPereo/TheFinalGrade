@@ -1,45 +1,42 @@
 package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
 import mx.itesm.thefinalgrade.TheFinalGrade;
+import mx.itesm.thefinalgrade.menus.Menu;
 
+public class Historia1 extends Menu {
 
-class CreditsMenu extends Menu {
+    private Texture botonAvanzar;
+    private Texture botonAvanzarP;
 
     private Texture fondo;
 
-    private Texture botonRegresar, botonRegresarP;
-
-    public CreditsMenu(TheFinalGrade game, String backgroundPath) {
+    public Historia1(TheFinalGrade game, String backgroundPath) {
         super(game, backgroundPath);
-    }
-
-    public void show() {
-        super.show();
     }
 
     @Override
     protected void createMenu() {
 
-        fondo =  new Texture("Us.jpeg");
-
         menuStage = new Stage(vista);
 
-        botonRegresar = new Texture("BotonRegresar.png");
-        TextureRegionDrawable regresarBoton = new TextureRegionDrawable(botonRegresar);
+        fondo = new Texture("Historia/1_Cuarto_1.png");
 
-        botonRegresarP = new Texture("BotonRegresar_Click.png");
-        TextureRegionDrawable regresarBotonP = new TextureRegionDrawable(botonRegresarP);
+        botonAvanzar = new Texture("BotonRegresar.png");
+        TextureRegionDrawable regresarBoton = new TextureRegionDrawable(botonAvanzar);
+
+        botonAvanzarP = new Texture("BotonRegresar_Click.png");
+        TextureRegionDrawable regresarBotonP = new TextureRegionDrawable(botonAvanzarP);
 
         ImageButton returnButton = new ImageButton(regresarBoton, regresarBotonP);
-        returnButton.setPosition(ANCHO/100, 6*ALTO/9);
+        returnButton.setPosition(ANCHO - 300, 6*ALTO/9);
 
         menuStage.addActor(returnButton);
 
@@ -47,12 +44,11 @@ class CreditsMenu extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new MainMenu(game, "Fondo_StartMenu.png"));
+                game.setScreen(new Historia2(game, "Fondo_StartMenu.png"));
             }
         });
 
         Gdx.input.setInputProcessor(menuStage);
-
     }
 
     public void render(float delta) {
@@ -61,25 +57,7 @@ class CreditsMenu extends Menu {
         batch.begin();
         batch.draw(fondo, 0, 0);
         batch.end();
-
         menuStage.draw();
 
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-        menuStage.dispose();
-        botonRegresar.dispose();
-        botonRegresarP.dispose();
     }
 }

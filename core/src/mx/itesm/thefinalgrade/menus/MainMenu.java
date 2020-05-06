@@ -113,7 +113,7 @@ public class MainMenu extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new MorningLevel(game, "Fondo_StartMenu.png"));
+                game.setScreen(new Historia1(game, "Historia/1_Cuarto_1.png"));
             }
         });
 
