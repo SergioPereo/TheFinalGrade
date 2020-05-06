@@ -15,7 +15,7 @@ public class Historia1 extends Menu {
 
     private Texture botonAvanzar;
     private Texture botonAvanzarP;
-
+    private Texture Prueba;
     private Texture fondo;
 
     public Historia1(TheFinalGrade game, String backgroundPath) {
