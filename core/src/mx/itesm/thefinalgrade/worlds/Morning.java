@@ -114,8 +114,8 @@ public class Morning extends BaseScreen {
 
     protected void createButton(){
 
-        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Brincar.png"));
-        TextureRegionDrawable brincarBotonClicked = new TextureRegionDrawable((Texture) game.getManager().get("BrincarClicked.png"));
+        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Brincar.png"));
+        TextureRegionDrawable brincarBotonClicked = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/BrincarClicked.png"));
         ImageButton jumpBtn = new ImageButton(brincarBoton, brincarBotonClicked);
         jumpBtn.setPosition(5*ANCHO/6, ALTO/18);
 
@@ -134,8 +134,8 @@ public class Morning extends BaseScreen {
     public void createHUD() {
 
         Skin skin = new Skin();
-        skin.add("background", game.getManager().get("padBack.png"));
-        skin.add("button", game.getManager().get("padKnob.png"));
+        skin.add("background", game.getManager().get("Sprites/buttons/padBack.png"));
+        skin.add("button", game.getManager().get("Sprites/buttons/padKnob.png"));
         Touchpad.TouchpadStyle estilo = new Touchpad.TouchpadStyle();
         estilo.background = skin.getDrawable("background");
         estilo.knob = skin.getDrawable("button");

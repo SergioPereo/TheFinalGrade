@@ -43,36 +43,36 @@ public class MainMenu extends Menu {
 
         //boton continuar
 
-        textContinueButton = new Texture("Continue.png");
+        textContinueButton = new Texture("Sprites/buttons/Continue.png");
         TextureRegionDrawable trdcontinue = new TextureRegionDrawable(
                 new TextureRegion(textContinueButton));
 
         //imagen btn continuar presionado
-        textContinueButton2 = new Texture("Continue_Click.png");
+        textContinueButton2 = new Texture("Sprites/buttons/Continue_Click.png");
         TextureRegionDrawable trdcontinue2 = new TextureRegionDrawable(
                 new TextureRegion(textContinueButton2));
         ImageButton continuebtn = new ImageButton(trdcontinue, trdcontinue2);
         continuebtn.setPosition(ANCHO/3,530);
 
         //boton NUEVO JUEGO
-        textNewGameButton = new Texture("NewGame.png");
+        textNewGameButton = new Texture("Sprites/buttons/NewGame.png");
         TextureRegionDrawable trdnewG = new TextureRegionDrawable(
                 new TextureRegion(textNewGameButton));
 
         //imagen btn NUEVO JUEGO presionado
-        textNewGameButton2 = new Texture("NewGame_Click.png");
+        textNewGameButton2 = new Texture("Sprites/buttons/NewGame_Click.png");
         TextureRegionDrawable trdNewG2 = new TextureRegionDrawable(
                 new TextureRegion(textNewGameButton2));
         ImageButton newGameBtn = new ImageButton(trdnewG, trdNewG2);
         newGameBtn.setPosition(ANCHO/3,400);
 
         //boton OPCIONES
-        textOptionsButton = new Texture("Opciones.png");
+        textOptionsButton = new Texture("Sprites/buttons/Opciones.png");
         TextureRegionDrawable trdoption = new TextureRegionDrawable(
                 new TextureRegion(textOptionsButton));
 
         //imagen btn OPCIONES presionado
-        textOptionsButton2 = new Texture("Opciones.png");
+        textOptionsButton2 = new Texture("Sprites/buttons/Opciones.png");
         TextureRegionDrawable trdoption2 = new TextureRegionDrawable(
                 new TextureRegion(textOptionsButton2));
 
@@ -80,22 +80,22 @@ public class MainMenu extends Menu {
         optionBtn.setPosition(ANCHO/3,250);
 
         //boton CREDITOS
-        textCreditsButton = new Texture("Credits.png");
+        textCreditsButton = new Texture("Sprites/buttons/Credits.png");
         TextureRegionDrawable trdCredits = new TextureRegionDrawable(
                 new TextureRegion(textCreditsButton));
         //imagen btn CREDITOS presionado
 
-        textCreditsButton2 = new Texture("Credits.png");
+        textCreditsButton2 = new Texture("Sprites/buttons/Credits.png");
         TextureRegionDrawable trdCredits2 = new TextureRegionDrawable(
                 new TextureRegion(textCreditsButton2));
         ImageButton creditsBtn = new ImageButton(trdCredits, trdCredits2);
         creditsBtn.setPosition(ANCHO/3,130);
 
-        textExit = new Texture("Instructions.png");
+        textExit = new Texture("Sprites/buttons/Instructions.png");
         TextureRegionDrawable trdExit = new TextureRegionDrawable(
                 new TextureRegion(textExit));
 
-        textExit2 = new Texture("Instructions.png");
+        textExit2 = new Texture("Sprites/buttons/Instructions.png");
         TextureRegionDrawable trdExitPress = new TextureRegionDrawable(
                 new TextureRegion(textExit2));
         ImageButton instructionsBtn = new ImageButton(trdExit, trdExitPress);
@@ -105,7 +105,7 @@ public class MainMenu extends Menu {
         //imagen Niño
         textniño = new Texture("Niño/niño(1).png");
         //imagen calendario
-        textcalendar = new Texture("Calendario.png");
+        textcalendar = new Texture("Sprites/elements/Calendario.png");
         textNiña = new Texture("Niña/Niña.png");
 
         // Add listeners
@@ -114,6 +114,7 @@ public class MainMenu extends Menu {
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
                 game.setScreen(new Historia1(game, "Historia/1_Cuarto_1.png"));
+
             }
         });
 
@@ -121,7 +122,7 @@ public class MainMenu extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new SoundSettingsMenu(game, "Fondo_StartMenu.png")); // Forums tells that this lane has to follow Gdx.app.exit because some things remain open in task manager
+                game.setScreen(new SoundSettingsMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png")); // Forums tells that this lane has to follow Gdx.app.exit because some things remain open in task manager
             }
         });
 
@@ -130,7 +131,7 @@ public class MainMenu extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new CreditsMenu(game, "Fondo_StartMenu.png"));
+                game.setScreen(new CreditsMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
             }
         });
 
@@ -139,7 +140,7 @@ public class MainMenu extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new InstructionsMenu(game, "Instructions.jpg"));
+                game.setScreen(new InstructionsMenu(game, "Sprites/backgrounds/Instructions.jpg"));
             }
         });
 

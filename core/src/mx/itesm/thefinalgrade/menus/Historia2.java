@@ -2,6 +2,7 @@ package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -13,8 +14,8 @@ import mx.itesm.thefinalgrade.menus.Menu;
 
 public class Historia2 extends Menu {
 
-    private Texture botonAvanzar;
-    private Texture botonAvanzarP;
+    private Texture botonAvanzar, botonAvanzarP;
+    Texture backButtonTexture,backButtonTexturePressed;
 
     private Texture fondo;
 
@@ -29,24 +30,41 @@ public class Historia2 extends Menu {
 
         fondo = new Texture("Historia/2_Calendario_1.png");
 
-        botonAvanzar = new Texture("BotonRegresar.png");
-        TextureRegionDrawable regresarBoton = new TextureRegionDrawable(botonAvanzar);
+        //Boton de adelante funcionalidad
+        botonAvanzar = new Texture("Sprites/buttons/BotonAdelante.png");
+        TextureRegionDrawable adelanteBoton = new TextureRegionDrawable(botonAvanzar);
 
-        botonAvanzarP = new Texture("BotonRegresar_Click.png");
-        TextureRegionDrawable regresarBotonP = new TextureRegionDrawable(botonAvanzarP);
+        botonAvanzarP = new Texture("Sprites/buttons/BotonAdelante_Click.png");
+        TextureRegionDrawable adelanteBotonP = new TextureRegionDrawable(botonAvanzarP);
 
-        ImageButton returnButton = new ImageButton(regresarBoton, regresarBotonP);
-        returnButton.setPosition(ANCHO - 300, 6 * ALTO / 9);
+        ImageButton goButton = new ImageButton(adelanteBoton, adelanteBotonP);
+        goButton.setPosition(ANCHO - 350, 6*ALTO/9);
 
-        menuStage.addActor(returnButton);
+        menuStage.addActor(goButton);
 
-        returnButton.addListener(new ClickListener() {
+        goButton.addListener(new ClickListener(){
             @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new Historia3(game, "Fondo_StartMenu.png"));
+                game.setScreen(new Historia3(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
             }
         });
+
+        backButtonTexture = new Texture("Sprites/buttons/BotonRegresar.png");
+        TextureRegionDrawable textureRegionBackButton = new TextureRegionDrawable(new TextureRegion(backButtonTexture));
+        backButtonTexturePressed = new Texture("Sprites/buttons/BotonRegresar_Click.png");
+        TextureRegionDrawable textureRegionBackButtonPressed = new TextureRegionDrawable(new TextureRegion(backButtonTexturePressed));
+
+        ImageButton backButton = new ImageButton(textureRegionBackButton, textureRegionBackButtonPressed);
+        backButton.setPosition(ANCHO/100, 6*ALTO/9);
+
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                game.setScreen(new Historia1(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
+            }
+        });
+        menuStage.addActor(backButton);
 
         Gdx.input.setInputProcessor(menuStage);
     }

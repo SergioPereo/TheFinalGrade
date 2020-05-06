@@ -22,10 +22,10 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/player/nino-r-r.png", Texture.class);
 		manager.load("Sprites/platforms/platform2resized.png", Texture.class);
 		manager.load("Sprites/backgrounds/skybackground.png", Texture.class);
-		manager.load("padBack.png", Texture.class);
-		manager.load("padKnob.png", Texture.class);
-		manager.load("Brincar.png", Texture.class);
-		manager.load("BrincarClicked.png", Texture.class);
+		manager.load("Sprites/buttons/padBack.png", Texture.class);
+		manager.load("Sprites/buttons/padKnob.png", Texture.class);
+		manager.load("Sprites/buttons/Brincar.png", Texture.class);
+		manager.load("Sprites/buttons/BrincarClicked.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/1.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/2.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/3.png", Texture.class);
@@ -33,7 +33,8 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/player/boy/animations/walk/5.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/6.png", Texture.class);
 		manager.finishLoading();
-		setScreen(new StartMenu(this, "Fondo_StartMenu.png"));
+		//setScreen(new Morning(this,"Sprites/backgrounds/Fondo_StartMenu.png"));
+		setScreen(new StartMenu(this, "Sprites/backgrounds/Fondo_StartMenu.png"));
 	}
 
 	@Override

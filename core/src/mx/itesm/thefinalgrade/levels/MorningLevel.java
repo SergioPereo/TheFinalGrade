@@ -27,7 +27,7 @@ public class MorningLevel extends Level {
 
     Texture platformTexture;
     Texture platform2Texture;
-    Texture obstacleTexture;
+    Texture obstaclehojaTexture;
     Texture arbolTexture;
     Texture arbol2Texture;
     Texture casa1Texture;
@@ -36,6 +36,8 @@ public class MorningLevel extends Level {
     Texture pasto;
     Texture pastito;
     Texture cloudTexture;
+    Texture cafeTexture;
+    Texture obstaclehoja2Texture;
 
     private float movementMultiplicator = 60f;
 
@@ -51,11 +53,11 @@ public class MorningLevel extends Level {
 
         platformTexture = new Texture("Mapa 1/Plataforma 1.png");
         platform2Texture = new Texture("Mapa 1/Plataforma 2.png");
-        obstacleTexture = new Texture("HojaRota.png");
+        obstaclehojaTexture = new Texture("items/HojaRota.png");
         playerTexture = new Texture("Niño/Niño.png");
-        hojaBuenaTexture = new Texture("Hoja.png");
-        botonBrincar = new Texture("Brincar.png");
-        brincarClicked = new Texture("BrincarClicked.png");
+        hojaBuenaTexture = new Texture("items/Hoja.png");
+        botonBrincar = new Texture("Sprites/buttons/Brincar.png");
+        brincarClicked = new Texture("Sprites/buttons/BrincarClicked.png");
         arbolTexture = new Texture("Mapa 1/Arbolito 1.png");
         arbol2Texture = new Texture("Mapa 1/Arbolito 2.png");
         casa1Texture = new Texture("Mapa 1/Casita.png");
@@ -64,6 +66,8 @@ public class MorningLevel extends Level {
         pasto = new Texture("Mapa 1/Pasto_Base.png");
         pastito = new Texture("Mapa 1/Pastito.png");
         cloudTexture = new Texture("Mapa 1/Nube.png");
+        cafeTexture = new Texture("items/tazacafe.png");
+        obstaclehoja2Texture = new Texture("items/HojaArrugada.png");
     }
 
 
@@ -87,7 +91,8 @@ public class MorningLevel extends Level {
 
     private void createObstacles(){
         obstacles = new Array<>();
-        obstacles.add(new Obstacle(obstacleTexture, ANCHO/3, ALTO/3+25));
+        obstacles.add(new Obstacle(obstaclehojaTexture, ANCHO/3, ALTO/3+25));
+        obstacles.add(new Obstacle(obstaclehoja2Texture,ANCHO / 2 + 320,ALTO/2+120));
 
     }
 
@@ -105,6 +110,7 @@ public class MorningLevel extends Level {
     private void createBonus(){
         bonus = new Array<>();
         bonus.add(new Bonus(hojaBuenaTexture, ANCHO / 2 + 260, ALTO - 370));
+        bonus.add(new Bonus(cafeTexture, ANCHO/2,ALTO/2+25));
     }
 
     @Override

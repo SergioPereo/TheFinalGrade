@@ -28,10 +28,10 @@ class InstructionsMenu extends Menu  {
 
         menuStage = new Stage(vista);
 
-        botonRegresar = new Texture("BotonRegresar.png");
+        botonRegresar = new Texture("Sprites/buttons/BotonRegresar.png");
         TextureRegionDrawable regresarBoton = new TextureRegionDrawable(botonRegresar);
 
-        botonRegresarP = new Texture("BotonRegresar_Click.png");
+        botonRegresarP = new Texture("Sprites/buttons/BotonRegresar_Click.png");
         TextureRegionDrawable regresarBotonP = new TextureRegionDrawable(botonRegresarP);
 
         ImageButton returnButton = new ImageButton(regresarBoton, regresarBotonP);
@@ -43,7 +43,7 @@ class InstructionsMenu extends Menu  {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new MainMenu(game, "Fondo_StartMenu.png"));
+                game.setScreen(new MainMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
             }
         });
 

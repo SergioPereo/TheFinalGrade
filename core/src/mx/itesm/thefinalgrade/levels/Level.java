@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -48,6 +49,7 @@ public abstract class Level extends Pantalla {
     Texture playerTexture;
     Texture hojaBuenaTexture;
     Texture botonBrincar, brincarClicked;
+    Texture backButtonTexture,backButtonTexturePressed;
 
 
     // HUD (joystick virtual)
@@ -74,22 +76,25 @@ public abstract class Level extends Pantalla {
     protected void loadTextures(){
 
         playerTexture = new Texture("Niño/Niño.png");
-        botonBrincar = new Texture("Brincar.png");
-        brincarClicked = new Texture("BrincarClicked.png");
+        botonBrincar = new Texture("Sprites/buttons/Brincar.png");
+        brincarClicked = new Texture("Sprites/buttons/BrincarClicked.png");
+        backButtonTexture =  new Texture("Sprites/buttons/BotonRegresar.png");
+        backButtonTexturePressed = new Texture("Sprites/buttons/BotonRegresar.png");
+
 
     }
 
     public void createHUD() {
 
         Skin skin = new Skin();
-        skin.add("fondo", new Texture("padBack.png"));
-        skin.add("boton", new Texture("padKnob.png"));
+        skin.add("fondo", new Texture("Sprites/buttons/padBack.png"));
+        skin.add("boton", new Texture("Sprites/buttons/padknoblue.png"));
         Touchpad.TouchpadStyle estilo = new Touchpad.TouchpadStyle();
         estilo.background = skin.getDrawable("fondo");
         estilo.knob = skin.getDrawable("boton");
         // Crear el pad
         Touchpad pad = new Touchpad(64, estilo);
-        pad.setBounds(16,16,128,128); //limites del pad
+        pad.setBounds(ANCHO/6, ALTO/14,128,128); //limites del pad
         pad.setColor(1,1,1,0.7f);
         pad.addListener(new ChangeListener() {
             @Override
@@ -112,11 +117,26 @@ public abstract class Level extends Pantalla {
     }
 
     protected void createButton(){
+        backButtonTexture = new Texture("Sprites/buttons/BotonRegresar.png");
+        TextureRegionDrawable textureRegionBackButton = new TextureRegionDrawable(new TextureRegion(backButtonTexture));
+        backButtonTexturePressed = new Texture("Sprites/buttons/BotonRegresar_Click.png");
+        TextureRegionDrawable textureRegionBackButtonPressed = new TextureRegionDrawable(new TextureRegion(backButtonTexturePressed));
+
+        ImageButton backButton = new ImageButton(textureRegionBackButton, textureRegionBackButtonPressed);
+        backButton.setPosition(ANCHO/100, 6*ALTO/9);
+
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                game.setScreen(new MainMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
+            }
+        });
+        levelStage.addActor(backButton);
 
         TextureRegionDrawable brincarBoton = new TextureRegionDrawable(botonBrincar);
         TextureRegionDrawable brincarBotonClicked = new TextureRegionDrawable(brincarClicked);
         ImageButton jumpBtn = new ImageButton(brincarBoton, brincarBotonClicked);
-        jumpBtn.setPosition(5*ANCHO/6, ALTO/18);
+        jumpBtn.setPosition(5*ANCHO/6, ALTO/16);
 
 
         jumpBtn.addListener(new ClickListener(){
@@ -154,7 +174,7 @@ public abstract class Level extends Pantalla {
                 player.getTextureWidth(), player.getTextureHeight());
 
         if (playerRect.getY() < 0){
-            game.setScreen(new Loser(game, "Failed_Niño.png"));
+            game.setScreen(new Loser(game, "Sprites/backgrounds/Failed_Niño.png"));
         }
 
         for (int i = obstacles.size-1; i >= 0; i--){
@@ -220,10 +240,10 @@ public abstract class Level extends Pantalla {
             case IDLE:
                 break;
             case RIGHT:
-                player.move(movementMultiplicator * delta, 0);
+                player.move(movementMultiplicator * delta + 5, 0);
                 break;
             case LEFT:
-                player.move(-movementMultiplicator * delta, 0);
+                player.move(-movementMultiplicator * delta - 5, 0);
                 break;
             default:
                 break;
@@ -298,4 +318,5 @@ public abstract class Level extends Pantalla {
             return false;
         }
     }
+
 }
