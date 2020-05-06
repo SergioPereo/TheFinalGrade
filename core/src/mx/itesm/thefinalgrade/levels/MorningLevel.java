@@ -26,6 +26,7 @@ public class MorningLevel extends Level {
 
     Texture platformTexture;
     Texture obstacleTexture;
+    Texture obstacle;
 
     private float movementMultiplicator = 60f;
 
