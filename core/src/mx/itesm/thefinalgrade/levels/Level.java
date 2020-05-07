@@ -128,7 +128,7 @@ public abstract class Level extends Pantalla {
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                game.setScreen(new MainMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
+                game.setScreen(new MainMenu(game));
             }
         });
         levelStage.addActor(backButton);
@@ -174,7 +174,7 @@ public abstract class Level extends Pantalla {
                 player.getTextureWidth(), player.getTextureHeight());
 
         if (playerRect.getY() < 0){
-            game.setScreen(new Loser(game, "Sprites/backgrounds/Failed_Niño.png"));
+            game.setScreen(new Loser(game));
         }
 
         for (int i = obstacles.size-1; i >= 0; i--){

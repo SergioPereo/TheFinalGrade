@@ -2,6 +2,7 @@ package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,13 +11,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
+import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 class InstructionsMenu extends Menu  {
 
     private Texture botonRegresar, botonRegresarP;
 
-    public InstructionsMenu(TheFinalGrade game, String backgroundPath) {
-        super(game, backgroundPath);
+    private Music music;
+
+    public InstructionsMenu(TheFinalGrade game) {
+        super(game);
     }
 
     public void show() {
@@ -25,13 +29,19 @@ class InstructionsMenu extends Menu  {
 
     @Override
     protected void createMenu() {
-
+        music = game.getManager().get("music/Mushroom Theme.mp3");
+        music.setVolume(UserPreferences.getInstance().getVolume());
+        music.setLooping(true);
+        music.setPosition(UserPreferences.getInstance().getPosition());
+        music.play();
         menuStage = new Stage(vista);
 
-        botonRegresar = new Texture("Sprites/buttons/BotonRegresar.png");
+        background = game.getManager().get("Sprites/backgrounds/Instructions.jpg");
+
+        botonRegresar = game.getManager().get("Sprites/buttons/BotonRegresar.png");
         TextureRegionDrawable regresarBoton = new TextureRegionDrawable(botonRegresar);
 
-        botonRegresarP = new Texture("Sprites/buttons/BotonRegresar_Click.png");
+        botonRegresarP = game.getManager().get("Sprites/buttons/BotonRegresar_Click.png");
         TextureRegionDrawable regresarBotonP = new TextureRegionDrawable(botonRegresarP);
 
         ImageButton returnButton = new ImageButton(regresarBoton, regresarBotonP);
@@ -43,7 +53,7 @@ class InstructionsMenu extends Menu  {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new MainMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
+                game.setScreen(new MainMenu(game));
             }
         });
 
@@ -74,8 +84,8 @@ class InstructionsMenu extends Menu  {
 
     @Override
     public void dispose() {
+        music.stop();
+        UserPreferences.getInstance().setPosition(music.getPosition());
         menuStage.dispose();
-        botonRegresar.dispose();
-        botonRegresarP.dispose();
     }
 }

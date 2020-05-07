@@ -2,6 +2,7 @@ package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.util.Pantalla;
@@ -9,22 +10,17 @@ import mx.itesm.thefinalgrade.util.Pantalla;
 public abstract class Menu extends Pantalla {
 
     protected TheFinalGrade game;
-    protected String backgroundPath;
     protected Texture background;
     protected Stage menuStage;
 
-    public Menu(TheFinalGrade game, String backgroundPath){
+    public Menu(TheFinalGrade game){
         this.game = game;
-        this.backgroundPath = backgroundPath;
     }
 
     @Override
     public void show() {
-        menuStage = new Stage();
-        if(backgroundPath.length() > 0 && backgroundPath != null){
-            background = new Texture(this.backgroundPath);
-            createMenu();
-        }
+        menuStage = new Stage(new FitViewport(ANCHO, ALTO));
+        createMenu();
     }
 
     // Create buttons here
@@ -49,7 +45,6 @@ public abstract class Menu extends Pantalla {
 
     @Override
     public void dispose() {
-        background.dispose();
         menuStage.dispose();
     }
 }

@@ -1,6 +1,7 @@
 package mx.itesm.thefinalgrade.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,31 +13,44 @@ import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.menus.Menu;
 import mx.itesm.thefinalgrade.util.Pantalla;
+import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 public class Loser extends Menu {
 
     private Texture botonRegresar, botonRegresarP;
 
-    public Loser(TheFinalGrade game, String backgroundPath){
-        super(game, backgroundPath);
-        this.backgroundPath = backgroundPath;
+    private Music music;
+
+    public Loser(TheFinalGrade game){
+        super(game);
 
     }
 
     @Override
     public void show() {
         super.show();
+        music = game.getManager().get("music/Mushroom Theme.mp3");
+        music.setVolume(UserPreferences.getInstance().getVolume());
+        music.setLooping(true);
+        music.setPosition(UserPreferences.getInstance().getPosition());
+        music.play();
     }
 
     @Override
     protected void createMenu() {
 
+        if(UserPreferences.getInstance().getGender()){
+            background = game.getManager().get("Sprites/backgrounds/Failed_Niño.png");
+        } else {
+            background = game.getManager().get("Sprites/backgrounds/Failed_Niña.png");
+        }
+
         menuStage = new Stage(vista);
 
-        botonRegresar = new Texture("Sprites/buttons/BotonRegresar.png");
+        botonRegresar = game.getManager().get("Sprites/buttons/BotonRegresar.png");
         TextureRegionDrawable regresarBoton = new TextureRegionDrawable(botonRegresar);
 
-        botonRegresarP = new Texture("Sprites/buttons/BotonRegresar_Click.png");
+        botonRegresarP =game.getManager().get("Sprites/buttons/BotonRegresar_Click.png");
         TextureRegionDrawable regresarBotonP = new TextureRegionDrawable(botonRegresarP);
 
         ImageButton returnButton = new ImageButton(regresarBoton, regresarBotonP);
@@ -48,7 +62,7 @@ public class Loser extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new MainMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
+                game.setScreen(new MainMenu(game));
             }
         });
 
@@ -61,7 +75,7 @@ public class Loser extends Menu {
         borrarPantalla();
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        batch.draw(background, 0, 0);
+        batch.draw(background, 0, 0, ANCHO, ALTO);
         batch.end();
 
         menuStage.draw();
@@ -80,6 +94,7 @@ public class Loser extends Menu {
 
     @Override
     public void dispose() {
-
+        music.stop();
+        UserPreferences.getInstance().setPosition(music.getPosition());
     }
 }
