@@ -86,8 +86,8 @@ public abstract class Level extends Pantalla {
     public void createHUD() {
 
         Skin skin = new Skin();
-        skin.add("fondo", new Texture("padBack.png"));
-        skin.add("boton", new Texture("padKnob.png"));
+        skin.add("fondo", new Texture(""));
+        skin.add("boton", new Texture(""));
         Touchpad.TouchpadStyle estilo = new Touchpad.TouchpadStyle();
         estilo.background = skin.getDrawable("fondo");
         estilo.knob = skin.getDrawable("boton");
