@@ -2,6 +2,7 @@ package mx.itesm.thefinalgrade.levels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -44,6 +45,8 @@ public class MorningLevel extends Level {
     private boolean isGrounded = true;
 
     private Text score = new Text(4);
+
+    private Music music;
 
     public MorningLevel(TheFinalGrade game, String backgroundPath) {
         super(game, backgroundPath);
@@ -125,6 +128,11 @@ public class MorningLevel extends Level {
     }
     @Override
     protected void createLevel() {
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/Mushroom Theme.mp3"));
+        music.setVolume(UserPreferences.getInstance().getVolume());
+        music.setLooping(true);
+        music.setPosition(UserPreferences.getInstance().getPosition());
+        music.play();
         levelStage = new Stage(vista);
         loadTextures();
         super.createPlayer();

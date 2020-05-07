@@ -23,8 +23,8 @@ public class StartMenu extends Menu {
 
     private Music music;
 
-    public StartMenu(TheFinalGrade game, String backgroundPath) {
-        super(game, backgroundPath);
+    public StartMenu(TheFinalGrade game) {
+        super(game);
     }
 
     @Override
@@ -32,19 +32,22 @@ public class StartMenu extends Menu {
 
         menuStage = new Stage(vista);
 
+        background = game.getManager().get("Sprites/backgrounds/skybackground.png");
+
         // Play button
-        playTexture = new Texture("Sprites/buttons/Start.png");
+        playTexture = game.getManager().get("Sprites/buttons/Start.png");
         TextureRegionDrawable playRegionDrawable = new TextureRegionDrawable(new TextureRegion(playTexture));
 
-        playTextureP = new Texture("Sprites/buttons/StartClick.png");
+        playTextureP = game.getManager().get("Sprites/buttons/StartClick.png");
         TextureRegionDrawable playRegionDrawableP = new TextureRegionDrawable(new TextureRegion(playTextureP));
 
-        textureNiño = new Texture("Niño/niño(1).png");
-        textureCalendario = new Texture("Sprites/elements/CalendarioTransparente.png");
+        textureNiño = game.getManager().get("Sprites/player/boy/boy-start.png");
+        textureCalendario = game.getManager().get("Sprites/elements/CalendarioTransparente.png");
 
         ImageButton playButton = new ImageButton(playRegionDrawable, playRegionDrawableP);
 
-        playButton.setPosition(ANCHO-playButton.getWidth()-paddingPlayRight, playButton.getHeight());
+        playButton.setPosition(ANCHO-(3*playButton.getWidth()/2), playButton.getHeight());
+        playButton.getImageCell().size(3*playButton.getWidth()/2, 3*playButton.getHeight()/2);
 
         // Add actors
         menuStage.addActor(playButton);
@@ -54,14 +57,14 @@ public class StartMenu extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new MainMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
+                game.setScreen(new MainMenu(game));
             }
         });
 
         // Add input processor
         Gdx.input.setInputProcessor(menuStage);
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("music/Mushroom Theme.mp3"));
+        music = game.getManager().get("music/Mushroom Theme.mp3");
         music.setVolume(UserPreferences.getInstance().getVolume());
         music.setLooping(true);
         music.setPosition(UserPreferences.getInstance().getPosition());
@@ -84,11 +87,8 @@ public class StartMenu extends Menu {
     @Override
     public void dispose() {
         // Dispose resources to clean memory
+        music.stop();
         UserPreferences.getInstance().setPosition(music.getPosition());
-        music.dispose();
-        background.dispose();
-        playTexture.dispose();
-        playTextureP.dispose();
         menuStage.dispose();
     }
 }

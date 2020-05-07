@@ -25,8 +25,8 @@ public class OptionsMenu extends Menu{
 
     private Music music;
 
-    public OptionsMenu(TheFinalGrade game, String backgroundPath) {
-        super(game, backgroundPath);
+    public OptionsMenu(TheFinalGrade game) {
+        super(game);
     }
 
     @Override
@@ -34,6 +34,7 @@ public class OptionsMenu extends Menu{
 
         menuStage = new Stage(vista);
 
+        background = game.getManager().get("Sprites/backgrounds/skybackground.png");
 
         instructionsTexture = new Texture("Sprites/buttons/Credits.png");
         TextureRegionDrawable textureRegionInstructionsButton = new TextureRegionDrawable(new TextureRegion(instructionsTexture));
@@ -59,7 +60,7 @@ public class OptionsMenu extends Menu{
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
 
-                game.setScreen(new MainMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
+                game.setScreen(new MainMenu(game));
             }
         });
 
@@ -75,7 +76,7 @@ public class OptionsMenu extends Menu{
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new SoundSettingsMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
+                game.setScreen(new SoundSettingsMenu(game));
             }
         });
 
@@ -113,7 +114,6 @@ public class OptionsMenu extends Menu{
     }
     @Override
     public void dispose() {
-        background.dispose();
         instructionsTexture.dispose();
         instructionsTexturePress.dispose();
         UserPreferences.getInstance().setPosition(music.getPosition());

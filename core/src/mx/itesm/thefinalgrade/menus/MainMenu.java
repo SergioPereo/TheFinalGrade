@@ -17,8 +17,8 @@ import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 public class MainMenu extends Menu {
 
-    public MainMenu(TheFinalGrade game, String backgroundPath) {
-        super(game, backgroundPath);
+    public MainMenu(TheFinalGrade game) {
+        super(game);
 
     }
     //Botones
@@ -40,80 +40,86 @@ public class MainMenu extends Menu {
         //la escena se conecta con la vista
         menuStage = new Stage(vista);
 
+        background = game.getManager().get("Sprites/backgrounds/skybackground.png");
 
         //boton continuar
 
-        textContinueButton = new Texture("Sprites/buttons/Continue.png");
+        textContinueButton = game.getManager().get("Sprites/buttons/Continue.png");
         TextureRegionDrawable trdcontinue = new TextureRegionDrawable(
                 new TextureRegion(textContinueButton));
 
         //imagen btn continuar presionado
-        textContinueButton2 = new Texture("Sprites/buttons/Continue_Click.png");
+        textContinueButton2 = game.getManager().get("Sprites/buttons/Continue_Click.png");
         TextureRegionDrawable trdcontinue2 = new TextureRegionDrawable(
                 new TextureRegion(textContinueButton2));
         ImageButton continuebtn = new ImageButton(trdcontinue, trdcontinue2);
-        continuebtn.setPosition(ANCHO/3,530);
+        continuebtn.setPosition(ANCHO/3+75,550);
 
         //boton NUEVO JUEGO
-        textNewGameButton = new Texture("Sprites/buttons/NewGame.png");
+        textNewGameButton = game.getManager().get("Sprites/buttons/NewGame.png");
         TextureRegionDrawable trdnewG = new TextureRegionDrawable(
                 new TextureRegion(textNewGameButton));
 
         //imagen btn NUEVO JUEGO presionado
-        textNewGameButton2 = new Texture("Sprites/buttons/NewGame_Click.png");
+        textNewGameButton2 = game.getManager().get("Sprites/buttons/NewGame_Click.png");
         TextureRegionDrawable trdNewG2 = new TextureRegionDrawable(
                 new TextureRegion(textNewGameButton2));
         ImageButton newGameBtn = new ImageButton(trdnewG, trdNewG2);
-        newGameBtn.setPosition(ANCHO/3,400);
+        newGameBtn.setPosition(ANCHO/3+75,380);
 
         //boton OPCIONES
-        textOptionsButton = new Texture("Sprites/buttons/Opciones.png");
+        textOptionsButton = game.getManager().get("Sprites/buttons/Opciones.png");
         TextureRegionDrawable trdoption = new TextureRegionDrawable(
                 new TextureRegion(textOptionsButton));
 
         //imagen btn OPCIONES presionado
-        textOptionsButton2 = new Texture("Sprites/buttons/Opciones.png");
+        textOptionsButton2 = game.getManager().get("Sprites/buttons/Opciones.png");
         TextureRegionDrawable trdoption2 = new TextureRegionDrawable(
                 new TextureRegion(textOptionsButton2));
-
         ImageButton optionBtn = new ImageButton(trdoption, trdoption2);
         optionBtn.setPosition(ANCHO/3,250);
+        optionBtn.setSize(412.5f, 105);
+        optionBtn.getImageCell().size(412.5f, 105);
+
 
         //boton CREDITOS
-        textCreditsButton = new Texture("Sprites/buttons/Credits.png");
+        textCreditsButton = game.getManager().get("Sprites/buttons/Credits.png");
         TextureRegionDrawable trdCredits = new TextureRegionDrawable(
                 new TextureRegion(textCreditsButton));
         //imagen btn CREDITOS presionado
 
-        textCreditsButton2 = new Texture("Sprites/buttons/Credits.png");
+        textCreditsButton2 = game.getManager().get("Sprites/buttons/Credits.png");
         TextureRegionDrawable trdCredits2 = new TextureRegionDrawable(
                 new TextureRegion(textCreditsButton2));
         ImageButton creditsBtn = new ImageButton(trdCredits, trdCredits2);
-        creditsBtn.setPosition(ANCHO/3,130);
+        creditsBtn.setPosition(ANCHO/3,135);
+        creditsBtn.setSize(412.5f, 105);
+        creditsBtn.getImageCell().size(412.5f, 105);
 
-        textExit = new Texture("Sprites/buttons/Instructions.png");
+        textExit = game.getManager().get("Sprites/buttons/Instructions.png");
         TextureRegionDrawable trdExit = new TextureRegionDrawable(
                 new TextureRegion(textExit));
 
-        textExit2 = new Texture("Sprites/buttons/Instructions.png");
+        textExit2 = game.getManager().get("Sprites/buttons/Instructions.png");
         TextureRegionDrawable trdExitPress = new TextureRegionDrawable(
                 new TextureRegion(textExit2));
         ImageButton instructionsBtn = new ImageButton(trdExit, trdExitPress);
         instructionsBtn.setPosition(ANCHO/3, 20);
-
+        instructionsBtn.setSize(412.5f, 105);
+        instructionsBtn.getImageCell().size(412.5f, 105);
 
         //imagen Niño
-        textniño = new Texture("Niño/niño(1).png");
+        textniño = game.getManager().get("Sprites/player/boy/boy-start.png");
         //imagen calendario
-        textcalendar = new Texture("Sprites/elements/Calendario.png");
-        textNiña = new Texture("Niña/Niña.png");
+        textcalendar = game.getManager().get("Sprites/elements/Calendario.png");
+        textNiña = game.getManager().get("Sprites/player/girl/nina-r.png");
 
         // Add listeners
         newGameBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new Historia1(game, "Historia/1_Cuarto_1.png"));
+                game.setScreen(new CharacterChooser(game));
 
             }
         });
@@ -122,7 +128,7 @@ public class MainMenu extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new SoundSettingsMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png")); // Forums tells that this lane has to follow Gdx.app.exit because some things remain open in task manager
+                game.setScreen(new SoundSettingsMenu(game)); // Forums tells that this lane has to follow Gdx.app.exit because some things remain open in task manager
             }
         });
 
@@ -131,7 +137,7 @@ public class MainMenu extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new CreditsMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
+                game.setScreen(new CreditsMenu(game));
             }
         });
 
@@ -140,7 +146,7 @@ public class MainMenu extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new InstructionsMenu(game, "Sprites/backgrounds/Instructions.jpg"));
+                game.setScreen(new InstructionsMenu(game));
             }
         });
 
@@ -156,8 +162,7 @@ public class MainMenu extends Menu {
         // Add input processor
         Gdx.input.setInputProcessor(menuStage);
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("music/Mushroom Theme.mp3"));
-        System.out.println("Current Position: " + UserPreferences.getInstance().getPosition());
+        music = game.getManager().get("music/Mushroom Theme.mp3");
         music.setVolume(UserPreferences.getInstance().getVolume());
         music.setLooping(true);
         music.setPosition(UserPreferences.getInstance().getPosition());
@@ -169,30 +174,16 @@ public class MainMenu extends Menu {
         borrarPantalla(0,0,0);
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        batch.draw(background,0,0);
+        batch.draw(background,0,0, ANCHO, ALTO);
         batch.draw(textniño, 800,0);
         batch.draw(textNiña, 0, 0);
         batch.end();
         menuStage.draw();
-
     }
     @Override
     public void dispose() {
-        background.dispose();
+        music.stop();
         UserPreferences.getInstance().setPosition(music.getPosition());
-        music.dispose();
-        textContinueButton.dispose();
-        textContinueButton2.dispose();
-        textNewGameButton.dispose();
-        textNewGameButton2.dispose();
-        textOptionsButton.dispose();
-        textOptionsButton2.dispose();
-        textCreditsButton.dispose();
-        textCreditsButton2.dispose();
-        textExit.dispose();
-        textExit2.dispose();
-        textcalendar.dispose();
-        textniño.dispose();
         menuStage.dispose();
     }
 }
