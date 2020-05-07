@@ -63,6 +63,7 @@ public class Loser extends Menu {
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
                 game.setScreen(new MainMenu(game));
+                UserPreferences.getInstance().setScore(0);
             }
         });
 
