@@ -33,14 +33,14 @@ public class StartMenu extends Menu {
         menuStage = new Stage(vista);
 
         // Play button
-        playTexture = new Texture("Start.png");
+        playTexture = new Texture("Sprites/buttons/Start.png");
         TextureRegionDrawable playRegionDrawable = new TextureRegionDrawable(new TextureRegion(playTexture));
 
-        playTextureP = new Texture("StartClick.png");
+        playTextureP = new Texture("Sprites/buttons/StartClick.png");
         TextureRegionDrawable playRegionDrawableP = new TextureRegionDrawable(new TextureRegion(playTextureP));
 
         textureNiño = new Texture("Niño/niño(1).png");
-        textureCalendario = new Texture("CalendarioTransparente.png");
+        textureCalendario = new Texture("Sprites/elements/CalendarioTransparente.png");
 
         ImageButton playButton = new ImageButton(playRegionDrawable, playRegionDrawableP);
 
@@ -54,7 +54,7 @@ public class StartMenu extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new MainMenu(game, "Fondo_StartMenu.png"));
+                game.setScreen(new MainMenu(game, "Sprites/backgrounds/Fondo_StartMenu.png"));
             }
         });
 
