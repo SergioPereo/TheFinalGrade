@@ -11,8 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
-import mx.itesm.thefinalgrade.levels.EveningLevel;
-import mx.itesm.thefinalgrade.levels.MorningLevel;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 public class MainMenu extends Menu {
