@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import mx.itesm.thefinalgrade.levels.MorningLevel;
 import mx.itesm.thefinalgrade.menus.StartMenu;
+import mx.itesm.thefinalgrade.worlds.Evening;
 import mx.itesm.thefinalgrade.worlds.Morning;
 
 public class TheFinalGrade extends Game {
@@ -26,6 +27,7 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/player/girl/nina-r-r.png", Texture.class);
 		manager.load("Sprites/platforms/platform2resized.png", Texture.class);
 		manager.load("Sprites/backgrounds/skybackground.png", Texture.class);
+		manager.load("Sprites/backgrounds/FondoCieloTarde.png", Texture.class);
 
 		manager.load("Sprites/buttons/padBack.png", Texture.class);
 		manager.load("Sprites/buttons/padKnob.png", Texture.class);
