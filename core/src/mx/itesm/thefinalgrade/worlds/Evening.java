@@ -1,6 +1,5 @@
 package mx.itesm.thefinalgrade.worlds;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -20,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
@@ -38,14 +36,14 @@ import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.actors.ItemActor;
 import mx.itesm.thefinalgrade.util.actors.NormalPlatformActor;
-import mx.itesm.thefinalgrade.util.actors.PolePlatformActor;
 import mx.itesm.thefinalgrade.util.actors.PlayerActor;
+import mx.itesm.thefinalgrade.util.actors.PolePlatformActor;
 import mx.itesm.thefinalgrade.util.actors.PropsActor;
 import mx.itesm.thefinalgrade.util.actors.WinActor;
 import mx.itesm.thefinalgrade.util.variables.BaseScreen;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
-public class Morning extends BaseScreen {
+public class Evening extends BaseScreen {
 
     private Stage stage;
 
@@ -84,10 +82,8 @@ public class Morning extends BaseScreen {
 
     private Music music;
 
-
-    public Morning(TheFinalGrade game) {
+    public Evening(TheFinalGrade game) {
         super(game);
-
     }
 
     @Override
@@ -168,8 +164,8 @@ public class Morning extends BaseScreen {
         music.play();
 
         /**debugRenderer = new Box2DDebugRenderer();
-        debugCamera = new OrthographicCamera(64, 36);
-        debugCamera.translate(0, 1);*/
+         debugCamera = new OrthographicCamera(64, 36);
+         debugCamera.translate(0, 1);*/
 
         world = new World(new Vector2(0, -8), true);
 
@@ -190,7 +186,7 @@ public class Morning extends BaseScreen {
                 if(areCollided(contact, "player", "item")){
                     for(int i = 0 ; i < items.size ; i++){
                         if(contact.getFixtureA().equals(items.get(i).getFixture())
-                        || contact.getFixtureB().equals(items.get(i).getFixture())){
+                                || contact.getFixtureB().equals(items.get(i).getFixture())){
                             switch (items.get(i).getType()){
                                 case SHEET:
                                     UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore() + 10);
@@ -241,9 +237,10 @@ public class Morning extends BaseScreen {
         createHUD();
         createButton();
     }
+
     private void loadTextures() {
 
-        background = game.getManager().get("Sprites/backgrounds/skybackground.png");
+        background = game.getManager().get("Sprites/backgrounds/FondoCieloTarde.png");
         tree1 = game.getManager().get("Sprites/morning/Arbolito 1.png");
         tree2 = game.getManager().get("Sprites/morning/Arbolito 2.png");
         house1 = game.getManager().get("Sprites/morning/Casita.png");
@@ -407,7 +404,7 @@ public class Morning extends BaseScreen {
             game.setScreen(new Loser(game));
         }
         /**debugCamera.update();
-        debugRenderer.render(world, debugCamera.combined);
+         debugRenderer.render(world, debugCamera.combined);
          */
         for(Body body: bodiesToBeDestroyed){
             world.destroyBody(body);
@@ -415,7 +412,7 @@ public class Morning extends BaseScreen {
         bodiesToBeDestroyed.clear();
 
         if(win){
-            game.setScreen(new Evening(game));
+            game.setScreen(new Winner(game));
         }
     }
 
