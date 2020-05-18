@@ -16,11 +16,7 @@ import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 public class Historia1 extends Menu {
 
-
-    private Texture botonAvanzar;
-    private Texture botonAvanzarP;
-    private Texture Prueba;
-
+    private Texture botonAvanzar, botonAvanzarP;
     Texture backButtonTexture,backButtonTexturePressed;
 
     private Texture fondo;
