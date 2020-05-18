@@ -1,7 +1,9 @@
 package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -9,16 +11,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
+import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 public class Historia3 extends Menu {
 
-    private Texture botonAvanzar;
-    private Texture botonAvanzarP;
+    private Texture botonAvanzar, botonAvanzarP;
 
-    private Texture fondo;
+    Texture backButtonTexture,backButtonTexturePressed;
 
-    public Historia3(TheFinalGrade game, String backgroundPath) {
-        super(game, backgroundPath);
+    private Music music;
+
+    public Historia3(TheFinalGrade game) {
+        super(game);
     }
 
     @Override
@@ -26,36 +30,71 @@ public class Historia3 extends Menu {
 
         menuStage = new Stage(vista);
 
-        fondo = new Texture("Historia/3_OhNo_1.png");
+        if(UserPreferences.getInstance().getGender()){
+            background = game.getManager().get("Sprites/history/boy/3.png");
+        } else {
+            background = game.getManager().get("Sprites/history/girl/3.png");
+        }
 
-        botonAvanzar = new Texture("BotonRegresar.png");
-        TextureRegionDrawable regresarBoton = new TextureRegionDrawable(botonAvanzar);
+        //Boton de adelante funcionalidad
+        botonAvanzar = game.getManager().get("Sprites/buttons/BotonAdelante.png");
+        TextureRegionDrawable adelanteBoton = new TextureRegionDrawable(botonAvanzar);
 
-        botonAvanzarP = new Texture("BotonRegresar_Click.png");
-        TextureRegionDrawable regresarBotonP = new TextureRegionDrawable(botonAvanzarP);
+        botonAvanzarP = game.getManager().get("Sprites/buttons/BotonAdelante_Click.png");
+        TextureRegionDrawable adelanteBotonP = new TextureRegionDrawable(botonAvanzarP);
 
-        ImageButton returnButton = new ImageButton(regresarBoton, regresarBotonP);
-        returnButton.setPosition(ANCHO - 300, 6 * ALTO / 9);
+        ImageButton goButton = new ImageButton(adelanteBoton, adelanteBotonP);
+        goButton.setPosition(ANCHO - 350, 6*ALTO/9);
 
-        menuStage.addActor(returnButton);
+        menuStage.addActor(goButton);
 
-        returnButton.addListener(new ClickListener() {
+        goButton.addListener(new ClickListener(){
             @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new Historia4(game, "Fondo_StartMenu.png"));
+                game.setScreen(new Historia4(game));
             }
         });
 
+        backButtonTexture = game.getManager().get("Sprites/buttons/BotonRegresar.png");
+        TextureRegionDrawable textureRegionBackButton = new TextureRegionDrawable(new TextureRegion(backButtonTexture));
+        backButtonTexturePressed = game.getManager().get("Sprites/buttons/BotonRegresar_Click.png");
+        TextureRegionDrawable textureRegionBackButtonPressed = new TextureRegionDrawable(new TextureRegion(backButtonTexturePressed));
+
+        ImageButton backButton = new ImageButton(textureRegionBackButton, textureRegionBackButtonPressed);
+        backButton.setPosition(ANCHO/100, 6*ALTO/9);
+
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                game.setScreen(new Historia2(game));
+            }
+        });
+        menuStage.addActor(backButton);
+
         Gdx.input.setInputProcessor(menuStage);
+
+        music = game.getManager().get("music/Mushroom Theme.mp3");
+        music.setVolume(UserPreferences.getInstance().getVolume());
+        music.setLooping(true);
+        music.setPosition(UserPreferences.getInstance().getPosition());
+        music.play();
+
     }
 
     public void render(float delta) {
         borrarPantalla();
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        batch.draw(fondo, 0, 0);
+        batch.draw(background, 0, 0);
         batch.end();
         menuStage.draw();
+    }
+
+    @Override
+    public void dispose() {
+        music.stop();
+        UserPreferences.getInstance().setPosition(music.getPosition());
+        menuStage.dispose();
     }
 }

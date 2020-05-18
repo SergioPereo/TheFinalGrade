@@ -28,8 +28,8 @@ public class SoundSettingsMenu extends Menu{
     private Slider slider;
     private Music music;
 
-    public SoundSettingsMenu(TheFinalGrade game, String backgroundPath) {
-        super(game, backgroundPath);
+    public SoundSettingsMenu(TheFinalGrade game) {
+        super(game);
     }
 
     public void show() {
@@ -38,14 +38,17 @@ public class SoundSettingsMenu extends Menu{
 
     @Override
     protected void createMenu() {
+
+        background = game.getManager().get("Sprites/backgrounds/skybackground.png");
+
         menuStage = new Stage(vista);
 
-        textureNiño = new Texture("Sprites/niño.png");
-        textureCalendario = new Texture("Sprites/Calendario.png");
+        textureNiño = game.getManager().get("Sprites/elements/niño.png");
+        textureCalendario = game.getManager().get("Sprites/elements/Calendario.png");
 
-        backButtonTexture = new Texture("BotonRegresar.png");
+        backButtonTexture = game.getManager().get("Sprites/buttons/BotonRegresar.png");
         TextureRegionDrawable textureRegionBackButton = new TextureRegionDrawable(new TextureRegion(backButtonTexture));
-        backButtonTexturePressed = new Texture("BotonRegresar_Click.png");
+        backButtonTexturePressed = game.getManager().get("Sprites/buttons/BotonRegresar_Click.png");
         TextureRegionDrawable textureRegionBackButtonPressed = new TextureRegionDrawable(new TextureRegion(backButtonTexturePressed));
 
         ImageButton backButton = new ImageButton(textureRegionBackButton, textureRegionBackButtonPressed);
@@ -54,7 +57,7 @@ public class SoundSettingsMenu extends Menu{
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                game.setScreen(new MainMenu(game, "Fondo_StartMenu.png"));
+                game.setScreen(new MainMenu(game));
             }
         });
 
@@ -104,7 +107,7 @@ public class SoundSettingsMenu extends Menu{
 
         Gdx.input.setInputProcessor(menuStage);
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("music/Mushroom Theme.mp3"));
+        music = game.getManager().get("music/Mushroom Theme.mp3");
         music.setVolume(UserPreferences.getInstance().getVolume());
         music.setLooping(true);
         music.setPosition(UserPreferences.getInstance().getPosition());
@@ -129,14 +132,8 @@ public class SoundSettingsMenu extends Menu{
     @Override
     public void dispose() {
         // Dispose resources to clean memory
+        music.stop();
         UserPreferences.getInstance().setPosition(music.getPosition());
-        music.dispose();
-        background.dispose();
-        textureCalendario.dispose();
-        textureNiño.dispose();
-
-        backButtonTexture.dispose();
-        backButtonTexturePressed.dispose();
     }
 
 }

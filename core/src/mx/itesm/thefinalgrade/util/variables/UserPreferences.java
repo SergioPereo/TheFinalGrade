@@ -8,12 +8,14 @@ public class UserPreferences {
     private Preferences preferences;
     private float volume = 0.3f;
     private float position = 0f;
+    private boolean isBoy = false;
     private int score = 0;
 
     private UserPreferences(){
         preferences = Gdx.app.getPreferences("Game Preferences");
         preferences.putFloat("volume", volume);
         preferences.putFloat("position", position);
+        preferences.putBoolean("isBoy", isBoy);
     }
 
     public static UserPreferences getInstance(){
@@ -42,6 +44,12 @@ public class UserPreferences {
         getPreferences().flush();
     }
 
+    public void setGender(boolean isBoy){
+        this.isBoy = isBoy;
+        getPreferences().putBoolean("isBoy", isBoy);
+        getPreferences().flush();
+    }
+
     public void setScore(int score){
         this.score = score;
     }
@@ -55,4 +63,6 @@ public class UserPreferences {
     }
 
     public int getScore(){ return score; }
+
+    public boolean getGender() { return isBoy; }
 }
