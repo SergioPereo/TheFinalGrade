@@ -66,7 +66,7 @@ public class Evening extends BaseScreen {
     private boolean win = false;
 
     private Texture background, tree1,
-            tree2, house1, house2, house3, grassBase, grass, cloud;
+            tree2, house1, house2, house3, floor, sun;
 
     private Box2DDebugRenderer debugRenderer;
 
@@ -243,12 +243,11 @@ public class Evening extends BaseScreen {
         background = game.getManager().get("Sprites/backgrounds/FondoCieloTarde.png");
         tree1 = game.getManager().get("Sprites/morning/Arbolito 1.png");
         tree2 = game.getManager().get("Sprites/morning/Arbolito 2.png");
-        house1 = game.getManager().get("Sprites/morning/Casita.png");
-        house2 = game.getManager().get("Sprites/morning/Casita 2.png");
-        house3 = game.getManager().get("Sprites/morning/Casita 3.png");
-        grassBase = game.getManager().get("Sprites/morning/Pasto_Base.png");
-        grass = game.getManager().get("Sprites/morning/Pastito.png");
-        cloud = game.getManager().get("Sprites/morning/Nube.png");
+        house1 = game.getManager().get("Sprites/evening/Casita 1_Mapa 2.png");
+        house2 = game.getManager().get("Sprites/evening/Casita 2_Mapa 2.png");
+        house3 = game.getManager().get("Sprites/evening/CDT.png");
+        floor = game.getManager().get("Sprites/evening/piso.png");
+        sun = game.getManager().get("Sprites/evening/Sol.png");
 
     }
 
@@ -312,7 +311,7 @@ public class Evening extends BaseScreen {
     }
 
     public void createPolePlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/platforms/platform2resized.png");
+        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
         polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 3.5f)));
         for(PolePlatformActor actor: polePlatforms){
@@ -321,7 +320,7 @@ public class Evening extends BaseScreen {
     }
 
     public void createNormalPlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/platforms/platform1-r-r.png");
+        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(3, 2)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(8.5f, 3)));
@@ -380,19 +379,9 @@ public class Evening extends BaseScreen {
         stage.getBatch().draw(house3, 150, 20, 285, 285);
         stage.getBatch().draw(house2, 335, 20, 285, 285);
         stage.getBatch().draw(house1, 555, 20, 285, 285);
-        stage.getBatch().draw(house3, 790, 20, 240, 240);
         stage.getBatch().draw(house2, 945, 20, 285, 285);
         stage.getBatch().draw(house1, 1120, 20, 370, 370);
-        stage.getBatch().draw(grassBase, 0, -50);
-        stage.getBatch().draw(grass, 335, 40, 125, 125);
-        stage.getBatch().draw(tree2, 145, 40, 145, 145);
-        stage.getBatch().draw(tree1, 750, 30, 175, 175);
-        stage.getBatch().draw(tree2, 505, 20, 205, 205);
-        stage.getBatch().draw(tree2, 1120, 0, 305, 305);
-        stage.getBatch().draw(grass, 945, 40, 125, 125);
-        stage.getBatch().draw(cloud, 0, 520);
-        stage.getBatch().draw(cloud, 400, 520);
-        stage.getBatch().draw(cloud, 800, 520);
+        stage.getBatch().draw(sun, 0, 520);
 
         score.draw(stage.getBatch(), "" + UserPreferences.getInstance().getScore(), 8*ANCHO/9, 20*ALTO/21);
         stage.getBatch().end();
