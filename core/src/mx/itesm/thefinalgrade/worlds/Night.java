@@ -29,8 +29,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import java.util.Timer;
+
 import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.levels.Loser;
+import mx.itesm.thefinalgrade.levels.Winner;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.actors.ItemActor;
@@ -42,8 +45,10 @@ import mx.itesm.thefinalgrade.util.actors.WinActor;
 import mx.itesm.thefinalgrade.util.variables.BaseScreen;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
-public class Evening extends BaseScreen {
 
+
+
+public class Night<timerTask> extends BaseScreen {
     private Stage stage;
 
     private World world;
@@ -64,8 +69,7 @@ public class Evening extends BaseScreen {
 
     private boolean win = false;
 
-    private Texture background, tree1,
-            tree2, house1, house2, house3, floor, sun;
+    private Texture background;
 
     private Box2DDebugRenderer debugRenderer;
 
@@ -81,7 +85,9 @@ public class Evening extends BaseScreen {
 
     private Music music;
 
-    public Evening(TheFinalGrade game) {
+    private Timer timer;
+
+    public Night(TheFinalGrade game) {
         super(game);
     }
 
@@ -112,18 +118,18 @@ public class Evening extends BaseScreen {
         TextButton pauseButton = new TextButton("Pause", skin);
         TextButton continuePauseButton = new TextButton("Continue", skin);
         TextButton exitPauseButton = new TextButton("Exit", skin);
-        pauseButton.setPosition(0, ALTO-pauseButton.getHeight());
+        pauseButton.setPosition(0, ALTO - pauseButton.getHeight());
         pauseButton.setScale(12);
         pause = new Window("PAUSE", skin);
         pause.add(continuePauseButton).padBottom(50).row();
         pause.add(exitPauseButton);
         pause.padTop(64);
-        pause.setSize(ANCHO/1.5f, ALTO/1.5f);
-        pause.setPosition(stage.getWidth()/2 - pause.getWidth()/2, stage.getHeight()/2  - pause.getHeight()/2);
+        pause.setSize(ANCHO / 1.5f, ALTO / 1.5f);
+        pause.setPosition(stage.getWidth() / 2 - pause.getWidth() / 2, stage.getHeight() / 2 - pause.getHeight() / 2);
         continuePauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(!isPause){
+                if (!isPause) {
                     isPause = true;
                     stage.addActor(pause);
                 } else {
@@ -141,7 +147,7 @@ public class Evening extends BaseScreen {
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(!isPause){
+                if (!isPause) {
                     isPause = true;
                     stage.addActor(pause);
                 } else {
@@ -154,7 +160,7 @@ public class Evening extends BaseScreen {
 
     }
 
-    public void createLevel(){
+    public void createLevel() {
 
         music = game.getManager().get("music/Mushroom Theme.mp3");
         music.setVolume(UserPreferences.getInstance().getVolume());
@@ -170,7 +176,7 @@ public class Evening extends BaseScreen {
 
         world.setContactListener(new ContactListener() {
 
-            private boolean areCollided(Contact contact, Object userA, Object userB){
+            private boolean areCollided(Contact contact, Object userA, Object userB) {
                 return (contact.getFixtureA().getUserData().equals(userA)
                         && contact.getFixtureB().getUserData().equals(userB))
                         || (contact.getFixtureA().getUserData().equals(userB)
@@ -179,14 +185,14 @@ public class Evening extends BaseScreen {
 
             @Override
             public void beginContact(Contact contact) {
-                if(areCollided(contact, "player", "platform")){
+                if (areCollided(contact, "player", "platform")) {
                     player.setJumping(false);
                 }
-                if(areCollided(contact, "player", "item")){
-                    for(int i = 0 ; i < items.size ; i++){
-                        if(contact.getFixtureA().equals(items.get(i).getFixture())
-                                || contact.getFixtureB().equals(items.get(i).getFixture())){
-                            switch (items.get(i).getType()){
+                if (areCollided(contact, "player", "item")) {
+                    for (int i = 0; i < items.size; i++) {
+                        if (contact.getFixtureA().equals(items.get(i).getFixture())
+                                || contact.getFixtureB().equals(items.get(i).getFixture())) {
+                            switch (items.get(i).getType()) {
                                 case SHEET:
                                     UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore() + 10);
                                     break;
@@ -206,7 +212,7 @@ public class Evening extends BaseScreen {
                         }
                     }
                 }
-                if(areCollided(contact, "player", "win")){
+                if (areCollided(contact, "player", "win")) {
                     win = true;
                 }
             }
@@ -230,38 +236,33 @@ public class Evening extends BaseScreen {
         stage.addActor(winActor);
         loadTextures();
         createPlayer();
-        createPolePlatforms();
         createNormalPlatforms();
+        createPolePlatforms();
         createItems();
         createHUD();
         createButton();
+        reponerPlataforma();
     }
+
 
     private void loadTextures() {
 
         background = game.getManager().get("Sprites/backgrounds/FondoCieloTarde.png");
-        tree1 = game.getManager().get("Sprites/morning/Arbolito 1.png");
-        tree2 = game.getManager().get("Sprites/morning/Arbolito 2.png");
-        house1 = game.getManager().get("Sprites/evening/Casita 1_Mapa 2.png");
-        house2 = game.getManager().get("Sprites/evening/Casita 2_Mapa 2.png");
-        house3 = game.getManager().get("Sprites/evening/CDT.png");
-        floor = game.getManager().get("Sprites/evening/piso.png");
-        sun = game.getManager().get("Sprites/evening/Sol.png");
 
     }
 
 
-    protected void createButton(){
+    protected void createButton() {
 
         TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Brincar.png"));
         TextureRegionDrawable brincarBotonClicked = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/BrincarClicked.png"));
         ImageButton jumpBtn = new ImageButton(brincarBoton, brincarBotonClicked);
-        jumpBtn.setPosition(5*ANCHO/6, ALTO/18);
+        jumpBtn.setPosition(5 * ANCHO / 6, ALTO / 18);
 
 
-        jumpBtn.addListener(new ClickListener(){
+        jumpBtn.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
                 player.jump();
             }
         });
@@ -280,12 +281,12 @@ public class Evening extends BaseScreen {
         estilo.knob = skin.getDrawable("button");
         // Crear el pad
         Touchpad pad = new Touchpad(0, estilo);
-        pad.setBounds(16,16,128,128); //limites del pad
-        pad.setColor(1,1,1,0.7f);
+        pad.setBounds(16, 16, 128, 128); //limites del pad
+        pad.setColor(1, 1, 1, 0.7f);
         pad.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Touchpad pad = (Touchpad)actor;
+                Touchpad pad = (Touchpad) actor;
                 player.move(pad.getKnobPercentX());
             }
         });
@@ -294,43 +295,71 @@ public class Evening extends BaseScreen {
         stage.addActor(pad);
     }
 
-    public void createPlayer(){
+    public void createPlayer() {
         Texture playerBoyTexture = game.getManager().get("Sprites/player/boy/nino-r-r.png");
         Texture playerGirlTexture = game.getManager().get("Sprites/player/girl/nina-r-r.png");
         Texture[] framesBoy = new Texture[6];
         Texture[] framesGirl = new Texture[6];
-        for(int i = 0 ; i < 6 ; i++){
-            framesBoy[i] = game.getManager().get("Sprites/player/boy/animations/walk/" + (i+1) + ".png");
-            framesGirl[i] = game.getManager().get("Sprites/player/girl/animations/walk/" + (i+1) + ".png");
+        for (int i = 0; i < 6; i++) {
+            framesBoy[i] = game.getManager().get("Sprites/player/boy/animations/walk/" + (i + 1) + ".png");
+            framesGirl[i] = game.getManager().get("Sprites/player/girl/animations/walk/" + (i + 1) + ".png");
         }
-        Animation<Texture> walkBoyAnimation = new Animation<Texture>(1f/6f, framesBoy);
-        Animation<Texture> walkGirlAnimation = new Animation<Texture>(1f/6f, framesGirl);
+        Animation<Texture> walkBoyAnimation = new Animation<Texture>(1f / 6f, framesBoy);
+        Animation<Texture> walkGirlAnimation = new Animation<Texture>(1f / 6f, framesGirl);
         player = new PlayerActor(world, playerBoyTexture, walkBoyAnimation, playerGirlTexture, walkGirlAnimation, new Vector2(3, 3));
         stage.addActor(player);
     }
 
-    public void createPolePlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
+
+    public void createPolePlatforms() {
+        Texture platformTexture = game.getManager().get("Sprites/platforms/platform2resized.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
         polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 3.5f)));
-        for(PolePlatformActor actor: polePlatforms){
+        for (PolePlatformActor actor : polePlatforms) {
             stage.addActor(actor);
         }
     }
 
-    public void createNormalPlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
+    public void createNormalPlatforms() {
+        Texture platformTexture = game.getManager().get("Sprites/platforms/platform1-r-r.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(3, 2)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(8.5f, 3)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12.3f, 2.2f)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 3.8f)));
-        for(NormalPlatformActor actor: normalPlatforms){
+        for (NormalPlatformActor actor : normalPlatforms) {
             stage.addActor(actor);
         }
     }
 
-    public void createItems(){
+
+    private void reponerPlataforma() {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                while (true) {
+
+                    try {
+                        Thread.sleep(3000);
+                        for (PolePlatformActor actor : polePlatforms) {
+                            actor.detach();
+                            actor.remove();
+                        }
+                        Thread.sleep(8000);
+                        createPolePlatforms();
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        Thread hilo = new Thread(runnable);
+        hilo.start();
+    }
+
+    public void createItems() {
 
         Texture brokenSheet = game.getManager().get("Sprites/items/broken-sheet.png");
         Texture sheet = game.getManager().get("Sprites/items/sheet.png");
@@ -343,7 +372,7 @@ public class Evening extends BaseScreen {
                 ItemActor.ItemType.SHEET));
         items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(13f, 4.4f),
                 ItemActor.ItemType.COFFEE));
-        for(ItemActor item : items){
+        for (ItemActor item : items) {
             stage.addActor(item);
         }
 
@@ -353,15 +382,15 @@ public class Evening extends BaseScreen {
     public void hide() {
         player.detach();
         player.remove();
-        for(NormalPlatformActor actor: normalPlatforms){
+        for (NormalPlatformActor actor : normalPlatforms) {
             actor.detach();
             actor.remove();
         }
-        for(PolePlatformActor actor: polePlatforms){
+        for (PolePlatformActor actor : polePlatforms) {
             actor.detach();
             actor.remove();
         }
-        for(ItemActor item: items){
+        for (ItemActor item : items) {
             item.detach();
             item.remove();
         }
@@ -375,32 +404,26 @@ public class Evening extends BaseScreen {
         stage.getCamera().update();
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, ANCHO, ALTO);
-        stage.getBatch().draw(house3, 150, 20, 285, 285);
-        stage.getBatch().draw(house2, 335, 20, 285, 285);
-        stage.getBatch().draw(house1, 555, 20, 285, 285);
-        stage.getBatch().draw(house2, 945, 20, 285, 285);
-        stage.getBatch().draw(house1, 1120, 20, 370, 370);
-        stage.getBatch().draw(sun, 0, 520);
 
-        score.draw(stage.getBatch(), "" + UserPreferences.getInstance().getScore(), 8*ANCHO/9, 20*ALTO/21);
+        score.draw(stage.getBatch(), "" + UserPreferences.getInstance().getScore(), 8 * ANCHO / 9, 20 * ALTO / 21);
         stage.getBatch().end();
         stage.act();
         world.step(delta, 6, 2);
 
         stage.draw();
-        if(player.getBody().getPosition().y < 0){
+        if (player.getBody().getPosition().y < 0) {
             game.setScreen(new Loser(game));
         }
         /**debugCamera.update();
          debugRenderer.render(world, debugCamera.combined);
          */
-        for(Body body: bodiesToBeDestroyed){
+        for (Body body : bodiesToBeDestroyed) {
             world.destroyBody(body);
         }
         bodiesToBeDestroyed.clear();
 
-        if(win){
-            game.setScreen(new Night<>(game));
+        if (win) {
+            game.setScreen(new Winner(game));
         }
     }
 
@@ -409,13 +432,13 @@ public class Evening extends BaseScreen {
     public void dispose() {
         music.stop();
         UserPreferences.getInstance().setPosition(music.getPosition());
-        for(PolePlatformActor platform : polePlatforms){
+        for (PolePlatformActor platform : polePlatforms) {
             platform.detach();
         }
-        for(NormalPlatformActor platformActor : normalPlatforms){
+        for (NormalPlatformActor platformActor : normalPlatforms) {
             platformActor.detach();
         }
-        for(ItemActor actor : items){
+        for (ItemActor actor : items) {
             actor.detach();
         }
         winActor.detach();
