@@ -44,6 +44,7 @@ public class NormalPlatformActor extends Actor {
         setSize((width)* (5*Constants.PIXELS_IN_METER/4), (height)*(2*Constants.PIXELS_IN_METER)/3);
     }
 
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         setPosition((body.getPosition().x - 1.28f) * Constants.PIXELS_IN_METER,

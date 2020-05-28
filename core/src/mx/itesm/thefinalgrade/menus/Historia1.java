@@ -77,10 +77,10 @@ public class Historia1 extends Menu {
         menuStage.addActor(backButton);
 
         //Boton saltar historia skip
-        skipButtonTexture = game.getManager().get("Sprites/buttons/Start.png");
+        skipButtonTexture = game.getManager().get("Sprites/buttons/SKIP2.png");
         TextureRegionDrawable textureRegionSkipButton = new TextureRegionDrawable(new TextureRegion(skipButtonTexture));
         ImageButton skipButton = new ImageButton(textureRegionSkipButton);
-        skipButton.setPosition(ANCHO-270,ALTO/8);
+        skipButton.setPosition(ANCHO-350,ALTO/10);
         skipButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
