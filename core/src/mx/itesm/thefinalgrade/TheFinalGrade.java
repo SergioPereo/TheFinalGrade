@@ -138,10 +138,13 @@ public class TheFinalGrade extends Game {
 
 		manager.load("Sprites/buttons/SKIP2.png", Texture.class);
 
+		manager.load("Sprites/player/boy/animations/walk/Secuencia_Niño.png", Texture.class);
+		manager.load("Sprites/player/boy/animations/walk/Secuencia_Niño2.png", Texture.class);
+
 
 		manager.finishLoading();
 		//setScreen(new Morning(this));
-		setScreen(new MainMenu(this));
+		setScreen(new StartMenu(this));
 	}
 
 	@Override

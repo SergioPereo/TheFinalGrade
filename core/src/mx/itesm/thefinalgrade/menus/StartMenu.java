@@ -3,6 +3,7 @@ package mx.itesm.thefinalgrade.menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
+import mx.itesm.thefinalgrade.util.actors.ObjectAnimation;
+import mx.itesm.thefinalgrade.util.actors.ObjectMove;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 public class StartMenu extends Menu {
@@ -19,12 +22,16 @@ public class StartMenu extends Menu {
     private float paddingPlayRight = 20f;
 
     // Declare textures
-    private Texture playTexture, playTextureP, textureNiño, textureCalendario;
+    private Texture playTexture, playTextureP, texturewalkNiño, textureCalendario, textureNiño;
 
     private Music music;
-
-    public StartMenu(TheFinalGrade game) {
+    private ObjectAnimation niñowalk;
+    private ObjectMove niñoPortada;
+    public StartMenu(TheFinalGrade game)
+    {
         super(game);
+
+
     }
 
     @Override
@@ -33,7 +40,9 @@ public class StartMenu extends Menu {
         menuStage = new Stage(vista);
 
         background = game.getManager().get("Sprites/backgrounds/skybackground.png");
+        niñowalk = new ObjectAnimation(1280/10*8,720/3*2);
 
+        niñoPortada = new ObjectMove(1280/2,720/2);
         // Play button
         playTexture = game.getManager().get("Sprites/buttons/Start.png");
         TextureRegionDrawable playRegionDrawable = new TextureRegionDrawable(new TextureRegion(playTexture));
@@ -73,15 +82,20 @@ public class StartMenu extends Menu {
     @Override
     public void render(float delta) {
         borrarPantalla();
+        //Actualiza objetos
+        updateObject();
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(background, 0, 0);
-        batch.draw(textureNiño, 10, 0);
+        niñowalk.render(batch);
+        niñoPortada.drawObject(batch);
+        //batch.draw(textureNiño, 10, 0);
         batch.draw(textureCalendario, 375, 0);
         batch.end();
-
-
         menuStage.draw();
+    }
+    private void updateObject(){
+        niñoPortada.moveX();
     }
 
     @Override
