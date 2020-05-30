@@ -22,11 +22,11 @@ public class StartMenu extends Menu {
     private float paddingPlayRight = 20f;
 
     // Declare textures
-    private Texture playTexture, playTextureP, texturewalkNiño, textureCalendario, textureNiño;
+    private Texture playTexture, playTextureP, logoTexture, textureCalendario, textureNiño;
 
     private Music music;
-    private ObjectAnimation niñowalk;
-    private ObjectMove niñoPortada;
+    private ObjectAnimation niñawalk;
+    private ObjectMove calendarioMoveTexture;
     public StartMenu(TheFinalGrade game)
     {
         super(game);
@@ -40,9 +40,14 @@ public class StartMenu extends Menu {
         menuStage = new Stage(vista);
 
         background = game.getManager().get("Sprites/backgrounds/skybackground.png");
-        niñowalk = new ObjectAnimation(1280/10*8,720/3*2);
+        logoTexture = game.getManager().get("Sprites/backgrounds/Logo_v1.png");
 
-        niñoPortada = new ObjectMove(1280/2,720/2);
+        //primera version
+        //niñawalk = new ObjectAnimation(1280-170,720-250);
+        //segunda version
+        niñawalk = new ObjectAnimation(1280-250,720-490);
+
+        calendarioMoveTexture = new ObjectMove(-800,720/3);
         // Play button
         playTexture = game.getManager().get("Sprites/buttons/Start.png");
         TextureRegionDrawable playRegionDrawable = new TextureRegionDrawable(new TextureRegion(playTexture));
@@ -51,7 +56,7 @@ public class StartMenu extends Menu {
         TextureRegionDrawable playRegionDrawableP = new TextureRegionDrawable(new TextureRegion(playTextureP));
 
         textureNiño = game.getManager().get("Sprites/player/boy/boy-start.png");
-        textureCalendario = game.getManager().get("Sprites/elements/CalendarioTransparente.png");
+        textureCalendario = game.getManager().get("Sprites/elements/Calendario.png");
 
         ImageButton playButton = new ImageButton(playRegionDrawable, playRegionDrawableP);
 
@@ -82,20 +87,20 @@ public class StartMenu extends Menu {
     @Override
     public void render(float delta) {
         borrarPantalla();
-        //Actualiza objetos
-        updateObject();
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(background, 0, 0);
-        niñowalk.render(batch);
-        niñoPortada.drawObject(batch);
-        //batch.draw(textureNiño, 10, 0);
-        batch.draw(textureCalendario, 375, 0);
+        batch.draw(logoTexture,-100,-50);
+        niñawalk.render(batch);
+        //calendarioMoveTexture.render(batch);
+        //niñoPortada.drawObject(batch);
+        batch.draw(textureNiño, 10, 0);
+        //Primera version
+        //batch.draw(textureCalendario, 700, ALTO/2-150);
+        //Segunda version
+        //batch.draw(textureCalendario, 700, ALTO/2-25);
         batch.end();
         menuStage.draw();
-    }
-    private void updateObject(){
-        niñoPortada.moveX();
     }
 
     @Override

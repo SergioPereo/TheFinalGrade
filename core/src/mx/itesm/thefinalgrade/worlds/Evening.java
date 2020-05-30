@@ -249,7 +249,7 @@ public class Evening extends BaseScreen {
         house1 = game.getManager().get("Sprites/evening/Casita 1_Mapa 2.png");
         house2 = game.getManager().get("Sprites/evening/Casita 2_Mapa 2.png");
         house3 = game.getManager().get("Sprites/evening/CDT.png");
-        floor = game.getManager().get("Sprites/evening/piso.png");
+        floor = game.getManager().get("Sprites/evening/Piso.png");
         sun = game.getManager().get("Sprites/evening/Sol.png");
 
     }
@@ -257,9 +257,8 @@ public class Evening extends BaseScreen {
 
     protected void createButton(){
 
-        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Brincar.png"));
-        TextureRegionDrawable brincarBotonClicked = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/BrincarClicked.png"));
-        ImageButton jumpBtn = new ImageButton(brincarBoton, brincarBotonClicked);
+        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Boton_Saltar3.png"));
+        ImageButton jumpBtn = new ImageButton(brincarBoton);
         jumpBtn.setPosition(5*ANCHO/6, ALTO/18);
 
 
@@ -278,13 +277,13 @@ public class Evening extends BaseScreen {
 
         Skin skin = new Skin();
         skin.add("background", game.getManager().get("Sprites/buttons/padBack.png"));
-        skin.add("button", game.getManager().get("Sprites/buttons/padKnoblue.png"));
+        skin.add("button", game.getManager().get("Sprites/buttons/padKnob.png"));
         Touchpad.TouchpadStyle estilo = new Touchpad.TouchpadStyle();
         estilo.background = skin.getDrawable("background");
         estilo.knob = skin.getDrawable("button");
         // Crear el pad
         Touchpad pad = new Touchpad(0, estilo);
-        pad.setBounds(16,16,128,128); //limites del pad
+        pad.setBounds(50,40,128,128); //limites del pad
         pad.setColor(1,1,1,0.7f);
         pad.addListener(new ChangeListener() {
             @Override

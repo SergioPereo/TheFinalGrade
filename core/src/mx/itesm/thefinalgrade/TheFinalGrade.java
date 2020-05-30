@@ -32,11 +32,9 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/platforms/platform2resized.png", Texture.class);
 		manager.load("Sprites/backgrounds/skybackground.png", Texture.class);
 		manager.load("Sprites/backgrounds/FondoCieloTarde.png", Texture.class);
-
+		//Botone del pad en morning y evening
 		manager.load("Sprites/buttons/padBack.png", Texture.class);
 		manager.load("Sprites/buttons/padKnob.png", Texture.class);
-		manager.load("Sprites/buttons/Brincar.png", Texture.class);
-		manager.load("Sprites/buttons/BrincarClicked.png", Texture.class);
 
 		manager.load("Sprites/player/boy/animations/walk/1.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/2.png", Texture.class);
@@ -67,7 +65,7 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/evening/Plataforma 1_Mapa 2.png", Texture.class);
 		manager.load("Sprites/evening/Plataforma 2_Mapa 2.png", Texture.class);
 		manager.load("Sprites/evening/CDT.png", Texture.class);
-		manager.load("Sprites/evening/piso.png", Texture.class);
+		manager.load("Sprites/evening/Piso.png", Texture.class);
 		manager.load("Sprites/evening/Sol.png", Texture.class);
 		manager.load("Sprites/items/coffee.png", Texture.class);
 		manager.load("Sprites/items/wrinkled-sheet.png", Texture.class);
@@ -133,13 +131,19 @@ public class TheFinalGrade extends Game {
         manager.load("Sprites/items/coca2.png", Texture.class);
         manager.load("Sprites/items/jugo2.png", Texture.class);
 
+        //Boton jump clases morning y evening
+        manager.load("Sprites/buttons/padKnob.png", Texture.class);
+		manager.load("Sprites/buttons/Boton_Saltar3.png", Texture.class);
 
-        manager.load("Sprites/buttons/padKnoblue.png", Texture.class);
 
+		//Boton Historia 1 Skip
 		manager.load("Sprites/buttons/SKIP2.png", Texture.class);
-
-		manager.load("Sprites/player/boy/animations/walk/Secuencia_Niño.png", Texture.class);
+		//Sprites en start menu
 		manager.load("Sprites/player/boy/animations/walk/Secuencia_Niño2.png", Texture.class);
+		manager.load("Sprites/player/girl/animations/walk/SecuenciaSalto_Niña2.png", Texture.class);
+		manager.load("Sprites/backgrounds/Logo_v1.png", Texture.class);
+		manager.load("Sprites/elements/Calendario.png", Texture.class);
+
 
 
 		manager.finishLoading();
