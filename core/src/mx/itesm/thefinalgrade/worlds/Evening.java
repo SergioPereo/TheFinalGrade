@@ -65,7 +65,7 @@ public class Evening extends BaseScreen {
     private boolean win = false;
 
     private Texture background, tree1,
-            tree2, house1, house2, house3, floor, sun;
+            tree2, house1, house2, house3, floor, sun, grassBase;
 
     private Box2DDebugRenderer debugRenderer;
 
@@ -247,7 +247,7 @@ public class Evening extends BaseScreen {
         house3 = game.getManager().get("Sprites/evening/CDT.png");
         floor = game.getManager().get("Sprites/evening/piso.png");
         sun = game.getManager().get("Sprites/evening/Sol.png");
-
+        grassBase = game.getManager().get("Sprites/morning/Pasto_Base.png");
     }
 
 
@@ -375,6 +375,7 @@ public class Evening extends BaseScreen {
         stage.getCamera().update();
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, ANCHO, ALTO);
+        stage.getBatch().draw(grassBase, 0, -50);
         stage.getBatch().draw(house3, 150, 20, 285, 285);
         stage.getBatch().draw(house2, 335, 20, 285, 285);
         stage.getBatch().draw(house1, 555, 20, 285, 285);
@@ -400,7 +401,8 @@ public class Evening extends BaseScreen {
         bodiesToBeDestroyed.clear();
 
         if(win){
-            game.setScreen(new Night<>(game));
+            game.setScreen(new Night(game) {
+            });
         }
     }
 

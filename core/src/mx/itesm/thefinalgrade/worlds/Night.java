@@ -47,8 +47,7 @@ import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 
 
-
-public class Night<timerTask> extends BaseScreen {
+public class Night extends BaseScreen {
     private Stage stage;
 
     private World world;
@@ -69,7 +68,7 @@ public class Night<timerTask> extends BaseScreen {
 
     private boolean win = false;
 
-    private Texture background;
+    private Texture background, borregos, edificio1, edificio2, estrellas, grass, grassBase;
 
     private Box2DDebugRenderer debugRenderer;
 
@@ -241,14 +240,19 @@ public class Night<timerTask> extends BaseScreen {
         createItems();
         createHUD();
         createButton();
-        reponerPlataforma();
+        desaparecerPlataformas();
     }
 
 
     private void loadTextures() {
 
-        background = game.getManager().get("Sprites/backgrounds/FondoCieloTarde.png");
-
+        background = game.getManager().get("Sprites/night/Mapa3.png");
+        borregos = game.getManager().get("Sprites/night/Borregos.png");
+        edificio1 = game.getManager().get("Sprites/night/Edificio1.png");
+        edificio2 = game.getManager().get("Sprites/night/Edificio2.png");
+        estrellas = game.getManager().get("Sprites/night/Estrellitas.png");
+        grass = game.getManager().get("Sprites/morning/Pastito.png");
+        grassBase = game.getManager().get("Sprites/morning/Pasto_Base.png");
     }
 
 
@@ -311,53 +315,28 @@ public class Night<timerTask> extends BaseScreen {
     }
 
 
-    public void createPolePlatforms() {
-        Texture platformTexture = game.getManager().get("Sprites/platforms/platform2resized.png");
+    public void createPolePlatforms(){
+        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
         polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 3.5f)));
-        for (PolePlatformActor actor : polePlatforms) {
+        for(PolePlatformActor actor: polePlatforms){
             stage.addActor(actor);
         }
     }
 
-    public void createNormalPlatforms() {
-        Texture platformTexture = game.getManager().get("Sprites/platforms/platform1-r-r.png");
+
+    public void createNormalPlatforms(){
+        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(3, 2)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(8.5f, 3)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12.3f, 2.2f)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 3.8f)));
-        for (NormalPlatformActor actor : normalPlatforms) {
+        for(NormalPlatformActor actor: normalPlatforms){
             stage.addActor(actor);
         }
     }
 
-
-    private void reponerPlataforma() {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-
-                while (true) {
-
-                    try {
-                        Thread.sleep(3000);
-                        for (PolePlatformActor actor : polePlatforms) {
-                            actor.detach();
-                            actor.remove();
-                        }
-                        Thread.sleep(8000);
-                        createPolePlatforms();
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-        Thread hilo = new Thread(runnable);
-        hilo.start();
-    }
 
     public void createItems() {
 
@@ -378,22 +357,35 @@ public class Night<timerTask> extends BaseScreen {
 
     }
 
+    public void desaparecerPlataformas(){
+        Runnable runnable = new Runnable() {
+            int index = 0;
+            @Override
+            public void run() {
+                while (index <= 4) {
+                    try {
+                        Thread.sleep(5000);
+                        normalPlatforms.get(index).detach();
+                        normalPlatforms.get(index).remove();
+                        index += 1;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        Thread hilo = new Thread(runnable);
+        hilo.start();
+    }
+
+
     @Override
     public void hide() {
-        player.detach();
-        player.remove();
-        for (NormalPlatformActor actor : normalPlatforms) {
-            actor.detach();
-            actor.remove();
-        }
         for (PolePlatformActor actor : polePlatforms) {
             actor.detach();
             actor.remove();
         }
-        for (ItemActor item : items) {
-            item.detach();
-            item.remove();
-        }
+
     }
 
     @Override
@@ -404,7 +396,24 @@ public class Night<timerTask> extends BaseScreen {
         stage.getCamera().update();
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, ANCHO, ALTO);
-
+        stage.getBatch().draw(estrellas, 100,400,285, 285);
+        stage.getBatch().draw(estrellas, 200,400,285, 285);
+        stage.getBatch().draw(estrellas, 300,400,285, 285);
+        stage.getBatch().draw(estrellas, 400,400,285, 285);
+        stage.getBatch().draw(estrellas, 500,400,285, 285);
+        stage.getBatch().draw(estrellas, 600,400,285, 285);
+        stage.getBatch().draw(estrellas, 700,400,285, 285);
+        stage.getBatch().draw(estrellas, 800,400,285, 285);
+        stage.getBatch().draw(estrellas, 900,400,285, 285);
+        stage.getBatch().draw(estrellas, 1000,400,285, 285);
+        stage.getBatch().draw(estrellas, 0,400,285, 285);
+        stage.getBatch().draw(grassBase, 0, -50);
+        stage.getBatch().draw(grass, 335, 40, 125, 125);
+        stage.getBatch().draw(borregos, 550,0,285, 285);
+        stage.getBatch().draw(edificio1, 100,0,285, 285);
+        stage.getBatch().draw(edificio2, 350,0,285, 285);
+        stage.getBatch().draw(edificio1, 800,0,285, 285);
+        stage.getBatch().draw(edificio2, 1050,0,285, 285);
         score.draw(stage.getBatch(), "" + UserPreferences.getInstance().getScore(), 8 * ANCHO / 9, 20 * ALTO / 21);
         stage.getBatch().end();
         stage.act();
@@ -432,13 +441,13 @@ public class Night<timerTask> extends BaseScreen {
     public void dispose() {
         music.stop();
         UserPreferences.getInstance().setPosition(music.getPosition());
-        for (PolePlatformActor platform : polePlatforms) {
+        for(PolePlatformActor platform : polePlatforms){
             platform.detach();
         }
-        for (NormalPlatformActor platformActor : normalPlatforms) {
+        for(NormalPlatformActor platformActor : normalPlatforms){
             platformActor.detach();
         }
-        for (ItemActor actor : items) {
+        for(ItemActor actor : items){
             actor.detach();
         }
         winActor.detach();
