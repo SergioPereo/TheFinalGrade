@@ -14,10 +14,11 @@ import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.menus.Menu;
 import mx.itesm.thefinalgrade.util.Pantalla;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
+import mx.itesm.thefinalgrade.worlds.Morning;
 
 public class Loser extends Menu {
 
-    private Texture botonRegresar, botonRegresarP;
+    private Texture botonRegresar, botonRegresarP, botonContinuar, botonContinuarP;
 
     private Music music;
 
@@ -46,28 +47,38 @@ public class Loser extends Menu {
         }
 
         menuStage = new Stage(vista);
-
+        //Boton de regreso
         botonRegresar = game.getManager().get("Sprites/buttons/BotonRegresar.png");
         TextureRegionDrawable regresarBoton = new TextureRegionDrawable(botonRegresar);
 
         botonRegresarP =game.getManager().get("Sprites/buttons/BotonRegresar_Click.png");
         TextureRegionDrawable regresarBotonP = new TextureRegionDrawable(botonRegresarP);
-
         ImageButton returnButton = new ImageButton(regresarBoton, regresarBotonP);
-        returnButton.setPosition(50, 500);
-
+        returnButton.setPosition(ANCHO/100, 6*ALTO/9);
         menuStage.addActor(returnButton);
-
-       returnButton.addListener(new ClickListener(){
+        returnButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
                 game.setScreen(new MainMenu(game));
             }
         });
-
+        //Boton de continuar
+        botonContinuar = game.getManager().get("Sprites/buttons/Continue.png");
+        TextureRegionDrawable continuarBoton = new TextureRegionDrawable(botonContinuar);
+        botonContinuarP = game.getManager().get("Sprites/buttons/Continue_Click.png");
+        TextureRegionDrawable continuarBotonP = new TextureRegionDrawable(botonContinuarP);
+        ImageButton continueButton = new ImageButton(continuarBoton, continuarBotonP);
+        continueButton.setPosition(ANCHO/2+250, 100);
+        menuStage.addActor(continueButton);
+       continueButton.addListener(new ClickListener(){
+           @Override
+           public void clicked(InputEvent event, float x, float y){
+               super.clicked(event, x, y);
+               game.setScreen(new Morning(game));
+           }
+       });
         Gdx.input.setInputProcessor(menuStage);
-
     }
 
     @Override

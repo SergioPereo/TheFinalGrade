@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -80,6 +81,8 @@ public class Evening extends BaseScreen {
     Skin skin;
 
     private Music music;
+
+
 
     public Evening(TheFinalGrade game) {
         super(game);
@@ -245,7 +248,7 @@ public class Evening extends BaseScreen {
         house1 = game.getManager().get("Sprites/evening/Casita 1_Mapa 2.png");
         house2 = game.getManager().get("Sprites/evening/Casita 2_Mapa 2.png");
         house3 = game.getManager().get("Sprites/evening/CDT.png");
-        floor = game.getManager().get("Sprites/evening/piso.png");
+        floor = game.getManager().get("Sprites/evening/Piso.png");
         sun = game.getManager().get("Sprites/evening/Sol.png");
         grassBase = game.getManager().get("Sprites/morning/Pasto_Base.png");
     }
@@ -253,9 +256,8 @@ public class Evening extends BaseScreen {
 
     protected void createButton(){
 
-        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Brincar.png"));
-        TextureRegionDrawable brincarBotonClicked = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/BrincarClicked.png"));
-        ImageButton jumpBtn = new ImageButton(brincarBoton, brincarBotonClicked);
+        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Boton_Saltar3.png"));
+        ImageButton jumpBtn = new ImageButton(brincarBoton);
         jumpBtn.setPosition(5*ANCHO/6, ALTO/18);
 
 
@@ -280,7 +282,7 @@ public class Evening extends BaseScreen {
         estilo.knob = skin.getDrawable("button");
         // Crear el pad
         Touchpad pad = new Touchpad(0, estilo);
-        pad.setBounds(16,16,128,128); //limites del pad
+        pad.setBounds(50,40,128,128); //limites del pad
         pad.setColor(1,1,1,0.7f);
         pad.addListener(new ChangeListener() {
             @Override
@@ -305,42 +307,53 @@ public class Evening extends BaseScreen {
         }
         Animation<Texture> walkBoyAnimation = new Animation<Texture>(1f/6f, framesBoy);
         Animation<Texture> walkGirlAnimation = new Animation<Texture>(1f/6f, framesGirl);
-        player = new PlayerActor(world, playerBoyTexture, walkBoyAnimation, playerGirlTexture, walkGirlAnimation, new Vector2(3, 3));
+        player = new PlayerActor(world, playerBoyTexture, walkBoyAnimation, playerGirlTexture, walkGirlAnimation, new Vector2(2, 7));
         stage.addActor(player);
     }
 
     public void createPolePlatforms(){
         Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
-        polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 3.5f)));
+        polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(6.3f, 7)));
         for(PolePlatformActor actor: polePlatforms){
             stage.addActor(actor);
         }
     }
 
+
     public void createNormalPlatforms(){
         Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(3, 2)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(8.5f, 3)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12.3f, 2.2f)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2, 6)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(1.6f, 2.5f)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(6.3f, 2)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(10, 0.5f)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12.5f, 2)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 3.8f)));
         for(NormalPlatformActor actor: normalPlatforms){
             stage.addActor(actor);
         }
     }
 
+
+
     public void createItems(){
 
-        Texture brokenSheet = game.getManager().get("Sprites/items/broken-sheet.png");
-        Texture sheet = game.getManager().get("Sprites/items/sheet.png");
-        Texture coffee = game.getManager().get("Sprites/items/coffee.png");
-        Texture wrinkledSheet = game.getManager().get("Sprites/items/wrinkled-sheet.png");
+        Texture brokenSheet = game.getManager().get("Sprites/items/coca2.png");
+        Texture sheet = game.getManager().get("Sprites/items/jugo2.png");
+        Texture coffee = game.getManager().get("Sprites/items/jugo2.png");
+        Texture wrinkledSheet = game.getManager().get("Sprites/items/coca2.png");
 
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(8.5f, 3.6f),
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(4.4f, 2),
                 ItemActor.ItemType.BROKEN_SHEET));
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(1.5f, 3.3f),
+                ItemActor.ItemType.COFFEE));
         items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(12.3f, 2.8f),
                 ItemActor.ItemType.SHEET));
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(9, 1),
+                ItemActor.ItemType.SHEET));
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(10.7f, 1),
+                ItemActor.ItemType.BROKEN_SHEET));
         items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(13f, 4.4f),
                 ItemActor.ItemType.COFFEE));
         for(ItemActor item : items){

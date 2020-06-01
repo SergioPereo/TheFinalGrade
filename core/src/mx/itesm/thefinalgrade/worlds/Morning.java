@@ -256,9 +256,8 @@ public class Morning extends BaseScreen {
 
     protected void createButton(){
 
-        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Brincar.png"));
-        TextureRegionDrawable brincarBotonClicked = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/BrincarClicked.png"));
-        ImageButton jumpBtn = new ImageButton(brincarBoton, brincarBotonClicked);
+        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Boton_Saltar3.png"));
+        ImageButton jumpBtn = new ImageButton(brincarBoton);
         jumpBtn.setPosition(5*ANCHO/6, ALTO/18);
 
 
@@ -283,7 +282,7 @@ public class Morning extends BaseScreen {
         estilo.knob = skin.getDrawable("button");
         // Crear el pad
         Touchpad pad = new Touchpad(0, estilo);
-        pad.setBounds(16,16,128,128); //limites del pad
+        pad.setBounds(50,40,128,128); //limites del pad
         pad.setColor(1,1,1,0.7f);
         pad.addListener(new ChangeListener() {
             @Override
@@ -403,6 +402,8 @@ public class Morning extends BaseScreen {
         stage.draw();
         if(player.getBody().getPosition().y < 0){
             game.setScreen(new Loser(game));
+
+
         }
         /**debugCamera.update();
         debugRenderer.render(world, debugCamera.combined);

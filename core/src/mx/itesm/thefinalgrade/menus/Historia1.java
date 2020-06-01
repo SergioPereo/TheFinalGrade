@@ -13,11 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.menus.Menu;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
+import mx.itesm.thefinalgrade.worlds.Morning;
 
 public class Historia1 extends Menu {
 
     private Texture botonAvanzar, botonAvanzarP;
-    Texture backButtonTexture,backButtonTexturePressed;
+    Texture backButtonTexture,backButtonTexturePressed, skipButtonTexture;
 
     private Texture fondo;
 
@@ -74,6 +75,20 @@ public class Historia1 extends Menu {
             }
         });
         menuStage.addActor(backButton);
+
+        //Boton saltar historia skip
+        skipButtonTexture = game.getManager().get("Sprites/buttons/SKIP2.png");
+        TextureRegionDrawable textureRegionSkipButton = new TextureRegionDrawable(new TextureRegion(skipButtonTexture));
+        ImageButton skipButton = new ImageButton(textureRegionSkipButton);
+        skipButton.setPosition(ANCHO-350,ALTO/10);
+        skipButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                game.setScreen(new Morning(game));
+            }
+        });
+        menuStage.addActor(skipButton);
+
 
         Gdx.input.setInputProcessor(menuStage);
 

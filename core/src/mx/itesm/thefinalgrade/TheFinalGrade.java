@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 import mx.itesm.thefinalgrade.menus.StartMenu;
+import mx.itesm.thefinalgrade.worlds.Evening;
 
 public class TheFinalGrade extends Game {
 
@@ -62,15 +63,6 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/evening/CDT.png", Texture.class);
 		manager.load("Sprites/evening/piso.png", Texture.class);
 		manager.load("Sprites/evening/Sol.png", Texture.class);
-		manager.load("Sprites/night/Mapa3.png", Texture.class);
-		manager.load("Sprites/night/Borregos.png", Texture.class);
-		manager.load("Sprites/night/Edificio1.png", Texture.class);
-		manager.load("Sprites/night/Edificio2.png", Texture.class);
-		manager.load("Sprites/night/Estrellitas.png", Texture.class);
-		manager.load("Sprites/night/Plataforma 1_Mapa 3.png", Texture.class);
-		manager.load("Sprites/night/Plataforma 2_Mapa 3.png", Texture.class);
-
-
 		manager.load("Sprites/items/coffee.png", Texture.class);
 		manager.load("Sprites/items/wrinkled-sheet.png", Texture.class);
 		manager.load("Sprites/platforms/platform1-r-r.png", Texture.class);
@@ -134,12 +126,7 @@ public class TheFinalGrade extends Game {
 
 		manager.finishLoading();
 		//setScreen(new Morning(this));
-		setScreen(new StartMenu(this) {
-			@Override
-			protected void createMenu() {
-
-			}
-		});
+		setScreen(new Evening(this));
 	}
 
 	@Override

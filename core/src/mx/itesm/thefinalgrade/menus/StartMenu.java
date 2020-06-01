@@ -3,6 +3,7 @@ package mx.itesm.thefinalgrade.menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
+import mx.itesm.thefinalgrade.util.actors.ObjectAnimation;
+import mx.itesm.thefinalgrade.util.actors.ObjectMove;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 public class StartMenu extends Menu {
@@ -19,12 +22,16 @@ public class StartMenu extends Menu {
     private float paddingPlayRight = 20f;
 
     // Declare textures
-    private Texture playTexture, playTextureP, textureNiño, textureCalendario;
+    private Texture playTexture, playTextureP, logoTexture, textureCalendario, textureNiño;
 
     private Music music;
-
-    public StartMenu(TheFinalGrade game) {
+    private ObjectAnimation niñawalk;
+    private ObjectMove calendarioMoveTexture;
+    public StartMenu(TheFinalGrade game)
+    {
         super(game);
+
+
     }
 
     @Override
@@ -33,7 +40,14 @@ public class StartMenu extends Menu {
         menuStage = new Stage(vista);
 
         background = game.getManager().get("Sprites/backgrounds/skybackground.png");
+        logoTexture = game.getManager().get("Sprites/backgrounds/Logo_v1.png");
 
+        //primera version
+        //niñawalk = new ObjectAnimation(1280-170,720-250);
+        //segunda version
+        niñawalk = new ObjectAnimation(1280-250,720-490);
+
+        calendarioMoveTexture = new ObjectMove(-800,720/3);
         // Play button
         playTexture = game.getManager().get("Sprites/buttons/Start.png");
         TextureRegionDrawable playRegionDrawable = new TextureRegionDrawable(new TextureRegion(playTexture));
@@ -42,7 +56,7 @@ public class StartMenu extends Menu {
         TextureRegionDrawable playRegionDrawableP = new TextureRegionDrawable(new TextureRegion(playTextureP));
 
         textureNiño = game.getManager().get("Sprites/player/boy/boy-start.png");
-        textureCalendario = game.getManager().get("Sprites/elements/CalendarioTransparente.png");
+        textureCalendario = game.getManager().get("Sprites/elements/Calendario.png");
 
         ImageButton playButton = new ImageButton(playRegionDrawable, playRegionDrawableP);
 
@@ -76,11 +90,16 @@ public class StartMenu extends Menu {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         batch.draw(background, 0, 0);
+        batch.draw(logoTexture,-100,-50);
+        niñawalk.render(batch);
+        //calendarioMoveTexture.render(batch);
+        //niñoPortada.drawObject(batch);
         batch.draw(textureNiño, 10, 0);
-        batch.draw(textureCalendario, 375, 0);
+        //Primera version
+        //batch.draw(textureCalendario, 700, ALTO/2-150);
+        //Segunda version
+        //batch.draw(textureCalendario, 700, ALTO/2-25);
         batch.end();
-
-
         menuStage.draw();
     }
 
