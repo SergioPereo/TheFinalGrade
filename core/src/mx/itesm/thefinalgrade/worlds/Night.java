@@ -256,17 +256,16 @@ public class Night extends BaseScreen {
     }
 
 
-    protected void createButton() {
+    protected void createButton(){
 
-        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Brincar.png"));
-        TextureRegionDrawable brincarBotonClicked = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/BrincarClicked.png"));
-        ImageButton jumpBtn = new ImageButton(brincarBoton, brincarBotonClicked);
-        jumpBtn.setPosition(5 * ANCHO / 6, ALTO / 18);
+        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Boton_Saltar3.png"));
+        ImageButton jumpBtn = new ImageButton(brincarBoton);
+        jumpBtn.setPosition(5*ANCHO/6, ALTO/18);
 
 
-        jumpBtn.addListener(new ClickListener() {
+        jumpBtn.addListener(new ClickListener(){
             @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y){
                 player.jump();
             }
         });
@@ -314,47 +313,49 @@ public class Night extends BaseScreen {
         stage.addActor(player);
     }
 
-
     public void createPolePlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
+        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
-        polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 3.5f)));
+        polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 2f)));
         for(PolePlatformActor actor: polePlatforms){
             stage.addActor(actor);
         }
     }
 
-
     public void createNormalPlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
+        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(3, 2)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(8.5f, 3)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12.3f, 2.2f)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2f, 1)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12f, 1)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(9f, 3)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2f, 5)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(5f, 6)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(9f, 7)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(10.5f, 5)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 3.8f)));
         for(NormalPlatformActor actor: normalPlatforms){
             stage.addActor(actor);
         }
     }
 
-
     public void createItems() {
 
-        Texture brokenSheet = game.getManager().get("Sprites/items/broken-sheet.png");
-        Texture sheet = game.getManager().get("Sprites/items/sheet.png");
-        Texture coffee = game.getManager().get("Sprites/items/coffee.png");
-        Texture wrinkledSheet = game.getManager().get("Sprites/items/wrinkled-sheet.png");
+        Texture brokenSheet = game.getManager().get("Sprites/items/Balón.png");
+        Texture sheet = game.getManager().get("Sprites/items/Bottle.png");
+        Texture coffee = game.getManager().get("Sprites/items/Microscopio.png");
+        Texture wrinkledSheet = game.getManager().get("Sprites/items/Gatorade.png");
 
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(8.5f, 3.6f),
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(8f, 3.6f),
                 ItemActor.ItemType.BROKEN_SHEET));
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(12.3f, 2.8f),
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(11f, 1.6f),
                 ItemActor.ItemType.SHEET));
         items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(13f, 4.4f),
                 ItemActor.ItemType.COFFEE));
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet,new Vector2(2f, 4.5f),
+                ItemActor.ItemType.WRINKLED_SHEET));
         for (ItemActor item : items) {
             stage.addActor(item);
         }
-
     }
 
     public void desaparecerPlataformas(){
@@ -370,6 +371,7 @@ public class Night extends BaseScreen {
                         index += 1;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+
                     }
                 }
             }
@@ -378,14 +380,14 @@ public class Night extends BaseScreen {
         hilo.start();
     }
 
-
     @Override
     public void hide() {
-        for (PolePlatformActor actor : polePlatforms) {
+        player.detach();
+        player.remove();
+        for(NormalPlatformActor actor: normalPlatforms){
             actor.detach();
             actor.remove();
         }
-
     }
 
     @Override
@@ -435,6 +437,7 @@ public class Night extends BaseScreen {
             game.setScreen(new Winner(game));
         }
     }
+
 
 
     @Override
