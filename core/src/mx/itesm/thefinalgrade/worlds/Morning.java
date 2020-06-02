@@ -20,7 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
@@ -32,8 +31,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
-import mx.itesm.thefinalgrade.levels.Loser;
-import mx.itesm.thefinalgrade.levels.Winner;
+import mx.itesm.thefinalgrade.levels.LoserMorning;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.actors.ItemActor;
@@ -403,7 +401,7 @@ public class Morning extends BaseScreen {
 
         stage.draw();
         if(player.getBody().getPosition().y < 0){
-            game.setScreen(new Loser(game));
+            game.setScreen(new LoserMorning(game));
 
 
         }

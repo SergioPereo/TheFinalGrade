@@ -16,13 +16,13 @@ import mx.itesm.thefinalgrade.util.Pantalla;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 import mx.itesm.thefinalgrade.worlds.Morning;
 
-public class Loser extends Menu {
+public class LoserMorning extends Menu {
 
     private Texture botonRegresar, botonRegresarP, botonContinuar, botonContinuarP;
 
     private Music music;
 
-    public Loser(TheFinalGrade game){
+    public LoserMorning(TheFinalGrade game){
         super(game);
 
     }
