@@ -13,7 +13,7 @@ import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.menus.Menu;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
-import mx.itesm.thefinalgrade.worlds.Evening;
+import mx.itesm.thefinalgrade.worlds.Night;
 
 public class LoserNight extends Menu {
     private Texture botonRegresar, botonRegresarP, botonContinuar, botonContinuarP;
@@ -73,7 +73,7 @@ public class LoserNight extends Menu {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
-                game.setScreen(new Evening(game));
+                game.setScreen(new Night(game));
             }
         });
         Gdx.input.setInputProcessor(menuStage);
