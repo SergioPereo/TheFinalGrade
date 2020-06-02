@@ -32,7 +32,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import java.util.Timer;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
-import mx.itesm.thefinalgrade.levels.Loser;
+import mx.itesm.thefinalgrade.levels.LoserNight;
 import mx.itesm.thefinalgrade.levels.Winner;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.util.Text;
@@ -240,7 +240,7 @@ public class Night extends BaseScreen {
         createItems();
         createHUD();
         createButton();
-        desaparecerPlataformas();
+        //desaparecerPlataformas();
     }
 
 
@@ -314,21 +314,21 @@ public class Night extends BaseScreen {
     }
 
     public void createPolePlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
+        Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 2_Mapa 3.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
-        polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 2f)));
+        polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 1.5f)));
         for(PolePlatformActor actor: polePlatforms){
             stage.addActor(actor);
         }
     }
 
     public void createNormalPlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
+        Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 1_Mapa 3.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2f, 1)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12f, 1)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(9f, 3)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2f, 5)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2f, 4)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(5f, 6)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(9f, 7)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(10.5f, 5)));
@@ -358,27 +358,27 @@ public class Night extends BaseScreen {
         }
     }
 
-    public void desaparecerPlataformas(){
-        Runnable runnable = new Runnable() {
-            int index = 0;
-            @Override
-            public void run() {
-                while (index <= 4) {
-                    try {
-                        Thread.sleep(5000);
-                        normalPlatforms.get(index).detach();
-                        normalPlatforms.get(index).remove();
-                        index += 1;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+    //public void desaparecerPlataformas(){
+        //Runnable runnable = new Runnable() {
+            //int index = 0;
+            //@Override
+            //public void run() {
+                //while (index <= 4) {
+                    //try {
+                        //Thread.sleep(5000);
+                        //normalPlatforms.get(index).detach();
+                        //normalPlatforms.get(index).remove();
+                        //index += 1;
+                    //} catch (InterruptedException e) {
+                        //e.printStackTrace();
 
-                    }
-                }
-            }
-        };
-        Thread hilo = new Thread(runnable);
-        hilo.start();
-    }
+                    //}
+                //}
+            //}
+        //};
+        //Thread hilo = new Thread(runnable);
+        //hilo.start();
+    //}
 
     @Override
     public void hide() {
@@ -423,7 +423,7 @@ public class Night extends BaseScreen {
 
         stage.draw();
         if (player.getBody().getPosition().y < 0) {
-            game.setScreen(new Loser(game));
+            game.setScreen(new LoserNight(game));
         }
         /**debugCamera.update();
          debugRenderer.render(world, debugCamera.combined);
