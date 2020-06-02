@@ -5,7 +5,8 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
-import mx.itesm.thefinalgrade.worlds.Night;
+import mx.itesm.thefinalgrade.menus.StartMenu;
+import mx.itesm.thefinalgrade.worlds.Evening;
 
 public class TheFinalGrade extends Game {
 
@@ -25,11 +26,9 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/platforms/platform2resized.png", Texture.class);
 		manager.load("Sprites/backgrounds/skybackground.png", Texture.class);
 		manager.load("Sprites/backgrounds/FondoCieloTarde.png", Texture.class);
-
+		//Botone del pad en morning y evening
 		manager.load("Sprites/buttons/padBack.png", Texture.class);
 		manager.load("Sprites/buttons/padKnob.png", Texture.class);
-		manager.load("Sprites/buttons/Brincar.png", Texture.class);
-		manager.load("Sprites/buttons/BrincarClicked.png", Texture.class);
 
 		manager.load("Sprites/player/boy/animations/walk/1.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/2.png", Texture.class);
@@ -60,7 +59,7 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/evening/Plataforma 1_Mapa 2.png", Texture.class);
 		manager.load("Sprites/evening/Plataforma 2_Mapa 2.png", Texture.class);
 		manager.load("Sprites/evening/CDT.png", Texture.class);
-		manager.load("Sprites/evening/piso.png", Texture.class);
+		manager.load("Sprites/evening/Piso.png", Texture.class);
 		manager.load("Sprites/evening/Sol.png", Texture.class);
 		manager.load("Sprites/items/coffee.png", Texture.class);
 		manager.load("Sprites/items/wrinkled-sheet.png", Texture.class);
@@ -122,36 +121,28 @@ public class TheFinalGrade extends Game {
 
 		manager.load("Sprites/backgrounds/boy_bw.png", Texture.class);
 		manager.load("Sprites/backgrounds/boy_color.png", Texture.class);
+		//Sprites de Evening
+        manager.load("Sprites/items/coca2.png", Texture.class);
+        manager.load("Sprites/items/jugo2.png", Texture.class);
 
-		manager.load("Sprites/buttons/Boton_Saltar3.png",Texture.class);
-		manager.load("Sprites/evening/Piso.png", Texture.class);
-		manager.load("Sprites/items/coca2.png", Texture.class);
-		manager.load("Sprites/items/jugo2.png", Texture.class);
-		manager.load("Sprites/items/coca.png", Texture.class);
-		manager.load("Sprites/items/jugo.png", Texture.class);
+        //Boton jump clases morning y evening
+        manager.load("Sprites/buttons/padKnob.png", Texture.class);
+		manager.load("Sprites/buttons/Boton_Saltar3.png", Texture.class);
 
-		manager.load("Sprites/night/Mapa3.png", Texture.class);
-		manager.load("Sprites/night/Borregos.png", Texture.class);
-		manager.load("Sprites/night/Edificio1.png", Texture.class);
-		manager.load("Sprites/night/Edificio2.png", Texture.class);
-		manager.load("Sprites/night/Estrellitas.png", Texture.class);
-		manager.load("Sprites/night/Piso_Mapa3.png", Texture.class);
-		manager.load("Sprites/platforms/Plataforma 1_Mapa 3.png", Texture.class);
-		manager.load("Sprites/platforms/Plataforma 2_Mapa 3.png", Texture.class);
 
+		//Boton Historia 1 Skip
 		manager.load("Sprites/buttons/SKIP2.png", Texture.class);
-		manager.load("Sprites/buttons/SKIP.png", Texture.class);
+		//Sprites en start menu
+		manager.load("Sprites/player/boy/animations/walk/Secuencia_Niño2.png", Texture.class);
+		manager.load("Sprites/player/girl/animations/walk/SecuenciaSalto_Niña2.png", Texture.class);
 		manager.load("Sprites/backgrounds/Logo_v1.png", Texture.class);
+		manager.load("Sprites/elements/Calendario.png", Texture.class);
 
-		manager.load("Sprites/items/Balón.png", Texture.class);
-		manager.load("Sprites/items/Bottle.png", Texture.class);
-		manager.load("Sprites/items/Gatorade.png", Texture.class);
-		manager.load("Sprites/items/Microscopio.png", Texture.class);
 
 
 		manager.finishLoading();
 		//setScreen(new Morning(this));
-		setScreen(new Night(this));
+		setScreen(new Evening(this));
 	}
 
 	@Override

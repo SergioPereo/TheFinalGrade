@@ -56,4 +56,19 @@ public class NormalPlatformActor extends Actor {
         body.destroyFixture(fixture);
         world.destroyBody(body);
     }
+
+    public Body getBody(){
+
+        return body;
+    }
+
+    public void moverPlataformas(boolean activo){
+        if (activo){
+            this.getBody().setLinearVelocity(0.0f, 0.12f);
+
+        } else {
+            this.getBody().setLinearVelocity(0.0f, 0.0f);
+        }
+    }
+
 }

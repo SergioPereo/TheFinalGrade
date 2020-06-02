@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -31,7 +30,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
-import mx.itesm.thefinalgrade.levels.Loser;
+import mx.itesm.thefinalgrade.levels.LoserEvening;
+import mx.itesm.thefinalgrade.levels.LoserMorning;
+import mx.itesm.thefinalgrade.levels.Winner;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.actors.ItemActor;
@@ -51,6 +52,14 @@ public class Evening extends BaseScreen {
 
     private PlayerActor player;
 
+    private int numeroPasos = 0;
+
+    private float tiempoPasos = 0.5f;
+
+    private int maxPasos = 32;
+
+    private float timerPlatform = 0;
+
     private Array<PolePlatformActor> polePlatforms;
 
     private Array<NormalPlatformActor> normalPlatforms;
@@ -66,7 +75,7 @@ public class Evening extends BaseScreen {
     private boolean win = false;
 
     private Texture background, tree1,
-            tree2, house1, house2, house3, floor, sun, grassBase;
+            tree2, house1, house2, house3, floor, sun;
 
     private Box2DDebugRenderer debugRenderer;
 
@@ -110,7 +119,7 @@ public class Evening extends BaseScreen {
         stage.getCamera().update();
     }
 
-    private void createPause() {
+    private boolean createPause() {
         skin = new Skin(Gdx.files.internal("skins/comic/skin/comic-ui.json"));
         TextButton pauseButton = new TextButton("Pause", skin);
         TextButton continuePauseButton = new TextButton("Continue", skin);
@@ -155,6 +164,7 @@ public class Evening extends BaseScreen {
         });
         stage.addActor(pauseButton);
 
+        return isPause;
     }
 
     public void createLevel(){
@@ -214,6 +224,7 @@ public class Evening extends BaseScreen {
                 }
             }
 
+
             @Override
             public void endContact(Contact contact) {
 
@@ -229,6 +240,7 @@ public class Evening extends BaseScreen {
 
             }
         });
+
         winActor = new WinActor(world, new Vector2(13.5f, 4.4f));
         stage.addActor(winActor);
         loadTextures();
@@ -250,7 +262,7 @@ public class Evening extends BaseScreen {
         house3 = game.getManager().get("Sprites/evening/CDT.png");
         floor = game.getManager().get("Sprites/evening/Piso.png");
         sun = game.getManager().get("Sprites/evening/Sol.png");
-        grassBase = game.getManager().get("Sprites/morning/Pasto_Base.png");
+
     }
 
 
@@ -311,10 +323,11 @@ public class Evening extends BaseScreen {
         stage.addActor(player);
     }
 
+
     public void createPolePlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
+        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
-        polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(6.3f, 7)));
+        polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(6.3f, 5)));
         for(PolePlatformActor actor: polePlatforms){
             stage.addActor(actor);
         }
@@ -322,7 +335,7 @@ public class Evening extends BaseScreen {
 
 
     public void createNormalPlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
+        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2, 6)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(1.6f, 2.5f)));
@@ -330,12 +343,12 @@ public class Evening extends BaseScreen {
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(10, 0.5f)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12.5f, 2)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 3.8f)));
-        for(NormalPlatformActor actor: normalPlatforms){
+
+        for(NormalPlatformActor actor: normalPlatforms) {
             stage.addActor(actor);
+            actor.moverPlataformas(createPause());
         }
     }
-
-
 
     public void createItems(){
 
@@ -344,7 +357,7 @@ public class Evening extends BaseScreen {
         Texture coffee = game.getManager().get("Sprites/items/jugo2.png");
         Texture wrinkledSheet = game.getManager().get("Sprites/items/coca2.png");
 
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(4.4f, 2),
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(7f, 2.5f),
                 ItemActor.ItemType.BROKEN_SHEET));
         items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(1.5f, 3.3f),
                 ItemActor.ItemType.COFFEE));
@@ -358,6 +371,12 @@ public class Evening extends BaseScreen {
                 ItemActor.ItemType.COFFEE));
         for(ItemActor item : items){
             stage.addActor(item);
+        }
+
+        for (int i = 0; i < items.size; i++){
+            if (!isPause){
+                items.get(i).getBody().setLinearVelocity(new Vector2(0.0f, 0.12f));
+            }
         }
 
     }
@@ -388,7 +407,6 @@ public class Evening extends BaseScreen {
         stage.getCamera().update();
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, ANCHO, ALTO);
-        stage.getBatch().draw(grassBase, 0, -50);
         stage.getBatch().draw(house3, 150, 20, 285, 285);
         stage.getBatch().draw(house2, 335, 20, 285, 285);
         stage.getBatch().draw(house1, 555, 20, 285, 285);
@@ -402,8 +420,9 @@ public class Evening extends BaseScreen {
         world.step(delta, 6, 2);
 
         stage.draw();
+
         if(player.getBody().getPosition().y < 0){
-            game.setScreen(new Loser(game));
+            game.setScreen(new LoserEvening(game));
         }
         /**debugCamera.update();
          debugRenderer.render(world, debugCamera.combined);
@@ -411,11 +430,11 @@ public class Evening extends BaseScreen {
         for(Body body: bodiesToBeDestroyed){
             world.destroyBody(body);
         }
+
         bodiesToBeDestroyed.clear();
 
         if(win){
-            game.setScreen(new Night(game) {
-            });
+            game.setScreen(new Winner(game));
         }
     }
 
