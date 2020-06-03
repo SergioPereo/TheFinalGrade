@@ -346,7 +346,7 @@ public class Evening extends BaseScreen {
 
         for(NormalPlatformActor actor: normalPlatforms) {
             stage.addActor(actor);
-            actor.moverPlataformas(createPause());
+            actor.moverPlataformas(true);
         }
     }
 
