@@ -6,7 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 import mx.itesm.thefinalgrade.menus.StartMenu;
-import mx.itesm.thefinalgrade.worlds.Evening;
+import mx.itesm.thefinalgrade.worlds.Night;
 
 public class TheFinalGrade extends Game {
 
@@ -122,11 +122,11 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/backgrounds/boy_bw.png", Texture.class);
 		manager.load("Sprites/backgrounds/boy_color.png", Texture.class);
 		//Sprites de Evening
-        manager.load("Sprites/items/coca2.png", Texture.class);
-        manager.load("Sprites/items/jugo2.png", Texture.class);
+		manager.load("Sprites/items/coca2.png", Texture.class);
+		manager.load("Sprites/items/jugo2.png", Texture.class);
 
-        //Boton jump clases morning y evening
-        manager.load("Sprites/buttons/padKnob.png", Texture.class);
+		//Boton jump clases morning y evening
+		manager.load("Sprites/buttons/padKnob.png", Texture.class);
 		manager.load("Sprites/buttons/Boton_Saltar3.png", Texture.class);
 
 
@@ -138,11 +138,26 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/backgrounds/Logo_v1.png", Texture.class);
 		manager.load("Sprites/elements/Calendario.png", Texture.class);
 
+		//Night
+		manager.load("Sprites/items/Balon.png", Texture.class);
+		manager.load("Sprites/items/Bottle.png", Texture.class);
+		manager.load("Sprites/items/Gatorade.png", Texture.class);
+		manager.load("Sprites/items/Microscopio.png", Texture.class);
+		manager.load("Sprites/night/Borregos.png", Texture.class);
+		manager.load("Sprites/night/Edificio1.png", Texture.class);
+		manager.load("Sprites/night/Edificio2.png", Texture.class);
+		manager.load("Sprites/night/Estrellitas.png", Texture.class);
+		manager.load("Sprites/night/Mapa3.png", Texture.class);
+		manager.load("Sprites/night/Piso_Mapa3.png", Texture.class);
+		manager.load("Sprites/platforms/Plataforma 1R_Mapa 3.png", Texture.class);
+		manager.load("Sprites/platforms/Plataforma 2R_Mapa 3.png", Texture.class);
+
+
 
 
 		manager.finishLoading();
 		//setScreen(new Morning(this));
-		setScreen(new Evening(this));
+		setScreen(new Night(this));
 	}
 
 	@Override
