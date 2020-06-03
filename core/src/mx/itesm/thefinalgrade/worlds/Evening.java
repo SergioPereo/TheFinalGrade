@@ -31,6 +31,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.levels.LoserEvening;
+import mx.itesm.thefinalgrade.levels.LoserMorning;
 import mx.itesm.thefinalgrade.levels.Winner;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.util.Text;
@@ -345,7 +346,7 @@ public class Evening extends BaseScreen {
 
         for(NormalPlatformActor actor: normalPlatforms) {
             stage.addActor(actor);
-            actor.moverPlataformas(false);
+            actor.moverPlataformas(createPause());
         }
     }
 
@@ -433,7 +434,7 @@ public class Evening extends BaseScreen {
         bodiesToBeDestroyed.clear();
 
         if(win){
-            game.setScreen(new Night(game));
+            game.setScreen(new Winner(game));
         }
     }
 

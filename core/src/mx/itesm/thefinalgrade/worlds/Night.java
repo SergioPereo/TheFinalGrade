@@ -314,7 +314,11 @@ public class Night extends BaseScreen {
     }
 
     public void createPolePlatforms(){
+<<<<<<< HEAD
         Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 2R_Mapa 3.png");
+=======
+        Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 2_Mapa 3.png");
+>>>>>>> origin/test
         TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
         polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 1.5f)));
         for(PolePlatformActor actor: polePlatforms){
@@ -323,7 +327,11 @@ public class Night extends BaseScreen {
     }
 
     public void createNormalPlatforms(){
+<<<<<<< HEAD
         Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 1R_Mapa 3.png");
+=======
+        Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 1_Mapa 3.png");
+>>>>>>> origin/test
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2f, 1)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12f, 1)));
@@ -340,7 +348,11 @@ public class Night extends BaseScreen {
 
     public void createItems() {
 
+<<<<<<< HEAD
         Texture brokenSheet = game.getManager().get("Sprites/items/Balon.png");
+=======
+        Texture brokenSheet = game.getManager().get("Sprites/items/Balón.png");
+>>>>>>> origin/test
         Texture sheet = game.getManager().get("Sprites/items/Bottle.png");
         Texture coffee = game.getManager().get("Sprites/items/Microscopio.png");
         Texture wrinkledSheet = game.getManager().get("Sprites/items/Gatorade.png");
@@ -359,6 +371,7 @@ public class Night extends BaseScreen {
     }
 
     //public void desaparecerPlataformas(){
+<<<<<<< HEAD
     //Runnable runnable = new Runnable() {
     //int index = 0;
     //@Override
@@ -378,6 +391,27 @@ public class Night extends BaseScreen {
     //};
     //Thread hilo = new Thread(runnable);
     //hilo.start();
+=======
+        //Runnable runnable = new Runnable() {
+            //int index = 0;
+            //@Override
+            //public void run() {
+                //while (index <= 4) {
+                    //try {
+                        //Thread.sleep(5000);
+                        //normalPlatforms.get(index).detach();
+                        //normalPlatforms.get(index).remove();
+                        //index += 1;
+                    //} catch (InterruptedException e) {
+                        //e.printStackTrace();
+
+                    //}
+                //}
+            //}
+        //};
+        //Thread hilo = new Thread(runnable);
+        //hilo.start();
+>>>>>>> origin/test
     //}
 
     @Override
@@ -459,4 +493,8 @@ public class Night extends BaseScreen {
         world.dispose();
         skin.dispose();
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/test
