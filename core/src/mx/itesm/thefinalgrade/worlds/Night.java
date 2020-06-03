@@ -256,16 +256,16 @@ public class Night extends BaseScreen {
     }
 
 
-    protected void createButton(){
+    protected void createButton() {
 
         TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Boton_Saltar3.png"));
         ImageButton jumpBtn = new ImageButton(brincarBoton);
-        jumpBtn.setPosition(5*ANCHO/6, ALTO/18);
+        jumpBtn.setPosition(5 * ANCHO / 6, ALTO / 18);
 
 
-        jumpBtn.addListener(new ClickListener(){
+        jumpBtn.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
                 player.jump();
             }
         });
@@ -313,25 +313,18 @@ public class Night extends BaseScreen {
         stage.addActor(player);
     }
 
-    public void createPolePlatforms(){
-<<<<<<< HEAD
+    public void createPolePlatforms() {
         Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 2R_Mapa 3.png");
-=======
-        Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 2_Mapa 3.png");
->>>>>>> origin/test
         TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
         polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 1.5f)));
-        for(PolePlatformActor actor: polePlatforms){
+        for (PolePlatformActor actor : polePlatforms) {
             stage.addActor(actor);
         }
     }
 
-    public void createNormalPlatforms(){
-<<<<<<< HEAD
+    public void createNormalPlatforms() {
         Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 1R_Mapa 3.png");
-=======
-        Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 1_Mapa 3.png");
->>>>>>> origin/test
+
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2f, 1)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12f, 1)));
@@ -341,18 +334,15 @@ public class Night extends BaseScreen {
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(9f, 7)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(10.5f, 5)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 3.8f)));
-        for(NormalPlatformActor actor: normalPlatforms){
+        for (NormalPlatformActor actor : normalPlatforms) {
             stage.addActor(actor);
         }
     }
 
     public void createItems() {
 
-<<<<<<< HEAD
         Texture brokenSheet = game.getManager().get("Sprites/items/Balon.png");
-=======
-        Texture brokenSheet = game.getManager().get("Sprites/items/Balón.png");
->>>>>>> origin/test
+
         Texture sheet = game.getManager().get("Sprites/items/Bottle.png");
         Texture coffee = game.getManager().get("Sprites/items/Microscopio.png");
         Texture wrinkledSheet = game.getManager().get("Sprites/items/Gatorade.png");
@@ -363,7 +353,7 @@ public class Night extends BaseScreen {
                 ItemActor.ItemType.SHEET));
         items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(13f, 4.4f),
                 ItemActor.ItemType.COFFEE));
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet,new Vector2(2f, 4.5f),
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(2f, 4.5f),
                 ItemActor.ItemType.WRINKLED_SHEET));
         for (ItemActor item : items) {
             stage.addActor(item);
@@ -371,7 +361,6 @@ public class Night extends BaseScreen {
     }
 
     //public void desaparecerPlataformas(){
-<<<<<<< HEAD
     //Runnable runnable = new Runnable() {
     //int index = 0;
     //@Override
@@ -391,34 +380,12 @@ public class Night extends BaseScreen {
     //};
     //Thread hilo = new Thread(runnable);
     //hilo.start();
-=======
-        //Runnable runnable = new Runnable() {
-            //int index = 0;
-            //@Override
-            //public void run() {
-                //while (index <= 4) {
-                    //try {
-                        //Thread.sleep(5000);
-                        //normalPlatforms.get(index).detach();
-                        //normalPlatforms.get(index).remove();
-                        //index += 1;
-                    //} catch (InterruptedException e) {
-                        //e.printStackTrace();
-
-                    //}
-                //}
-            //}
-        //};
-        //Thread hilo = new Thread(runnable);
-        //hilo.start();
->>>>>>> origin/test
-    //}
 
     @Override
     public void hide() {
         player.detach();
         player.remove();
-        for(NormalPlatformActor actor: normalPlatforms){
+        for (NormalPlatformActor actor : normalPlatforms) {
             actor.detach();
             actor.remove();
         }
@@ -432,24 +399,24 @@ public class Night extends BaseScreen {
         stage.getCamera().update();
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, ANCHO, ALTO);
-        stage.getBatch().draw(estrellas, 100,400,285, 285);
-        stage.getBatch().draw(estrellas, 200,400,285, 285);
-        stage.getBatch().draw(estrellas, 300,400,285, 285);
-        stage.getBatch().draw(estrellas, 400,400,285, 285);
-        stage.getBatch().draw(estrellas, 500,400,285, 285);
-        stage.getBatch().draw(estrellas, 600,400,285, 285);
-        stage.getBatch().draw(estrellas, 700,400,285, 285);
-        stage.getBatch().draw(estrellas, 800,400,285, 285);
-        stage.getBatch().draw(estrellas, 900,400,285, 285);
-        stage.getBatch().draw(estrellas, 1000,400,285, 285);
-        stage.getBatch().draw(estrellas, 0,400,285, 285);
+        stage.getBatch().draw(estrellas, 100, 400, 285, 285);
+        stage.getBatch().draw(estrellas, 200, 400, 285, 285);
+        stage.getBatch().draw(estrellas, 300, 400, 285, 285);
+        stage.getBatch().draw(estrellas, 400, 400, 285, 285);
+        stage.getBatch().draw(estrellas, 500, 400, 285, 285);
+        stage.getBatch().draw(estrellas, 600, 400, 285, 285);
+        stage.getBatch().draw(estrellas, 700, 400, 285, 285);
+        stage.getBatch().draw(estrellas, 800, 400, 285, 285);
+        stage.getBatch().draw(estrellas, 900, 400, 285, 285);
+        stage.getBatch().draw(estrellas, 1000, 400, 285, 285);
+        stage.getBatch().draw(estrellas, 0, 400, 285, 285);
         stage.getBatch().draw(grassBase, 0, -50);
         stage.getBatch().draw(grass, 335, 40, 125, 125);
-        stage.getBatch().draw(borregos, 550,0,285, 285);
-        stage.getBatch().draw(edificio1, 100,0,285, 285);
-        stage.getBatch().draw(edificio2, 350,0,285, 285);
-        stage.getBatch().draw(edificio1, 800,0,285, 285);
-        stage.getBatch().draw(edificio2, 1050,0,285, 285);
+        stage.getBatch().draw(borregos, 550, 0, 285, 285);
+        stage.getBatch().draw(edificio1, 100, 0, 285, 285);
+        stage.getBatch().draw(edificio2, 350, 0, 285, 285);
+        stage.getBatch().draw(edificio1, 800, 0, 285, 285);
+        stage.getBatch().draw(edificio2, 1050, 0, 285, 285);
         score.draw(stage.getBatch(), "" + UserPreferences.getInstance().getScore(), 8 * ANCHO / 9, 20 * ALTO / 21);
         stage.getBatch().end();
         stage.act();
@@ -473,18 +440,17 @@ public class Night extends BaseScreen {
     }
 
 
-
     @Override
     public void dispose() {
         music.stop();
         UserPreferences.getInstance().setPosition(music.getPosition());
-        for(PolePlatformActor platform : polePlatforms){
+        for (PolePlatformActor platform : polePlatforms) {
             platform.detach();
         }
-        for(NormalPlatformActor platformActor : normalPlatforms){
+        for (NormalPlatformActor platformActor : normalPlatforms) {
             platformActor.detach();
         }
-        for(ItemActor actor : items){
+        for (ItemActor actor : items) {
             actor.detach();
         }
         winActor.detach();
@@ -493,8 +459,4 @@ public class Night extends BaseScreen {
         world.dispose();
         skin.dispose();
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/test
