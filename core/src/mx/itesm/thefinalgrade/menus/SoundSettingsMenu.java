@@ -1,6 +1,7 @@
 package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -124,9 +125,11 @@ public class SoundSettingsMenu extends Menu{
         batch.draw(textureNiño, 10, 0);
         batch.draw(textureCalendario, 375, 0);
         batch.end();
-
-
         menuStage.draw();
+        //Tecla de Back
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            game.setScreen(new MainMenu(game));
+        }
     }
 
     @Override

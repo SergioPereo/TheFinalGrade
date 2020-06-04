@@ -1,6 +1,7 @@
 package mx.itesm.thefinalgrade.worlds;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -101,6 +102,8 @@ public class Night extends BaseScreen {
         createLevel();
         createPause();
         Gdx.input.setInputProcessor(stage);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
+
     }
 
     @Override
@@ -437,6 +440,10 @@ public class Night extends BaseScreen {
 
         if (win) {
             game.setScreen(new Winner(game));
+        }
+        //Tecla de Back
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            game.setScreen(new MainMenu(game));
         }
     }
 
