@@ -54,7 +54,7 @@ public class Night extends BaseScreen {
 
     private PlayerActor player;
 
-    private Array<PolePlatformActor> polePlatforms;
+    private Array<NormalPlatformActor> polePlatforms;
 
     private Array<NormalPlatformActor> normalPlatforms;
 
@@ -94,7 +94,7 @@ public class Night extends BaseScreen {
     public void show() {
         stage = new Stage(new FitViewport(ANCHO, ALTO));
         normalPlatforms = new Array<NormalPlatformActor>(4);
-        polePlatforms = new Array<PolePlatformActor>(1);
+        polePlatforms = new Array<NormalPlatformActor>(1);
         items = new Array<ItemActor>(3);
         bodiesToBeDestroyed = new Array<Body>(12);
         props = new Array<PropsActor>(20);
@@ -315,9 +315,10 @@ public class Night extends BaseScreen {
 
     public void createPolePlatforms() {
         Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 2R_Mapa 3.png");
-        TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
-        polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 1.5f)));
-        for (PolePlatformActor actor : polePlatforms) {
+
+        TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(5.3f, 1.5f)));
+        for (NormalPlatformActor actor : polePlatforms) {
             stage.addActor(actor);
         }
     }
@@ -444,7 +445,7 @@ public class Night extends BaseScreen {
     public void dispose() {
         music.stop();
         UserPreferences.getInstance().setPosition(music.getPosition());
-        for (PolePlatformActor platform : polePlatforms) {
+        for (NormalPlatformActor platform : polePlatforms) {
             platform.detach();
         }
         for (NormalPlatformActor platformActor : normalPlatforms) {

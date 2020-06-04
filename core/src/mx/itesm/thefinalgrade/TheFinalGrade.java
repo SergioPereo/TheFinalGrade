@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
+import mx.itesm.thefinalgrade.levels.Winner;
 import mx.itesm.thefinalgrade.menus.StartMenu;
 import mx.itesm.thefinalgrade.worlds.Night;
 
@@ -157,7 +158,7 @@ public class TheFinalGrade extends Game {
 
 		manager.finishLoading();
 		//setScreen(new Morning(this));
-		setScreen(new Night(this));
+		setScreen(new StartMenu(this));
 	}
 
 	@Override
