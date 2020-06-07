@@ -32,15 +32,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.levels.LoserEvening;
-import mx.itesm.thefinalgrade.levels.LoserMorning;
-import mx.itesm.thefinalgrade.levels.Winner;
 import mx.itesm.thefinalgrade.menus.MainMenu;
-import mx.itesm.thefinalgrade.util.Direction;
 import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.actors.ItemActor;
 import mx.itesm.thefinalgrade.util.actors.NormalPlatformActor;
 import mx.itesm.thefinalgrade.util.actors.PlayerActor;
-import mx.itesm.thefinalgrade.util.actors.PolePlatformActor;
 import mx.itesm.thefinalgrade.util.actors.PropsActor;
 import mx.itesm.thefinalgrade.util.actors.WinActor;
 import mx.itesm.thefinalgrade.util.variables.BaseScreen;

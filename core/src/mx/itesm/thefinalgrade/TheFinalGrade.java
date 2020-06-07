@@ -5,9 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
-import mx.itesm.thefinalgrade.levels.Winner;
-import mx.itesm.thefinalgrade.menus.StartMenu;
-import mx.itesm.thefinalgrade.worlds.Night;
+import mx.itesm.thefinalgrade.worlds.Evening;
 
 public class TheFinalGrade extends Game {
 
@@ -115,7 +113,18 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/history/girl/3.png", Texture.class);
 		manager.load("Sprites/history/girl/4.png", Texture.class);
 
+
+		//Musica
 		manager.load("music/Mushroom Theme.mp3", Music.class);
+		manager.load("music/Worldmap Theme.mp3", Music.class);
+		manager.load("music/Boss Theme.mp3", Music.class);
+		manager.load("music/Desert Theme.mp3", Music.class);
+		manager.load("music/Dungeon Theme.mp3", Music.class);
+		manager.load("music/Grasslands Theme.mp3", Music.class);
+		manager.load("music/Intro Theme.mp3", Music.class);
+		manager.load("music/Iceland Theme.mp3", Music.class);
+
+
 
 		manager.load("Sprites/backgrounds/girl_bw.png", Texture.class);
 		manager.load("Sprites/backgrounds/girl_color.png", Texture.class);
@@ -157,8 +166,7 @@ public class TheFinalGrade extends Game {
 
 
 		manager.finishLoading();
-		//setScreen(new Morning(this));
-		setScreen(new Night(this));
+		setScreen(new Evening(this));
 	}
 
 	@Override
