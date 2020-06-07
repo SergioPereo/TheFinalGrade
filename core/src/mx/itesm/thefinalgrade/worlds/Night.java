@@ -40,12 +40,10 @@ import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.actors.ItemActor;
 import mx.itesm.thefinalgrade.util.actors.NormalPlatformActor;
 import mx.itesm.thefinalgrade.util.actors.PlayerActor;
-import mx.itesm.thefinalgrade.util.actors.PolePlatformActor;
 import mx.itesm.thefinalgrade.util.actors.PropsActor;
 import mx.itesm.thefinalgrade.util.actors.WinActor;
 import mx.itesm.thefinalgrade.util.variables.BaseScreen;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
-
 
 
 public class Night extends BaseScreen {
@@ -61,7 +59,7 @@ public class Night extends BaseScreen {
 
     private Array<ItemActor> items;
 
-    private Array<Body> bodiesToBeDestroyed;
+    private Array<Body> bodiesToBeDestroyed, platformToBeDestroyed;
 
     private Array<PropsActor> props;
 
@@ -94,10 +92,11 @@ public class Night extends BaseScreen {
     @Override
     public void show() {
         stage = new Stage(new FitViewport(ANCHO, ALTO));
-        normalPlatforms = new Array<NormalPlatformActor>(4);
+        normalPlatforms = new Array<NormalPlatformActor>(8);
         polePlatforms = new Array<NormalPlatformActor>(1);
         items = new Array<ItemActor>(3);
         bodiesToBeDestroyed = new Array<Body>(12);
+        platformToBeDestroyed = new Array<Body>(15);
         props = new Array<PropsActor>(20);
         createLevel();
         createPause();
@@ -190,19 +189,26 @@ public class Night extends BaseScreen {
                 if (areCollided(contact, "player", "platform")) {
                     player.setJumping(false);
                 }
+
+
                 if (areCollided(contact, "player", "item")) {
                     for (int i = 0; i < items.size; i++) {
-                        if (contact.getFixtureA().equals(items.get(i).getFixture())
-                                || contact.getFixtureB().equals(items.get(i).getFixture())) {
+                        if (contact.getFixtureA().equals(items.get(i).getFixture()) || contact.getFixtureB().equals(items.get(i).getFixture())) {
                             switch (items.get(i).getType()) {
                                 case SHEET:
                                     UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore() + 10);
                                     break;
                                 case WRINKLED_SHEET:
                                     UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore() - 10);
+                                    platformToBeDestroyed.add(polePlatforms.get(0).getBody());
+                                    polePlatforms.get(0).remove();
+                                    polePlatforms.removeIndex(0);
                                     break;
                                 case BROKEN_SHEET:
                                     UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore() - 10);
+                                    platformToBeDestroyed.add(polePlatforms.get(0).getBody());
+                                    polePlatforms.get(0).remove();
+                                    polePlatforms.removeIndex(0);
                                     break;
                                 case COFFEE:
                                     UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore() + 15);
@@ -214,6 +220,7 @@ public class Night extends BaseScreen {
                         }
                     }
                 }
+
                 if (areCollided(contact, "player", "win")) {
                     win = true;
                 }
@@ -243,7 +250,6 @@ public class Night extends BaseScreen {
         createItems();
         createHUD();
         createButton();
-        //desaparecerPlataformas();
     }
 
 
@@ -320,7 +326,9 @@ public class Night extends BaseScreen {
         Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 2R_Mapa 3.png");
 
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
-        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(5.3f, 1.5f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(5.3f, 2f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12f, 1)));
+
         for (NormalPlatformActor actor : polePlatforms) {
             stage.addActor(actor);
         }
@@ -330,8 +338,7 @@ public class Night extends BaseScreen {
         Texture platformTexture = game.getManager().get("Sprites/platforms/Plataforma 1R_Mapa 3.png");
 
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2f, 1)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12f, 1)));
+        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2f, 0.5f)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(9f, 3)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2f, 4)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(5f, 6)));
@@ -343,10 +350,11 @@ public class Night extends BaseScreen {
         }
     }
 
+
+
+
     public void createItems() {
-
         Texture brokenSheet = game.getManager().get("Sprites/items/Balon.png");
-
         Texture sheet = game.getManager().get("Sprites/items/Bottle.png");
         Texture coffee = game.getManager().get("Sprites/items/Microscopio.png");
         Texture wrinkledSheet = game.getManager().get("Sprites/items/Gatorade.png");
@@ -355,45 +363,33 @@ public class Night extends BaseScreen {
                 ItemActor.ItemType.BROKEN_SHEET));
         items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(11f, 1.6f),
                 ItemActor.ItemType.SHEET));
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(13f, 4.4f),
-                ItemActor.ItemType.COFFEE));
         items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(2f, 4.5f),
+                ItemActor.ItemType.COFFEE));
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(9f, 7.5f),
                 ItemActor.ItemType.WRINKLED_SHEET));
         for (ItemActor item : items) {
             stage.addActor(item);
         }
     }
 
-    //public void desaparecerPlataformas(){
-    //Runnable runnable = new Runnable() {
-    //int index = 0;
-    //@Override
-    //public void run() {
-    //while (index <= 4) {
-    //try {
-    //Thread.sleep(5000);
-    //normalPlatforms.get(index).detach();
-    //normalPlatforms.get(index).remove();
-    //index += 1;
-    //} catch (InterruptedException e) {
-    //e.printStackTrace();
-
-    //}
-    //}
-    //}
-    //};
-    //Thread hilo = new Thread(runnable);
-    //hilo.start();
-
     @Override
     public void hide() {
         player.detach();
         player.remove();
-        for (NormalPlatformActor actor : normalPlatforms) {
+        for(NormalPlatformActor actor: normalPlatforms){
             actor.detach();
             actor.remove();
         }
+        for(NormalPlatformActor actor: polePlatforms){
+            actor.detach();
+            actor.remove();
+        }
+        for(ItemActor item: items){
+            item.detach();
+            item.remove();
+        }
     }
+
 
     @Override
     public void render(float delta) {
@@ -437,6 +433,11 @@ public class Night extends BaseScreen {
             world.destroyBody(body);
         }
         bodiesToBeDestroyed.clear();
+
+        for (Body body : platformToBeDestroyed) {
+            world.destroyBody(body);
+        }
+        platformToBeDestroyed.clear();
 
         if (win) {
             game.setScreen(new Winner(game));
