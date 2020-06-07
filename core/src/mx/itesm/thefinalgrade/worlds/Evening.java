@@ -35,6 +35,7 @@ import mx.itesm.thefinalgrade.levels.LoserEvening;
 import mx.itesm.thefinalgrade.levels.LoserMorning;
 import mx.itesm.thefinalgrade.levels.Winner;
 import mx.itesm.thefinalgrade.menus.MainMenu;
+import mx.itesm.thefinalgrade.util.Direction;
 import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.actors.ItemActor;
 import mx.itesm.thefinalgrade.util.actors.NormalPlatformActor;
@@ -53,17 +54,11 @@ public class Evening extends BaseScreen {
 
     private PlayerActor player;
 
-    private int numeroPasos = 0;
-
-    private float tiempoPasos = 0.5f;
-
-    private int maxPasos = 32;
-
-    private float timerPlatform = 0;
-
     private Array<NormalPlatformActor> polePlatforms;
 
-    private Array<NormalPlatformActor> normalPlatforms;
+    private Array<NormalPlatformActor> normalPlatformsDown;
+
+    private Array<NormalPlatformActor> normalPlatformsUp;
 
     private Array<ItemActor> items;
 
@@ -101,9 +96,10 @@ public class Evening extends BaseScreen {
     @Override
     public void show() {
         stage = new Stage(new FitViewport(ANCHO, ALTO));
-        normalPlatforms = new Array<NormalPlatformActor>(4);
-        polePlatforms = new Array<NormalPlatformActor>(1);
-        items = new Array<ItemActor>(3);
+        normalPlatformsUp = new Array<NormalPlatformActor>();
+        normalPlatformsDown = new Array<NormalPlatformActor>();
+        polePlatforms = new Array<NormalPlatformActor>();
+        items = new Array<ItemActor>();
         bodiesToBeDestroyed = new Array<Body>(12);
         props = new Array<PropsActor>(20);
         createLevel();
@@ -122,7 +118,7 @@ public class Evening extends BaseScreen {
         stage.getCamera().update();
     }
 
-    private boolean createPause() {
+    private void createPause() {
         skin = new Skin(Gdx.files.internal("skins/comic/skin/comic-ui.json"));
         TextButton pauseButton = new TextButton("Pause", skin);
         TextButton continuePauseButton = new TextButton("Continue", skin);
@@ -166,8 +162,6 @@ public class Evening extends BaseScreen {
             }
         });
         stage.addActor(pauseButton);
-
-        return isPause;
     }
 
     public void createLevel(){
@@ -244,7 +238,7 @@ public class Evening extends BaseScreen {
             }
         });
 
-        winActor = new WinActor(world, new Vector2(13.5f, 4.4f));
+        winActor = new WinActor(world, new Vector2(13.5f, 6.4f));
         stage.addActor(winActor);
         loadTextures();
         createPlayer();
@@ -253,6 +247,8 @@ public class Evening extends BaseScreen {
         createItems();
         createHUD();
         createButton();
+        moverPlataformas();
+        moverItems();
     }
 
     private void loadTextures() {
@@ -330,8 +326,14 @@ public class Evening extends BaseScreen {
     public void createPolePlatforms(){
         Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
-        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(6.3f, 5)));
-        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 3.8f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(1.2f, 6f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 2.5f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(1.2f, 2f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(7f, 0.5f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(7f, 4f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 6.2f)));
+
+
         for(NormalPlatformActor actor: polePlatforms){
             stage.addActor(actor);
         }
@@ -339,46 +341,68 @@ public class Evening extends BaseScreen {
 
 
     public void createNormalPlatforms(){
+
         Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(2, 6)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(1.6f, 2.5f)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(6.3f, 2)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(10, 0.5f)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12.5f, 2)));
+        normalPlatformsDown.add(new NormalPlatformActor(world, platformRegion, new Vector2(4f, 6f)));
+        normalPlatformsUp.add(new NormalPlatformActor(world, platformRegion, new Vector2(10f, 0f)));
 
-        for(NormalPlatformActor actor: normalPlatforms) {
+        for(NormalPlatformActor actor: normalPlatformsDown) {
             stage.addActor(actor);
-            actor.moverPlataformas(true);
+        }
+
+        for (NormalPlatformActor actor : normalPlatformsUp){
+            stage.addActor(actor);
+        }
+
+    }
+
+
+    public void moverPlataformas(){
+        for (NormalPlatformActor actor : normalPlatformsDown) {
+            actor.moverAbajo();
+        }
+
+        for (NormalPlatformActor actor: normalPlatformsUp){
+            actor.moverArriba();
         }
     }
 
     public void createItems(){
 
         Texture brokenSheet = game.getManager().get("Sprites/items/coca2.png");
-        Texture sheet = game.getManager().get("Sprites/items/jugo2.png");
+        Texture sheet = game.getManager().get("Sprites/items/sheet.png");
         Texture coffee = game.getManager().get("Sprites/items/jugo2.png");
-        Texture wrinkledSheet = game.getManager().get("Sprites/items/coca2.png");
+        Texture wrinkledSheet = game.getManager().get("Sprites/items/broken-sheet.png");
 
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(7f, 2.5f),
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(4.5f, 6.6f),
                 ItemActor.ItemType.BROKEN_SHEET));
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(1.5f, 3.3f),
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(1.7f, 2.6f),
                 ItemActor.ItemType.COFFEE));
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(12.3f, 2.8f),
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(7.6f, 1.1f),
                 ItemActor.ItemType.SHEET));
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(9, 1),
-                ItemActor.ItemType.SHEET));
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(10.7f, 1),
-                ItemActor.ItemType.BROKEN_SHEET));
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(13f, 4.4f),
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(10.2f, 0.7f),
+                ItemActor.ItemType.WRINKLED_SHEET));
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(12.8f, 3f),
                 ItemActor.ItemType.COFFEE));
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(7.2f, 4.6f),
+                ItemActor.ItemType.SHEET));
+
+
         for(ItemActor item : items){
             stage.addActor(item);
         }
+    }
 
-        for (int i = 0; i < items.size; i++){
-            if (!isPause){
-                items.get(i).getBody().setLinearVelocity(new Vector2(0.0f, 0.12f));
+    public void moverItems(){
+
+        for (ItemActor actor : items) {
+            if (actor.getType() == ItemActor.ItemType.BROKEN_SHEET) {
+                actor.moverAbajo();
+            }
+
+            if (actor.getType() == ItemActor.ItemType.WRINKLED_SHEET){
+                actor.moverArriba();
             }
         }
 
@@ -388,10 +412,16 @@ public class Evening extends BaseScreen {
     public void hide() {
         player.detach();
         player.remove();
-        for(NormalPlatformActor actor: normalPlatforms){
+        for(NormalPlatformActor actor: normalPlatformsDown){
             actor.detach();
             actor.remove();
         }
+
+        for(NormalPlatformActor actor: normalPlatformsUp){
+            actor.detach();
+            actor.remove();
+        }
+
         for(NormalPlatformActor actor: polePlatforms){
             actor.detach();
             actor.remove();
@@ -453,9 +483,14 @@ public class Evening extends BaseScreen {
         for(NormalPlatformActor platform : polePlatforms){
             platform.detach();
         }
-        for(NormalPlatformActor platformActor : normalPlatforms){
+        for(NormalPlatformActor platformActor : normalPlatformsDown){
             platformActor.detach();
         }
+
+        for(NormalPlatformActor platformActor : normalPlatformsUp){
+            platformActor.detach();
+        }
+
         for(ItemActor actor : items){
             actor.detach();
         }

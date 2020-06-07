@@ -91,4 +91,24 @@ public class ItemActor extends Actor {
         world.destroyBody(body);
     }
 
+    public void moverArriba(){
+        Vector2 vec = new Vector2(0.0f, 0.15f);
+        this.getBody().setLinearVelocity(vec);
+    }
+
+    public void moverDerecha(){
+        Vector2 vec = new Vector2(0.12f, 0.0f);
+        this.getBody().setLinearVelocity(vec);
+    }
+
+    public void moverIzquierda(){
+        Vector2 vec = new Vector2(-0.12f, 0.0f);
+        this.getBody().setLinearVelocity(vec);
+    }
+
+    public void moverAbajo(){
+        Vector2 vec = new Vector2(0.0f, -0.25f);
+        this.getBody().setLinearVelocity(vec);
+    }
+
 }
