@@ -68,7 +68,7 @@ public class NormalPlatformActor extends Actor {
     }
 
 
-<<<<<<<<< Temporary merge branch 1
+
     public void moverAbajo(){
         Vector2 vec = new Vector2(0.0f, -0.25f);
         this.getBody().setLinearVelocity(vec);
