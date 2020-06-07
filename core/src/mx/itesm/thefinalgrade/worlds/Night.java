@@ -307,18 +307,27 @@ public class Night extends BaseScreen {
         stage.addActor(pad);
     }
 
-    public void createPlayer() {
+    public void createPlayer(){
         Texture playerBoyTexture = game.getManager().get("Sprites/player/boy/nino-r-r.png");
         Texture playerGirlTexture = game.getManager().get("Sprites/player/girl/nina-r-r.png");
         Texture[] framesBoy = new Texture[6];
         Texture[] framesGirl = new Texture[6];
-        for (int i = 0; i < 6; i++) {
-            framesBoy[i] = game.getManager().get("Sprites/player/boy/animations/walk/" + (i + 1) + ".png");
-            framesGirl[i] = game.getManager().get("Sprites/player/girl/animations/walk/" + (i + 1) + ".png");
+        Texture[] framesBoyStand = new Texture[12];
+        Texture[] framesGirlStand = new Texture[12];
+        for(int i = 0 ; i < 6 ; i++){
+            framesBoy[i] = game.getManager().get("Sprites/player/boy/animations/walk/" + (i+1) + ".png");
+            framesGirl[i] = game.getManager().get("Sprites/player/girl/animations/walk/" + (i+1) + ".png");
         }
-        Animation<Texture> walkBoyAnimation = new Animation<Texture>(1f / 6f, framesBoy);
-        Animation<Texture> walkGirlAnimation = new Animation<Texture>(1f / 6f, framesGirl);
-        player = new PlayerActor(world, playerBoyTexture, walkBoyAnimation, playerGirlTexture, walkGirlAnimation, new Vector2(3, 3));
+
+        for (int i = 0; i < 12; i++){
+            framesBoyStand[i] = game.getManager().get("Sprites/player/boy/animations/stand/" + (i+1) + ".png");
+            framesGirlStand[i] = game.getManager().get("Sprites/player/girl/animations/stand/" + (i+1) + ".png");
+        }
+        Animation<Texture> walkBoyAnimation = new Animation<Texture>(1f/6f, framesBoy);
+        Animation<Texture> walkGirlAnimation = new Animation<Texture>(1f/6f, framesGirl);
+        Animation<Texture> BoyAnimationStand = new Animation<>(1/6f, framesBoyStand);
+        Animation<Texture> GirlAnimationStand = new Animation<>(1/6f, framesGirlStand);
+        player = new PlayerActor(world, playerBoyTexture, walkBoyAnimation, playerGirlTexture, walkGirlAnimation,BoyAnimationStand, GirlAnimationStand,new Vector2(3, 3));
         stage.addActor(player);
     }
 
