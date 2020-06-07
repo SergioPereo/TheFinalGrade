@@ -1,6 +1,7 @@
 package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,6 +25,11 @@ public class Historia2 extends Menu {
 
     public Historia2(TheFinalGrade game) {
         super(game);
+    }
+
+    @Override
+    public void show() {
+        super.show();
     }
 
     @Override
@@ -91,7 +97,10 @@ public class Historia2 extends Menu {
         batch.draw(background, 0, 0);
         batch.end();
         menuStage.draw();
-
+        //Tecla de Back
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.setScreen(new Historia1(game));
+        }
     }
 
     @Override

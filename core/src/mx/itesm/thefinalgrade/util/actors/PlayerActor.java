@@ -32,6 +32,7 @@ public class PlayerActor extends Actor {
 
     private Animation<Texture> walkBoyAnimation, walkGirlAnimation;
 
+
     private float playerWidth = 0.5f, playerHeight = 0.5f, velocity = 0f, animationTime = 0f;
 
     private boolean isBoy;

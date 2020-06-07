@@ -1,6 +1,8 @@
 package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,10 +17,7 @@ import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 public class MainMenu extends Menu {
 
-    public MainMenu(TheFinalGrade game) {
-        super(game);
 
-    }
     //Botones
     private Texture textContinueButton; private Texture textContinueButton2;
     private Texture textNewGameButton; private Texture textNewGameButton2;
@@ -29,9 +28,19 @@ public class MainMenu extends Menu {
     private Texture textniño;
     private Texture textNiña;
 
-
+    //Asset manager que tenemos en la clase LoadScreen
+    //private final AssetManager assetManager;
     private Music music;
 
+    public MainMenu(TheFinalGrade game) {
+        super(game);
+
+
+    }
+    @Override
+    public void show() {
+        super.show();
+    }
 
     @Override
     protected void createMenu() {
@@ -177,6 +186,8 @@ public class MainMenu extends Menu {
         batch.draw(textNiña, 0, 0);
         batch.end();
         menuStage.draw();
+
+
     }
     @Override
     public void dispose() {

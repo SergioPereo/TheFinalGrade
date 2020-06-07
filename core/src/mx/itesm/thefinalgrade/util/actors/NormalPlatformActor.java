@@ -44,6 +44,7 @@ public class NormalPlatformActor extends Actor {
         setSize((width)* (5*Constants.PIXELS_IN_METER/4), (height)*(2*Constants.PIXELS_IN_METER)/3);
     }
 
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         setPosition((body.getPosition().x - 1.28f) * Constants.PIXELS_IN_METER,
@@ -55,4 +56,20 @@ public class NormalPlatformActor extends Actor {
         body.destroyFixture(fixture);
         world.destroyBody(body);
     }
+
+
+    public Body getBody() {
+        return body;
+    }
+
+    public void moverArriba(){
+        Vector2 vec = new Vector2(0.0f, 0.17f);
+        this.getBody().setLinearVelocity(vec);
+    }
+
+    public void moverAbajo(){
+        Vector2 vec = new Vector2(0.0f, -0.25f);
+        this.getBody().setLinearVelocity(vec);
+    }
+
 }

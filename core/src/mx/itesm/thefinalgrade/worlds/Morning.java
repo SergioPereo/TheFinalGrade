@@ -2,6 +2,7 @@ package mx.itesm.thefinalgrade.worlds;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
@@ -32,8 +32,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
-import mx.itesm.thefinalgrade.levels.Loser;
-import mx.itesm.thefinalgrade.levels.Winner;
+import mx.itesm.thefinalgrade.levels.LoserMorning;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.actors.ItemActor;
@@ -101,6 +100,7 @@ public class Morning extends BaseScreen {
         createLevel();
         createPause();
         Gdx.input.setInputProcessor(stage);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 
     @Override
@@ -258,9 +258,8 @@ public class Morning extends BaseScreen {
 
     protected void createButton(){
 
-        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Brincar.png"));
-        TextureRegionDrawable brincarBotonClicked = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/BrincarClicked.png"));
-        ImageButton jumpBtn = new ImageButton(brincarBoton, brincarBotonClicked);
+        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Boton_Saltar3.png"));
+        ImageButton jumpBtn = new ImageButton(brincarBoton);
         jumpBtn.setPosition(5*ANCHO/6, ALTO/18);
 
 
@@ -285,7 +284,7 @@ public class Morning extends BaseScreen {
         estilo.knob = skin.getDrawable("button");
         // Crear el pad
         Touchpad pad = new Touchpad(0, estilo);
-        pad.setBounds(16,16,128,128); //limites del pad
+        pad.setBounds(50,40,128,128); //limites del pad
         pad.setColor(1,1,1,0.7f);
         pad.addListener(new ChangeListener() {
             @Override
@@ -404,7 +403,9 @@ public class Morning extends BaseScreen {
 
         stage.draw();
         if(player.getBody().getPosition().y < 0){
-            game.setScreen(new Loser(game));
+            game.setScreen(new LoserMorning(game));
+
+
         }
         /**debugCamera.update();
         debugRenderer.render(world, debugCamera.combined);
@@ -413,9 +414,13 @@ public class Morning extends BaseScreen {
             world.destroyBody(body);
         }
         bodiesToBeDestroyed.clear();
-
+        //Cuando gana te manda a Evening
         if(win){
             game.setScreen(new Evening(game));
+        }
+        //Tecla de Back
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            game.setScreen(new MainMenu(game));
         }
     }
 

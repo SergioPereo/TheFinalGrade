@@ -1,6 +1,7 @@
 package mx.itesm.thefinalgrade.worlds;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -30,9 +31,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
-import mx.itesm.thefinalgrade.levels.Loser;
+import mx.itesm.thefinalgrade.levels.LoserEvening;
+import mx.itesm.thefinalgrade.levels.LoserMorning;
 import mx.itesm.thefinalgrade.levels.Winner;
 import mx.itesm.thefinalgrade.menus.MainMenu;
+import mx.itesm.thefinalgrade.util.Direction;
 import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.actors.ItemActor;
 import mx.itesm.thefinalgrade.util.actors.NormalPlatformActor;
@@ -51,9 +54,11 @@ public class Evening extends BaseScreen {
 
     private PlayerActor player;
 
-    private Array<PolePlatformActor> polePlatforms;
+    private Array<NormalPlatformActor> polePlatforms;
 
-    private Array<NormalPlatformActor> normalPlatforms;
+    private Array<NormalPlatformActor> normalPlatformsDown;
+
+    private Array<NormalPlatformActor> normalPlatformsUp;
 
     private Array<ItemActor> items;
 
@@ -82,6 +87,8 @@ public class Evening extends BaseScreen {
 
     private Music music;
 
+
+
     public Evening(TheFinalGrade game) {
         super(game);
     }
@@ -89,14 +96,17 @@ public class Evening extends BaseScreen {
     @Override
     public void show() {
         stage = new Stage(new FitViewport(ANCHO, ALTO));
-        normalPlatforms = new Array<NormalPlatformActor>(4);
-        polePlatforms = new Array<PolePlatformActor>(1);
-        items = new Array<ItemActor>(3);
+        normalPlatformsUp = new Array<NormalPlatformActor>();
+        normalPlatformsDown = new Array<NormalPlatformActor>();
+        polePlatforms = new Array<NormalPlatformActor>();
+        items = new Array<ItemActor>();
         bodiesToBeDestroyed = new Array<Body>(12);
         props = new Array<PropsActor>(20);
         createLevel();
         createPause();
         Gdx.input.setInputProcessor(stage);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
+
     }
 
     @Override
@@ -152,7 +162,6 @@ public class Evening extends BaseScreen {
             }
         });
         stage.addActor(pauseButton);
-
     }
 
     public void createLevel(){
@@ -212,6 +221,7 @@ public class Evening extends BaseScreen {
                 }
             }
 
+
             @Override
             public void endContact(Contact contact) {
 
@@ -227,7 +237,8 @@ public class Evening extends BaseScreen {
 
             }
         });
-        winActor = new WinActor(world, new Vector2(13.5f, 4.4f));
+
+        winActor = new WinActor(world, new Vector2(13.5f, 6.4f));
         stage.addActor(winActor);
         loadTextures();
         createPlayer();
@@ -236,6 +247,8 @@ public class Evening extends BaseScreen {
         createItems();
         createHUD();
         createButton();
+        moverPlataformas();
+        moverItems();
     }
 
     private void loadTextures() {
@@ -246,7 +259,7 @@ public class Evening extends BaseScreen {
         house1 = game.getManager().get("Sprites/evening/Casita 1_Mapa 2.png");
         house2 = game.getManager().get("Sprites/evening/Casita 2_Mapa 2.png");
         house3 = game.getManager().get("Sprites/evening/CDT.png");
-        floor = game.getManager().get("Sprites/evening/piso.png");
+        floor = game.getManager().get("Sprites/evening/Piso.png");
         sun = game.getManager().get("Sprites/evening/Sol.png");
 
     }
@@ -254,9 +267,8 @@ public class Evening extends BaseScreen {
 
     protected void createButton(){
 
-        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Brincar.png"));
-        TextureRegionDrawable brincarBotonClicked = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/BrincarClicked.png"));
-        ImageButton jumpBtn = new ImageButton(brincarBoton, brincarBotonClicked);
+        TextureRegionDrawable brincarBoton = new TextureRegionDrawable((Texture) game.getManager().get("Sprites/buttons/Boton_Saltar3.png"));
+        ImageButton jumpBtn = new ImageButton(brincarBoton);
         jumpBtn.setPosition(5*ANCHO/6, ALTO/18);
 
 
@@ -281,7 +293,7 @@ public class Evening extends BaseScreen {
         estilo.knob = skin.getDrawable("button");
         // Crear el pad
         Touchpad pad = new Touchpad(0, estilo);
-        pad.setBounds(16,16,128,128); //limites del pad
+        pad.setBounds(50,40,128,128); //limites del pad
         pad.setColor(1,1,1,0.7f);
         pad.addListener(new ChangeListener() {
             @Override
@@ -306,46 +318,92 @@ public class Evening extends BaseScreen {
         }
         Animation<Texture> walkBoyAnimation = new Animation<Texture>(1f/6f, framesBoy);
         Animation<Texture> walkGirlAnimation = new Animation<Texture>(1f/6f, framesGirl);
-        player = new PlayerActor(world, playerBoyTexture, walkBoyAnimation, playerGirlTexture, walkGirlAnimation, new Vector2(3, 3));
+        player = new PlayerActor(world, playerBoyTexture, walkBoyAnimation, playerGirlTexture, walkGirlAnimation, new Vector2(2, 7));
         stage.addActor(player);
     }
 
+
     public void createPolePlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
-        TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
-        polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(5.3f, 3.5f)));
-        for(PolePlatformActor actor: polePlatforms){
+        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
+        TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(1.2f, 6f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 2.5f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(1.2f, 2f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(7f, 0.5f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(7f, 4f)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 6.2f)));
+
+
+        for(NormalPlatformActor actor: polePlatforms){
             stage.addActor(actor);
         }
     }
 
+
     public void createNormalPlatforms(){
-        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
+
+        Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 1_Mapa 2.png");
         TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(3, 2)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(8.5f, 3)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12.3f, 2.2f)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 3.8f)));
-        for(NormalPlatformActor actor: normalPlatforms){
+        normalPlatformsDown.add(new NormalPlatformActor(world, platformRegion, new Vector2(4f, 6f)));
+        normalPlatformsUp.add(new NormalPlatformActor(world, platformRegion, new Vector2(10f, 0f)));
+
+        for(NormalPlatformActor actor: normalPlatformsDown) {
             stage.addActor(actor);
+        }
+
+        for (NormalPlatformActor actor : normalPlatformsUp){
+            stage.addActor(actor);
+        }
+
+    }
+
+
+    public void moverPlataformas(){
+        for (NormalPlatformActor actor : normalPlatformsDown) {
+            actor.moverAbajo();
+        }
+
+        for (NormalPlatformActor actor: normalPlatformsUp){
+            actor.moverArriba();
         }
     }
 
     public void createItems(){
 
-        Texture brokenSheet = game.getManager().get("Sprites/items/broken-sheet.png");
+        Texture brokenSheet = game.getManager().get("Sprites/items/coca2.png");
         Texture sheet = game.getManager().get("Sprites/items/sheet.png");
-        Texture coffee = game.getManager().get("Sprites/items/coffee.png");
-        Texture wrinkledSheet = game.getManager().get("Sprites/items/wrinkled-sheet.png");
+        Texture coffee = game.getManager().get("Sprites/items/jugo2.png");
+        Texture wrinkledSheet = game.getManager().get("Sprites/items/broken-sheet.png");
 
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(8.5f, 3.6f),
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(4.5f, 6.6f),
                 ItemActor.ItemType.BROKEN_SHEET));
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(12.3f, 2.8f),
-                ItemActor.ItemType.SHEET));
-        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(13f, 4.4f),
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(1.7f, 2.6f),
                 ItemActor.ItemType.COFFEE));
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(7.6f, 1.1f),
+                ItemActor.ItemType.SHEET));
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(10.2f, 0.7f),
+                ItemActor.ItemType.WRINKLED_SHEET));
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(12.8f, 3f),
+                ItemActor.ItemType.COFFEE));
+        items.add(new ItemActor(world, sheet, brokenSheet, coffee, wrinkledSheet, new Vector2(7.2f, 4.6f),
+                ItemActor.ItemType.SHEET));
+
+
         for(ItemActor item : items){
             stage.addActor(item);
+        }
+    }
+
+    public void moverItems(){
+
+        for (ItemActor actor : items) {
+            if (actor.getType() == ItemActor.ItemType.BROKEN_SHEET) {
+                actor.moverAbajo();
+            }
+
+            if (actor.getType() == ItemActor.ItemType.WRINKLED_SHEET){
+                actor.moverArriba();
+            }
         }
 
     }
@@ -354,11 +412,17 @@ public class Evening extends BaseScreen {
     public void hide() {
         player.detach();
         player.remove();
-        for(NormalPlatformActor actor: normalPlatforms){
+        for(NormalPlatformActor actor: normalPlatformsDown){
             actor.detach();
             actor.remove();
         }
-        for(PolePlatformActor actor: polePlatforms){
+
+        for(NormalPlatformActor actor: normalPlatformsUp){
+            actor.detach();
+            actor.remove();
+        }
+
+        for(NormalPlatformActor actor: polePlatforms){
             actor.detach();
             actor.remove();
         }
@@ -389,8 +453,9 @@ public class Evening extends BaseScreen {
         world.step(delta, 6, 2);
 
         stage.draw();
+
         if(player.getBody().getPosition().y < 0){
-            game.setScreen(new Loser(game));
+            game.setScreen(new LoserEvening(game));
         }
         /**debugCamera.update();
          debugRenderer.render(world, debugCamera.combined);
@@ -398,10 +463,15 @@ public class Evening extends BaseScreen {
         for(Body body: bodiesToBeDestroyed){
             world.destroyBody(body);
         }
+
         bodiesToBeDestroyed.clear();
 
         if(win){
-            game.setScreen(new Winner(game));
+            game.setScreen(new Night(game));
+        }
+        //Tecla de Back
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            game.setScreen(new MainMenu(game));
         }
     }
 
@@ -410,12 +480,17 @@ public class Evening extends BaseScreen {
     public void dispose() {
         music.stop();
         UserPreferences.getInstance().setPosition(music.getPosition());
-        for(PolePlatformActor platform : polePlatforms){
+        for(NormalPlatformActor platform : polePlatforms){
             platform.detach();
         }
-        for(NormalPlatformActor platformActor : normalPlatforms){
+        for(NormalPlatformActor platformActor : normalPlatformsDown){
             platformActor.detach();
         }
+
+        for(NormalPlatformActor platformActor : normalPlatformsUp){
+            platformActor.detach();
+        }
+
         for(ItemActor actor : items){
             actor.detach();
         }

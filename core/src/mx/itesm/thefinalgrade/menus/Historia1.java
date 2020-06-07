@@ -1,6 +1,7 @@
 package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,11 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.menus.Menu;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
+import mx.itesm.thefinalgrade.worlds.Morning;
 
 public class Historia1 extends Menu {
 
     private Texture botonAvanzar, botonAvanzarP;
-    Texture backButtonTexture,backButtonTexturePressed;
+    Texture backButtonTexture,backButtonTexturePressed, skipButtonTexture;
 
     private Texture fondo;
 
@@ -25,6 +27,11 @@ public class Historia1 extends Menu {
 
     public Historia1(TheFinalGrade game) {
         super(game);
+    }
+
+    @Override
+    public void show() {
+        super.show();
     }
 
     @Override
@@ -75,6 +82,20 @@ public class Historia1 extends Menu {
         });
         menuStage.addActor(backButton);
 
+        //Boton saltar historia skip
+        skipButtonTexture = game.getManager().get("Sprites/buttons/SKIP2.png");
+        TextureRegionDrawable textureRegionSkipButton = new TextureRegionDrawable(new TextureRegion(skipButtonTexture));
+        ImageButton skipButton = new ImageButton(textureRegionSkipButton);
+        skipButton.setPosition(ANCHO-350,ALTO/10);
+        skipButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                game.setScreen(new Morning(game));
+            }
+        });
+        menuStage.addActor(skipButton);
+
+
         Gdx.input.setInputProcessor(menuStage);
 
         music = game.getManager().get("music/Mushroom Theme.mp3");
@@ -92,7 +113,10 @@ public class Historia1 extends Menu {
         batch.draw(background, 0, 0);
         batch.end();
         menuStage.draw();
-
+        //Tecla de Back
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            game.setScreen(new CharacterChooser(game));
+        }
     }
 
     @Override

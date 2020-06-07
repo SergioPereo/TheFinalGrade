@@ -85,7 +85,7 @@ public class OptionsMenu extends Menu{
 
         //imagen Niño
 
-        textniño = new Texture("Niño/Niño.png");
+        textniño = new Texture("Sprites/elements/niño.png");
         //imagen calendario
         textcalendar = new Texture("Sprites/elements/Calendario.png");
 
