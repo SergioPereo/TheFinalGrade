@@ -1,6 +1,7 @@
 package mx.itesm.thefinalgrade.worlds;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -31,6 +32,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.levels.LoserEvening;
+import mx.itesm.thefinalgrade.levels.LoserMorning;
 import mx.itesm.thefinalgrade.levels.Winner;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.util.Text;
@@ -59,7 +61,7 @@ public class Evening extends BaseScreen {
 
     private float timerPlatform = 0;
 
-    private Array<PolePlatformActor> polePlatforms;
+    private Array<NormalPlatformActor> polePlatforms;
 
     private Array<NormalPlatformActor> normalPlatforms;
 
@@ -100,13 +102,15 @@ public class Evening extends BaseScreen {
     public void show() {
         stage = new Stage(new FitViewport(ANCHO, ALTO));
         normalPlatforms = new Array<NormalPlatformActor>(4);
-        polePlatforms = new Array<PolePlatformActor>(1);
+        polePlatforms = new Array<NormalPlatformActor>(1);
         items = new Array<ItemActor>(3);
         bodiesToBeDestroyed = new Array<Body>(12);
         props = new Array<PropsActor>(20);
         createLevel();
         createPause();
         Gdx.input.setInputProcessor(stage);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
+
     }
 
     @Override
@@ -325,9 +329,10 @@ public class Evening extends BaseScreen {
 
     public void createPolePlatforms(){
         Texture platformTexture = game.getManager().get("Sprites/evening/Plataforma 2_Mapa 2.png");
-        TextureRegion platformRegion = new TextureRegion(platformTexture, 145, 21, 667, 485);
-        polePlatforms.add(new PolePlatformActor(world, platformRegion, new Vector2(6.3f, 5)));
-        for(PolePlatformActor actor: polePlatforms){
+        TextureRegion platformRegion = new TextureRegion(platformTexture, 170, 50, 667, 185);
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(6.3f, 5)));
+        polePlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 3.8f)));
+        for(NormalPlatformActor actor: polePlatforms){
             stage.addActor(actor);
         }
     }
@@ -341,11 +346,9 @@ public class Evening extends BaseScreen {
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(6.3f, 2)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(10, 0.5f)));
         normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(12.5f, 2)));
-        normalPlatforms.add(new NormalPlatformActor(world, platformRegion, new Vector2(13f, 3.8f)));
 
         for(NormalPlatformActor actor: normalPlatforms) {
             stage.addActor(actor);
-            actor.getBody().setLinearVelocity(new Vector2(0.0f,0.12f));
             actor.moverPlataformas(true);
         }
     }
@@ -389,7 +392,7 @@ public class Evening extends BaseScreen {
             actor.detach();
             actor.remove();
         }
-        for(PolePlatformActor actor: polePlatforms){
+        for(NormalPlatformActor actor: polePlatforms){
             actor.detach();
             actor.remove();
         }
@@ -434,7 +437,11 @@ public class Evening extends BaseScreen {
         bodiesToBeDestroyed.clear();
 
         if(win){
-            game.setScreen(new Winner(game));
+            game.setScreen(new Night(game));
+        }
+        //Tecla de Back
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            game.setScreen(new MainMenu(game));
         }
     }
 
@@ -443,7 +450,7 @@ public class Evening extends BaseScreen {
     public void dispose() {
         music.stop();
         UserPreferences.getInstance().setPosition(music.getPosition());
-        for(PolePlatformActor platform : polePlatforms){
+        for(NormalPlatformActor platform : polePlatforms){
             platform.detach();
         }
         for(NormalPlatformActor platformActor : normalPlatforms){

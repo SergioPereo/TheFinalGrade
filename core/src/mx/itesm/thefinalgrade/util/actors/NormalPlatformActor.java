@@ -57,6 +57,7 @@ public class NormalPlatformActor extends Actor {
         world.destroyBody(body);
     }
 
+
     public Body getBody(){
 
         return body;
@@ -70,5 +71,8 @@ public class NormalPlatformActor extends Actor {
             this.getBody().setLinearVelocity(0.0f, 0.0f);
         }
     }
+
+
+
 
 }

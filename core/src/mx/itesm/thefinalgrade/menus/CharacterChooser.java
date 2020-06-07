@@ -1,6 +1,7 @@
 package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -31,6 +32,11 @@ public class CharacterChooser extends Menu {
 
     public CharacterChooser(TheFinalGrade game) {
         super(game);
+    }
+
+    @Override
+    public void show() {
+        super.show();
     }
 
     @Override
@@ -131,6 +137,10 @@ public class CharacterChooser extends Menu {
         batch.end();
         menuStage.act();
         menuStage.draw();
+        //Tecla de Back
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.setScreen(new MainMenu(game));
+        }
     }
 
     @Override

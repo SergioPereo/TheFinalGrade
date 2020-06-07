@@ -1,6 +1,7 @@
 package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
@@ -69,7 +70,10 @@ class InstructionsMenu extends Menu  {
         batch.end();
 
         menuStage.draw();
-
+        //Tecla de Back
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            game.setScreen(new MainMenu(game));
+        }
     }
 
     @Override

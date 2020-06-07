@@ -1,5 +1,7 @@
 package mx.itesm.thefinalgrade.menus;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -21,6 +23,7 @@ public abstract class Menu extends Pantalla {
     public void show() {
         menuStage = new Stage(new FitViewport(ANCHO, ALTO));
         createMenu();
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 
     // Create buttons here
