@@ -30,20 +30,21 @@ public class PlayerActor extends Actor {
 
     private boolean alive = true, jumping = false, walking = false;
 
-    private Animation<Texture> walkBoyAnimation, walkGirlAnimation;
-
+    private Animation<Texture> walkBoyAnimation, walkGirlAnimation, standBoyAnimation, standGirlAnimation;
 
     private float playerWidth = 0.5f, playerHeight = 0.5f, velocity = 0f, animationTime = 0f;
 
     private boolean isBoy;
 
     public PlayerActor(World world, Texture textureBoy, Animation<Texture> walkBoyAnimation,
-                       Texture textureGirl, Animation<Texture> walkGirlAnimation, Vector2 position){
+                       Texture textureGirl, Animation<Texture> walkGirlAnimation, Animation<Texture> standBoyAnimation, Animation<Texture> standGirlAnimation,Vector2 position){
         this.world = world;
         this.textureBoy = textureBoy;
         this.walkBoyAnimation = walkBoyAnimation;
+        this.standBoyAnimation = standBoyAnimation;
         this.textureGirl = textureGirl;
         this.walkGirlAnimation = walkGirlAnimation;
+        this.standGirlAnimation = standGirlAnimation;
         this.isBoy = UserPreferences.getInstance().getGender();
         if(isBoy){
             this.sprite = new Sprite(textureBoy);
@@ -89,7 +90,16 @@ public class PlayerActor extends Actor {
             }
             sprite.setFlip(false, false);
             sprite.draw(batch);
-        } else {
+        } else if(velocity == 0){
+            walking = false;
+            if (isBoy){
+                sprite.setTexture(standBoyAnimation.getKeyFrame(animationTime));
+            } else{
+                sprite.setTexture(standGirlAnimation.getKeyFrame(animationTime));
+            }
+            sprite.setFlip(true, false);
+            sprite.draw(batch);
+        }else {
             walking = true;
             if(isBoy){
                 sprite.setTexture(walkBoyAnimation.getKeyFrame(animationTime));
