@@ -6,7 +6,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 import mx.itesm.thefinalgrade.menus.StartMenu;
-import mx.itesm.thefinalgrade.worlds.Evening;
 
 public class TheFinalGrade extends Game {
 
@@ -157,7 +156,7 @@ public class TheFinalGrade extends Game {
 
 		manager.finishLoading();
 		//setScreen(new Morning(this));
-		setScreen(new Night(this));
+		setScreen(new StartMenu(this));
 	}
 
 	@Override
