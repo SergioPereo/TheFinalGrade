@@ -6,6 +6,10 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 import mx.itesm.thefinalgrade.menus.StartMenu;
+import mx.itesm.thefinalgrade.worlds.Evening;
+import mx.itesm.thefinalgrade.worlds.LoadingScreen;
+import mx.itesm.thefinalgrade.worlds.Morning;
+import mx.itesm.thefinalgrade.worlds.Night;
 
 public class TheFinalGrade extends Game {
 
@@ -18,7 +22,6 @@ public class TheFinalGrade extends Game {
 	@Override
 	public void create() {
 		manager = new AssetManager();
-
 		// region
 		manager.load("Sprites/player/boy/nino-r-r.png", Texture.class);
 		manager.load("Sprites/player/girl/nina-r-r.png", Texture.class);
@@ -52,10 +55,6 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/player/boy/jump/6.png", Texture.class);
 		manager.load("Sprites/player/boy/jump/7.png", Texture.class);
 		manager.load("Sprites/player/boy/jump/8.png", Texture.class);
-		manager.load("Sprites/player/boy/jump/9.png", Texture.class);
-		manager.load("Sprites/player/boy/jump/10.png", Texture.class);
-		manager.load("Sprites/player/boy/jump/11.png", Texture.class);
-		manager.load("Sprites/player/boy/jump/12.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/1.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/2.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/3.png", Texture.class);
@@ -86,10 +85,6 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/player/girl/jump/6.png", Texture.class);
 		manager.load("Sprites/player/girl/jump/7.png", Texture.class);
 		manager.load("Sprites/player/girl/jump/8.png", Texture.class);
-		manager.load("Sprites/player/girl/jump/9.png", Texture.class);
-		manager.load("Sprites/player/girl/jump/10.png", Texture.class);
-		manager.load("Sprites/player/girl/jump/11.png", Texture.class);
-		manager.load("Sprites/player/girl/jump/12.png", Texture.class);
 		manager.load("Sprites/player/girl/animations/walk/1.png", Texture.class);
 		manager.load("Sprites/player/girl/animations/walk/2.png", Texture.class);
 		manager.load("Sprites/player/girl/animations/walk/3.png", Texture.class);
@@ -220,7 +215,9 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/platforms/Plataforma 1R_Mapa 3.png", Texture.class);
 		manager.load("Sprites/platforms/Plataforma 2R_Mapa 3.png", Texture.class);
 		manager.finishLoading();
-		setScreen(new StartMenu(this));
+
+
+		setScreen(new LoadingScreen(this));
 	}
 
 	@Override

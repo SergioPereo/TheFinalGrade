@@ -305,8 +305,8 @@ public class Morning extends BaseScreen {
         Texture[] framesGirl = new Texture[6];
         Texture[] framesBoyStand = new Texture[12];
         Texture[] framesGirlStand = new Texture[12];
-        Texture[] framesBoyJump = new Texture[12];
-        Texture[] framesGirlJump = new Texture[12];
+        Texture[] framesBoyJump = new Texture[8];
+        Texture[] framesGirlJump = new Texture[8];
 
 
         //Walk
@@ -322,7 +322,7 @@ public class Morning extends BaseScreen {
         }
 
         //Jump
-        for (int i = 0; i < 12; i++){
+        for (int i = 0; i < 8; i++){
             framesBoyJump[i] = game.getManager().get("Sprites/player/boy/jump/" + (i+1)+ ".png");
             framesGirlJump[i] = game.getManager().get("Sprites/player/girl/jump/" + (i+1) + ".png");
         }
@@ -331,8 +331,8 @@ public class Morning extends BaseScreen {
         Animation<Texture> walkGirlAnimation = new Animation<Texture>(1f/6f, framesGirl);
         Animation<Texture> BoyAnimationStand = new Animation<Texture>(1f/12f, framesBoyStand);
         Animation<Texture> GirlAnimationStand = new Animation<Texture>(1f/12f, framesGirlStand);
-        Animation<Texture> BoyAnimationJump = new Animation<Texture>(1f/12f, framesBoyJump);
-        Animation<Texture> GirlAnimationJump = new Animation<Texture>(1f/12f, framesGirlJump);
+        Animation<Texture> BoyAnimationJump = new Animation<Texture>(1f/8f, framesBoyJump);
+        Animation<Texture> GirlAnimationJump = new Animation<Texture>(1f/8f, framesGirlJump);
         player = new PlayerActor(world, playerBoyTexture, walkBoyAnimation, playerGirlTexture, walkGirlAnimation,
                 BoyAnimationStand, GirlAnimationStand, GirlAnimationJump, BoyAnimationJump,new Vector2(3, 3));
         stage.addActor(player);
