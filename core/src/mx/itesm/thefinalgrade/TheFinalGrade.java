@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import mx.itesm.thefinalgrade.levels.Winner;
 import mx.itesm.thefinalgrade.menus.MainMenu;
+import mx.itesm.thefinalgrade.menus.SoundSettingsMenu;
 import mx.itesm.thefinalgrade.menus.StartMenu;
 import mx.itesm.thefinalgrade.menus.StartMenu;
 import mx.itesm.thefinalgrade.worlds.Evening;
@@ -218,7 +219,7 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/platforms/Plataforma 1R_Mapa 3.png", Texture.class);
 		manager.load("Sprites/platforms/Plataforma 2R_Mapa 3.png", Texture.class);
 		manager.finishLoading();
-		setScreen(new LoadingScreen(this));
+		setScreen(new SoundSettingsMenu(this));
 	}
 
 	@Override
