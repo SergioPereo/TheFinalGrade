@@ -475,8 +475,12 @@ public class Evening extends BaseScreen {
 
         score.draw(stage.getBatch(), "" + UserPreferences.getInstance().getScore(), 8*ANCHO/9, 20*ALTO/21);
         stage.getBatch().end();
-        stage.act();
-        world.step(delta, 6, 2);
+
+        if (!isPause){
+            stage.act();
+            world.step(delta, 6, 2);
+        }
+
 
         stage.draw();
 
@@ -494,6 +498,7 @@ public class Evening extends BaseScreen {
 
         if(win){
             game.setScreen(new Night(game));
+            UserPreferences.getInstance().setEveningScore(UserPreferences.getInstance().getScore());
         }
         //Tecla de Back
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
