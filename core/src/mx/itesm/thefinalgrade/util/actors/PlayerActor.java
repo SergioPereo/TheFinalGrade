@@ -1,6 +1,5 @@
 package mx.itesm.thefinalgrade.util.actors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -30,21 +29,24 @@ public class PlayerActor extends Actor {
 
     private boolean alive = true, jumping = false, walking = false;
 
-    private Animation<Texture> walkBoyAnimation, walkGirlAnimation, standBoyAnimation, standGirlAnimation;
+    private Animation<Texture> walkBoyAnimation, walkGirlAnimation, standBoyAnimation, standGirlAnimation, jumpBoyAnimation, jumpGirlAnimation;
 
     private float playerWidth = 0.5f, playerHeight = 0.5f, velocity = 0f, animationTime = 0f;
 
     private boolean isBoy;
 
     public PlayerActor(World world, Texture textureBoy, Animation<Texture> walkBoyAnimation,
-                       Texture textureGirl, Animation<Texture> walkGirlAnimation, Animation<Texture> standBoyAnimation, Animation<Texture> standGirlAnimation,Vector2 position){
+                       Texture textureGirl, Animation<Texture> walkGirlAnimation, Animation<Texture> standBoyAnimation,
+                       Animation<Texture> standGirlAnimation, Animation<Texture> jumpGirlAnimation, Animation<Texture> jumpBoyAnimation,Vector2 position){
         this.world = world;
         this.textureBoy = textureBoy;
         this.walkBoyAnimation = walkBoyAnimation;
         this.standBoyAnimation = standBoyAnimation;
+        this.jumpBoyAnimation = jumpBoyAnimation;
         this.textureGirl = textureGirl;
         this.walkGirlAnimation = walkGirlAnimation;
         this.standGirlAnimation = standGirlAnimation;
+        this.jumpGirlAnimation = jumpGirlAnimation;
         this.isBoy = UserPreferences.getInstance().getGender();
         if(isBoy){
             this.sprite = new Sprite(textureBoy);
@@ -73,38 +75,44 @@ public class PlayerActor extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         sprite.setPosition((body.getPosition().x - playerWidth) * Constants.PIXELS_IN_METER,
                     (body.getPosition().y - playerHeight) * Constants.PIXELS_IN_METER);
-        if(velocity < 0.05 && velocity > -0.05 ){
-            walking = false;
-            if(isBoy){
-                sprite.setTexture(textureBoy);
-            } else {
-                sprite.setTexture(textureGirl);
+
+        //Estando quieto
+        if(!isJumping() && velocity == 0){
+            if (isBoy){
+                sprite.setTexture(standBoyAnimation.getKeyFrame(animationTime));
+            } else{
+                sprite.setTexture(standGirlAnimation.getKeyFrame(animationTime));
             }
+            sprite.setFlip(false, false);
             sprite.draw(batch);
-        } else if(velocity >  0.05){
+
+        //Moviendose a la derecha
+        } else if(velocity >  0.05 && !isJumping()) {
             walking = true;
-            if(isBoy){
+            if (isBoy) {
                 sprite.setTexture(walkBoyAnimation.getKeyFrame(animationTime));
             } else {
                 sprite.setTexture(walkGirlAnimation.getKeyFrame(animationTime));
             }
             sprite.setFlip(false, false);
             sprite.draw(batch);
-        } else if(velocity == 0){
-            walking = false;
-            if (isBoy){
-                sprite.setTexture(standBoyAnimation.getKeyFrame(animationTime));
-            } else{
-                sprite.setTexture(standGirlAnimation.getKeyFrame(animationTime));
+
+        //Saltando
+        } else if(isJumping()){
+            if (isBoy) {
+                sprite.setTexture(jumpBoyAnimation.getKeyFrame(animationTime));
+            } else {
+                sprite.setTexture(jumpGirlAnimation.getKeyFrame(animationTime));
             }
-            sprite.setFlip(true, false);
+            sprite.setFlip(false, false);
             sprite.draw(batch);
-        }else {
+
+        //Moviendose a la izquierda
+        } else if(velocity < 0.05 && !isJumping()){
             walking = true;
             if(isBoy){
                 sprite.setTexture(walkBoyAnimation.getKeyFrame(animationTime));
             } else {
-
                 sprite.setTexture(walkGirlAnimation.getKeyFrame(animationTime));
             }
             sprite.setFlip(true, false);
@@ -115,7 +123,17 @@ public class PlayerActor extends Actor {
     @Override
     public void act(float delta) {
         if(walking){
-            animationTime+=delta;
+            animationTime+= delta;
+            if(animationTime > 1f){
+                animationTime = 0f;
+            }
+        }else if(isJumping()){
+            animationTime+= delta;
+            if(animationTime > 1f){
+                animationTime = 0f;
+            }
+        }else if(!walking){
+            animationTime+= delta;
             if(animationTime > 1f){
                 animationTime = 0f;
             }
@@ -124,9 +142,9 @@ public class PlayerActor extends Actor {
 
     public void jump() {
         if(!jumping){
-            jumping = true;
             Vector2 position = body.getPosition();
             body.applyLinearImpulse(0, 20, position.x, position.y, true);
+            jumping = true;
         }
     }
 

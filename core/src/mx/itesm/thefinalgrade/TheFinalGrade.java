@@ -5,9 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
-import mx.itesm.thefinalgrade.levels.Winner;
 import mx.itesm.thefinalgrade.menus.StartMenu;
-import mx.itesm.thefinalgrade.worlds.Night;
 
 public class TheFinalGrade extends Game {
 
@@ -31,42 +29,76 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/buttons/padBack.png", Texture.class);
 		manager.load("Sprites/buttons/padKnob.png", Texture.class);
 
-		manager.load("Sprites/player/boy/animations/stand/1.png", Texture.class);
-		manager.load("Sprites/player/boy/animations/stand/2.png", Texture.class);
-		manager.load("Sprites/player/boy/animations/stand/3.png", Texture.class);
-		manager.load("Sprites/player/boy/animations/stand/4.png", Texture.class);
-		manager.load("Sprites/player/boy/animations/stand/5.png", Texture.class);
-		manager.load("Sprites/player/boy/animations/stand/6.png", Texture.class);
-		manager.load("Sprites/player/boy/animations/stand/7.png", Texture.class);
-		manager.load("Sprites/player/boy/animations/stand/8.png", Texture.class);
-		manager.load("Sprites/player/boy/animations/stand/9.png", Texture.class);
-		manager.load("Sprites/player/boy/animations/stand/10.png", Texture.class);
-		manager.load("Sprites/player/boy/animations/stand/11.png", Texture.class);
-		manager.load("Sprites/player/boy/animations/stand/12.png", Texture.class);
+
+		//Boy animations
+		manager.load("Sprites/player/boy/stand/1.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/2.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/3.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/4.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/5.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/6.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/7.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/8.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/9.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/10.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/11.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/12.png", Texture.class);
+		manager.load("Sprites/player/boy/stand/SecuenciaParada_Nino.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/1.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/2.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/3.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/4.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/5.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/6.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/7.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/8.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/9.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/10.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/11.png", Texture.class);
+		manager.load("Sprites/player/boy/jump/12.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/1.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/2.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/3.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/4.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/5.png", Texture.class);
 		manager.load("Sprites/player/boy/animations/walk/6.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/1.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/2.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/3.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/4.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/5.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/6.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/7.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/8.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/9.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/10.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/11.png", Texture.class);
-		manager.load("Sprites/player/girl/animations/stand/12.png", Texture.class);
+
+
+		//Girl animations
+
+		manager.load("Sprites/player/girl/stand/1.png", Texture.class);
+		manager.load("Sprites/player/girl/stand/2.png", Texture.class);
+		manager.load("Sprites/player/girl/stand/3.png", Texture.class);
+		manager.load("Sprites/player/girl/stand/4.png", Texture.class);
+		manager.load("Sprites/player/girl/stand/5.png", Texture.class);
+		manager.load("Sprites/player/girl/stand/6.png", Texture.class);
+		manager.load("Sprites/player/girl/stand/7.png", Texture.class);
+		manager.load("Sprites/player/girl/stand/8.png", Texture.class);
+		manager.load("Sprites/player/girl/stand/9.png", Texture.class);
+		manager.load("Sprites/player/girl/stand/10.png", Texture.class);
+		manager.load("Sprites/player/girl/stand/11.png", Texture.class);
+		manager.load("Sprites/player/girl/stand/12.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/1.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/2.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/3.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/4.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/5.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/6.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/7.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/8.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/9.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/10.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/11.png", Texture.class);
+		manager.load("Sprites/player/girl/jump/12.png", Texture.class);
 		manager.load("Sprites/player/girl/animations/walk/1.png", Texture.class);
 		manager.load("Sprites/player/girl/animations/walk/2.png", Texture.class);
 		manager.load("Sprites/player/girl/animations/walk/3.png", Texture.class);
 		manager.load("Sprites/player/girl/animations/walk/4.png", Texture.class);
 		manager.load("Sprites/player/girl/animations/walk/5.png", Texture.class);
 		manager.load("Sprites/player/girl/animations/walk/6.png", Texture.class);
+
+
+		//Morning
 		manager.load("Sprites/items/broken-sheet.png", Texture.class);
 		manager.load("Sprites/items/sheet.png", Texture.class);
 		manager.load("Sprites/buttons/Brincar.png", Texture.class);
@@ -188,8 +220,7 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/platforms/Plataforma 1R_Mapa 3.png", Texture.class);
 		manager.load("Sprites/platforms/Plataforma 2R_Mapa 3.png", Texture.class);
 		manager.finishLoading();
-		//setScreen(new Morning(this));
-		setScreen(new Night(this));
+		setScreen(new StartMenu(this));
 	}
 
 	@Override

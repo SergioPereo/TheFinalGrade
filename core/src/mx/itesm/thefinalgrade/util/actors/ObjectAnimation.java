@@ -14,6 +14,7 @@ public class ObjectAnimation {
     private Animation<TextureRegion> animation;
     private float time;
     private Texture texturewalkNiño;
+    private Texture textureStandNiño;
     private TextureRegion[] regionsMovement;
     private TextureRegion actualframe;
 
@@ -33,12 +34,19 @@ public class ObjectAnimation {
             time = 0f;
         }
 
-
+        textureStandNiño = new Texture(Gdx.files.internal("Sprites/player/boy/Stand/SecuenciaParada_Nino.png"));
+        TextureRegion[][] tms = TextureRegion.split(textureStandNiño,
+                textureStandNiño.getWidth()/12,textureStandNiño.getHeight());
+        regionsMovement = new TextureRegion[12];
+        for(int i=0; i<12;i++){
+            regionsMovement[i] = tms[0][i];
+            animation = new Animation<>(1/10f,regionsMovement);
+            time = 0f;
+        }
     }
     public void render(final SpriteBatch batch){
         time += Gdx.graphics.getDeltaTime();//tiempo que paso del último render
         actualframe = animation.getKeyFrame(time,true);
-
 
         batch.draw(actualframe,x,y);
     }
