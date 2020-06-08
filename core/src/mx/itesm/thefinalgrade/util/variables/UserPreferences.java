@@ -10,6 +10,9 @@ public class UserPreferences {
     private float position = 0f;
     private boolean isBoy = false;
     private int score = 0;
+    private int morningScore = 0;
+    private int eveningScore = 0;
+    private int nightScore = 0;
 
     private UserPreferences(){
         preferences = Gdx.app.getPreferences("Game Preferences");
@@ -54,6 +57,18 @@ public class UserPreferences {
         this.score = score;
     }
 
+    public void setMorningScore(int morningScore) {
+        this.morningScore = morningScore;
+    }
+
+    public void setEveningScore (int eveningScore){
+        this.eveningScore = eveningScore;
+    }
+
+    public void setNightScore(int nightScore) {
+        this.nightScore = nightScore;
+    }
+
     public float getPosition(){
         return position;
     }
@@ -63,6 +78,18 @@ public class UserPreferences {
     }
 
     public int getScore(){ return score; }
+
+    public int getMorningScore() {
+        return morningScore;
+    }
+
+    public int getEveningScore() {
+        return eveningScore;
+    }
+
+    public int getNightScore() {
+        return nightScore;
+    }
 
     public boolean getGender() { return isBoy; }
 }
