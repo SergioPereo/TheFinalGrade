@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import mx.itesm.thefinalgrade.TheFinalGrade;
+import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 public class SoundSettingsMenu extends Menu{
@@ -24,10 +25,10 @@ public class SoundSettingsMenu extends Menu{
     private Texture textureNiño, textureCalendario;
     private Texture backButtonTexture, backButtonTexturePressed;
 
-    private CheckBox checkBox;
     private Skin skin;
     private Slider slider;
     private Music music;
+    private Text volume = new Text(6);
 
     public SoundSettingsMenu(TheFinalGrade game) {
         super(game);
@@ -64,31 +65,6 @@ public class SoundSettingsMenu extends Menu{
 
         skin = new Skin(Gdx.files.internal("skins/glassy/skin/glassy-ui.json"));
 
-        checkBox = new CheckBox("Audio", skin);
-
-        checkBox.setChecked(true);
-
-        checkBox.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                if(!checkBox.isChecked()){
-                    UserPreferences.getInstance().setPosition(music.getPosition());
-                    music.stop();
-                } else {
-                    music.setPosition(UserPreferences.getInstance().getPosition());
-                    music.setVolume(UserPreferences.getInstance().getVolume());
-                    music.setLooping(true);
-                    music.play();
-                }
-            }
-        });
-
-        checkBox.setPosition(4*ANCHO/5, 5*ALTO/7);
-        checkBox.getImage().scaleBy(0.7f);
-        checkBox.getImageCell().width(80f);
-        checkBox.getImage().setWidth(checkBox.getImage().getImageWidth() + 20f);
-        checkBox.getLabel().setFontScale(2.5f, 2.5f);
-
         slider = new Slider(0, 1, 0.1f, false, skin);
         slider.setValue(UserPreferences.getInstance().getVolume());
 
@@ -102,7 +78,6 @@ public class SoundSettingsMenu extends Menu{
 
         slider.setPosition(4*ANCHO/5, 4*ALTO/7);
 
-        menuStage.addActor(checkBox);
         menuStage.addActor(slider);
         menuStage.addActor(backButton);
 
@@ -124,7 +99,10 @@ public class SoundSettingsMenu extends Menu{
         batch.draw(background, 0, 0);
         batch.draw(textureNiño, 10, 0);
         batch.draw(textureCalendario, 375, 0);
+        volume.draw(batch, "VOLUME", ANCHO/2+200,ALTO/2+200 );
         batch.end();
+
+
         menuStage.draw();
         //Tecla de Back
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {

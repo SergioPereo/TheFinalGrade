@@ -19,7 +19,7 @@ public class MainMenu extends Menu {
 
 
     //Botones
-    private Texture textContinueButton; private Texture textContinueButton2;
+
     private Texture textNewGameButton; private Texture textNewGameButton2;
     private Texture textOptionsButton; private Texture textOptionsButton2;
     private Texture textCreditsButton; private Texture textCreditsButton2;
@@ -49,18 +49,6 @@ public class MainMenu extends Menu {
 
         background = game.getManager().get("Sprites/backgrounds/skybackground.png");
 
-        //boton continuar
-
-        textContinueButton = game.getManager().get("Sprites/buttons/Continue.png");
-        TextureRegionDrawable trdcontinue = new TextureRegionDrawable(
-                new TextureRegion(textContinueButton));
-
-        //imagen btn continuar presionado
-        textContinueButton2 = game.getManager().get("Sprites/buttons/Continue_Click.png");
-        TextureRegionDrawable trdcontinue2 = new TextureRegionDrawable(
-                new TextureRegion(textContinueButton2));
-        ImageButton continuebtn = new ImageButton(trdcontinue, trdcontinue2);
-        continuebtn.setPosition(ANCHO/3+75,550);
 
         //boton NUEVO JUEGO
         textNewGameButton = game.getManager().get("Sprites/buttons/NewGame.png");
@@ -72,7 +60,7 @@ public class MainMenu extends Menu {
         TextureRegionDrawable trdNewG2 = new TextureRegionDrawable(
                 new TextureRegion(textNewGameButton2));
         ImageButton newGameBtn = new ImageButton(trdnewG, trdNewG2);
-        newGameBtn.setPosition(ANCHO/3+75,380);
+        newGameBtn.setPosition(ANCHO/3+75,550);
 
         //boton OPCIONES
         textOptionsButton = game.getManager().get("Sprites/buttons/Opciones.png");
@@ -84,7 +72,7 @@ public class MainMenu extends Menu {
         TextureRegionDrawable trdoption2 = new TextureRegionDrawable(
                 new TextureRegion(textOptionsButton2));
         ImageButton optionBtn = new ImageButton(trdoption, trdoption2);
-        optionBtn.setPosition(ANCHO/3,250);
+        optionBtn.setPosition(ANCHO/3,400);
         optionBtn.setSize(412.5f, 105);
         optionBtn.getImageCell().size(412.5f, 105);
 
@@ -99,7 +87,7 @@ public class MainMenu extends Menu {
         TextureRegionDrawable trdCredits2 = new TextureRegionDrawable(
                 new TextureRegion(textCreditsButton2));
         ImageButton creditsBtn = new ImageButton(trdCredits, trdCredits2);
-        creditsBtn.setPosition(ANCHO/3,135);
+        creditsBtn.setPosition(ANCHO/3,250);
         creditsBtn.setSize(412.5f, 105);
         creditsBtn.getImageCell().size(412.5f, 105);
 
@@ -111,7 +99,7 @@ public class MainMenu extends Menu {
         TextureRegionDrawable trdExitPress = new TextureRegionDrawable(
                 new TextureRegion(textExit2));
         ImageButton instructionsBtn = new ImageButton(trdExit, trdExitPress);
-        instructionsBtn.setPosition(ANCHO/3, 20);
+        instructionsBtn.setPosition(ANCHO/3, 100);
         instructionsBtn.setSize(412.5f, 105);
         instructionsBtn.getImageCell().size(412.5f, 105);
 
@@ -162,7 +150,6 @@ public class MainMenu extends Menu {
         // Add actors
         menuStage.addActor(newGameBtn);
         menuStage.addActor(optionBtn);
-        menuStage.addActor(continuebtn);
         menuStage.addActor(creditsBtn);
         menuStage.addActor(instructionsBtn);
 
