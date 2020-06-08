@@ -75,7 +75,7 @@ public class LoserEvening extends Menu {
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
                 game.setScreen(new Evening(game));
-                UserPreferences.getInstance().setScore(0);
+                UserPreferences.getInstance().setScore(UserPreferences.getInstance().getMorningScore());
             }
         });
         Gdx.input.setInputProcessor(menuStage);
