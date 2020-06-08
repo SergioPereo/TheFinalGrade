@@ -216,7 +216,7 @@ public class TheFinalGrade extends Game {
 		manager.load("Sprites/platforms/Plataforma 1R_Mapa 3.png", Texture.class);
 		manager.load("Sprites/platforms/Plataforma 2R_Mapa 3.png", Texture.class);
 		manager.finishLoading();
-		setScreen(new StartMenu(this));
+		setScreen(new LoadingScreen(this));
 	}
 
 	@Override
