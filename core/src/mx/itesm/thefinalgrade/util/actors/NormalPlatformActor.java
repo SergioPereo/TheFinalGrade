@@ -58,7 +58,7 @@ public class NormalPlatformActor extends Actor {
     }
 
 
-    public Body getBody() {
+    public Body getBody(){
         return body;
     }
 
@@ -66,6 +66,8 @@ public class NormalPlatformActor extends Actor {
         Vector2 vec = new Vector2(0.0f, 0.17f);
         this.getBody().setLinearVelocity(vec);
     }
+
+
 
     public void moverAbajo(){
         Vector2 vec = new Vector2(0.0f, -0.25f);
