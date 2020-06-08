@@ -444,6 +444,7 @@ public class Morning extends BaseScreen {
         //Cuando gana te manda a Evening
         if(win){
             game.setScreen(new Evening(game));
+            UserPreferences.getInstance().setMorningScore(UserPreferences.getInstance().getScore());
         }
         //Tecla de Back
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {

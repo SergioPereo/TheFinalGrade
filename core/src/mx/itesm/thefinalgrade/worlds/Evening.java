@@ -493,6 +493,7 @@ public class Evening extends BaseScreen {
 
         if(win){
             game.setScreen(new Night(game));
+            UserPreferences.getInstance().setEveningScore(UserPreferences.getInstance().getScore());
         }
         //Tecla de Back
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
