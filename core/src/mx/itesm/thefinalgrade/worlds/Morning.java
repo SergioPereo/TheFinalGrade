@@ -423,8 +423,10 @@ public class Morning extends BaseScreen {
 
         score.draw(stage.getBatch(), "" + UserPreferences.getInstance().getScore(), 8*ANCHO/9, 20*ALTO/21);
         stage.getBatch().end();
-        stage.act();
-        world.step(delta, 6, 2);
+        if (!isPause){
+            stage.act();
+            world.step(delta, 6, 2);
+        }
 
         stage.draw();
         if(player.getBody().getPosition().y < 0){
