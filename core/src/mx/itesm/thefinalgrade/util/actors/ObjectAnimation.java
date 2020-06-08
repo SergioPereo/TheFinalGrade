@@ -34,7 +34,7 @@ public class ObjectAnimation {
             time = 0f;
         }
 
-        textureStandNiño = new Texture(Gdx.files.internal("Sprites/player/boy/Stand/SecuenciaParada_Nino.png"));
+        textureStandNiño = new Texture(Gdx.files.internal("Sprites/player/girl/jump/SecuenciaSalto_Niña.png"));
         TextureRegion[][] tms = TextureRegion.split(textureStandNiño,
                 textureStandNiño.getWidth()/12,textureStandNiño.getHeight());
         regionsMovement = new TextureRegion[12];
