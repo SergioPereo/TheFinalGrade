@@ -20,11 +20,12 @@ public class LoserMorning extends Menu {
 
     private Texture botonRegresar, botonRegresarP, botonContinuar, botonContinuarP;
 
+    private Morning morning;
+
     private Music music;
 
     public LoserMorning(TheFinalGrade game){
         super(game);
-
     }
 
     @Override
@@ -76,7 +77,7 @@ public class LoserMorning extends Menu {
            public void clicked(InputEvent event, float x, float y){
                super.clicked(event, x, y);
                game.setScreen(new Morning(game));
-               UserPreferences.getInstance().setScore(0);
+               UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore());
            }
        });
         Gdx.input.setInputProcessor(menuStage);

@@ -18,12 +18,10 @@ import mx.itesm.thefinalgrade.worlds.Morning;
 
 public class LoserEvening extends Menu {
     private Texture botonRegresar, botonRegresarP, botonContinuar, botonContinuarP;
-
     private Music music;
 
     public LoserEvening(TheFinalGrade game){
         super(game);
-
     }
 
     @Override
@@ -75,7 +73,7 @@ public class LoserEvening extends Menu {
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
                 game.setScreen(new Evening(game));
-                UserPreferences.getInstance().setScore(0);
+                UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore());
             }
         });
         Gdx.input.setInputProcessor(menuStage);

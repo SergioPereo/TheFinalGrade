@@ -10,7 +10,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import mx.itesm.thefinalgrade.util.variables.BaseScreen;
 import mx.itesm.thefinalgrade.util.variables.Constants;
+import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 
 public class WinActor extends Actor {
 
@@ -41,7 +43,9 @@ public class WinActor extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+
     }
+
 
     public Fixture getFixture(){
         return fixture;

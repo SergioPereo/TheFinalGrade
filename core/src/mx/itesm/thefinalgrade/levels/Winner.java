@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import mx.itesm.thefinalgrade.TheFinalGrade;
 import mx.itesm.thefinalgrade.menus.MainMenu;
 import mx.itesm.thefinalgrade.menus.Menu;
+import mx.itesm.thefinalgrade.util.Text;
 import mx.itesm.thefinalgrade.util.actors.WinActor;
 import mx.itesm.thefinalgrade.util.variables.UserPreferences;
 import mx.itesm.thefinalgrade.worlds.Morning;
@@ -23,7 +24,7 @@ public class Winner extends Menu {
 
     private Texture botonRegresar, botonRegresarP;
 
-    private WinActor winActor;
+    private Text score = new Text(8);
 
     private Music music;
 
@@ -81,9 +82,10 @@ public class Winner extends Menu {
     public void render(float delta) {
         borrarPantalla();
         batch.setProjectionMatrix(camara.combined);
-        batch.begin();
-        batch.draw(background, 0, 0, ANCHO, ALTO);
-        batch.end();
+        menuStage.getBatch().begin();
+        menuStage.getBatch().draw(background, 0, 0, ANCHO, ALTO);
+        score.draw(menuStage.getBatch(), "" + UserPreferences.getInstance().getScore(), ANCHO/2+400, ALTO/2);
+        menuStage.getBatch().end();
 
         menuStage.draw();
 

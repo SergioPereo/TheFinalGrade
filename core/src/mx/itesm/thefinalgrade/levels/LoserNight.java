@@ -74,7 +74,7 @@ public class LoserNight extends Menu {
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
                 game.setScreen(new Night(game));
-                UserPreferences.getInstance().setScore(0);
+                UserPreferences.getInstance().setScore(UserPreferences.getInstance().getScore());
             }
         });
         Gdx.input.setInputProcessor(menuStage);

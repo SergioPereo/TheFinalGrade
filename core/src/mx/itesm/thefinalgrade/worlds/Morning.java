@@ -159,6 +159,16 @@ public class Morning extends BaseScreen {
 
     }
 
+    public Array<ItemActor> setItems (Array<ItemActor> items){
+        this.items = items;
+
+        return items;
+    }
+
+    public Array<ItemActor> getItems() {
+        return items;
+    }
+
     public void createLevel(){
 
         music = game.getManager().get("music/Mushroom Theme.mp3");
@@ -429,8 +439,6 @@ public class Morning extends BaseScreen {
         stage.draw();
         if(player.getBody().getPosition().y < 0){
             game.setScreen(new LoserMorning(game));
-
-
         }
         /**debugCamera.update();
         debugRenderer.render(world, debugCamera.combined);

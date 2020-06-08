@@ -114,7 +114,7 @@ public class Evening extends BaseScreen {
         stage.getCamera().update();
     }
 
-    private void createPause() {
+    private boolean createPause() {
         skin = new Skin(Gdx.files.internal("skins/comic/skin/comic-ui.json"));
         TextButton pauseButton = new TextButton("Pause", skin);
         TextButton continuePauseButton = new TextButton("Continue", skin);
@@ -151,6 +151,7 @@ public class Evening extends BaseScreen {
                 if(!isPause){
                     isPause = true;
                     stage.addActor(pause);
+                    moverPlataformas(isPause);
                 } else {
                     isPause = false;
                     pause.remove();
@@ -158,6 +159,8 @@ public class Evening extends BaseScreen {
             }
         });
         stage.addActor(pauseButton);
+
+        return isPause;
     }
 
     public void createLevel(){
@@ -243,7 +246,7 @@ public class Evening extends BaseScreen {
         createItems();
         createHUD();
         createButton();
-        moverPlataformas();
+        moverPlataformas(!isPause);
         moverItems();
     }
 
@@ -379,13 +382,15 @@ public class Evening extends BaseScreen {
     }
 
 
-    public void moverPlataformas(){
-        for (NormalPlatformActor actor : normalPlatformsDown) {
-            actor.moverAbajo();
-        }
+    public void moverPlataformas(boolean active){
+        if (active){
+            for (NormalPlatformActor actor : normalPlatformsDown) {
+                actor.moverAbajo();
+            }
 
-        for (NormalPlatformActor actor: normalPlatformsUp){
-            actor.moverArriba();
+            for (NormalPlatformActor actor: normalPlatformsUp){
+                actor.moverArriba();
+            }
         }
     }
 
