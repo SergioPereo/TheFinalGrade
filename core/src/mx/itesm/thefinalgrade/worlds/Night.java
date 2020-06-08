@@ -444,7 +444,7 @@ public class Night extends BaseScreen {
         stage.getBatch().draw(edificio2, 1050, 0, 285, 285);
         score.draw(stage.getBatch(), "" + UserPreferences.getInstance().getScore(), 8 * ANCHO / 9, 20 * ALTO / 21);
         stage.getBatch().end();
-        
+
         if (!isPause){
             stage.act();
             world.step(delta, 6, 2);
