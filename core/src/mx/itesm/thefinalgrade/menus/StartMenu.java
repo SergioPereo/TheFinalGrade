@@ -1,6 +1,7 @@
 package mx.itesm.thefinalgrade.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -32,6 +33,11 @@ public class StartMenu extends Menu {
         super(game);
 
 
+    }
+
+    @Override
+    public void show() {
+        super.show();
     }
 
     @Override
@@ -101,6 +107,10 @@ public class StartMenu extends Menu {
         //batch.draw(textureCalendario, 700, ALTO/2-25);
         batch.end();
         menuStage.draw();
+        //Tecla de Back
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            Gdx.app.exit();
+        }
     }
 
     @Override

@@ -174,7 +174,10 @@ public class MainMenu extends Menu {
         batch.draw(textNiña, 0, 0);
         batch.end();
         menuStage.draw();
-
+        //Tecla de Back
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            game.setScreen(new StartMenu(game));
+        }
 
     }
     @Override
